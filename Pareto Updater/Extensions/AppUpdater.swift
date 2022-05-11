@@ -144,7 +144,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var currentVersion: Version {
-        if applicationPath == nil {
+        if !isInstalled {
             return Version(0, 0, 0)
         }
         var version = (appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
@@ -179,6 +179,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var icon: NSImage? {
+        if !isInstalled {
+            return nil
+        }
         if let appPath = URL(string: applicationPath!)?.path {
             return NSWorkspace.shared.icon(forFile: appPath)
         }

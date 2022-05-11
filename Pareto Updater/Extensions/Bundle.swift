@@ -44,7 +44,6 @@ func runCMD(app: String, args: [String]) -> String {
 func appVersion(path: String, key: String = "CFBundleShortVersionString") -> String? {
     let plist = "\(path)/Contents/Info.plist"
     guard let dictionary = NSDictionary(contentsOfFile: plist) else {
-        os_log("Failed reading %{public}s", plist)
         return nil
     }
     // print("\(app): \(dictionary as AnyObject)")
