@@ -53,9 +53,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = cachePath.appendingPathComponent(latestURL.lastPathComponent)
         if FileManager.default.fileExists(atPath: cachedPath.path) {
+            os_log("Update from cache at \(cachedPath.debugDescription)")
             completion(latestURL, cachedPath)
         }
-        // os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(latestURL.debugDescription)")
+        os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
 
         AF.download(latestURL).responseData { [self] response in
             if !FileManager.default.fileExists(atPath: cachePath.path) {

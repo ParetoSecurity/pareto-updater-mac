@@ -27,9 +27,12 @@ class AppLibreOffice: AppUpdater {
 
     override var latestURL: URL {
         #if arch(arm64)
-            return URL(string: "https://www.libreoffice.org/donate/dl/mac-aarch64/\(latestVersionCached)/en-US/LibreOffice_\(latestVersionCached)_MacOS_aarch64.dmg")!
+            return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/aarch64/LibreOffice_\(latestVersionCached)_MacOS_aarch64.dmg")!
+
         #else
-            return URL(string: "https://www.libreoffice.org/donate/dl/mac-x86_64/\(latestVersionCached)/en-US/LibreOffice_\(latestVersionCached)_MacOS_x86-64.dmg")!
+
+            return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/x86_64/LibreOffice_\(latestVersionCached)_MacOS_x86_64.dmg")!
+
         #endif
     }
 
