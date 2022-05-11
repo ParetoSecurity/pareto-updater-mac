@@ -9,11 +9,13 @@ import AppUpdater
 import Cache
 import Foundation
 import os.log
+import Regex
 import SwiftUI
 import Version
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
+    var statusMenu: NSMenu?
     var popOver = NSPopover()
     let bundleModel = AppBundles()
 
@@ -50,7 +52,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {
-        popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: self.bundleModel))
@@ -59,8 +60,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let menuButton = statusItem?.button {
             menuButton.image = NSImage(systemSymbolName: "square.and.arrow.down.on.square", accessibilityDescription: nil)
-            menuButton.action = #selector(menuButtonToggle)
+            menuButton.action = #selector(menuButtonToggle(sender:))
+            menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
+
+        statusMenu = NSMenu(title: "ParetoUpdater")
+
+        let showItem = NSMenuItem(title: "Show", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
+        showItem.target = NSApp.delegate
+        statusMenu?.addItem(showItem)
+
+        let quitItem = NSMenuItem(title: "Quit Pareto Updater", action: #selector(AppDelegate.quitApp), keyEquivalent: "q")
+        quitItem.target = NSApp.delegate
+        statusMenu?.addItem(quitItem)
 
         DispatchQueue.main.async { [self] in
             _ = AppDelegate.updater.checkAndUpdate()
@@ -69,14 +81,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc
-    func menuButtonToggle(sender _: AnyObject) {
-        if popOver.isShown {
-            popOver.close()
+    func menuButtonToggle(sender _: NSStatusBarButton) {
+        let event = NSApp.currentEvent!
+
+        if event.type == NSEvent.EventType.rightMouseUp {
+            statusItem?.popUpMenu(statusMenu!)
         } else {
-            if let menuButton = statusItem?.button {
-                popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .minY)
+            if popOver.isShown {
+                popOver.close()
+            } else {
+                if let menuButton = statusItem?.button {
+                    popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .minY)
+                }
             }
         }
+    }
+
+    @objc
+    func quitApp() {
+        NSApplication.shared.terminate(self)
     }
 }
 
@@ -117,4 +140,63 @@ public enum Constants {
             transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
         )
     #endif
+
+    static let bugReportURL = { () -> URL in
+        let baseURL = "https://paretosecurity.com/report-bug?"
+        let logs = logEntries().joined(separator: "\n").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        let versions = getVersions().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        if let url = URL(string: baseURL + "&logs=" + logs! + "&version=" + versions!) {
+            return url
+        }
+
+        return URL(string: baseURL)!
+    }()
+
+    static let getVersions = { () -> String in
+        "HW: \(hwModelName)\nmacOS: \(macOSVersionString)\nApp: Pareto Updater\nApp Version: \(appVersion)\nBuild: \(buildVersion)"
+    }
+
+    static var hwModel: String {
+        HWInfo(forKey: "model")
+    }
+
+    static var hwModelName: String {
+        // Depending on if your serial number is 11 or 12 characters long take the last 3 or 4 characters, respectively, and feed that to the following URL after the ?cc=XXXX part.
+        let nameRegex = Regex("<configCode>(.+)</configCode>")
+        let cc = hwSerial.count <= 11 ? hwSerial.suffix(3) : hwSerial.suffix(4)
+        let url = URL(string: "https://support-sp.apple.com/sp/product?cc=\(cc)")!
+        let data = try? String(contentsOf: url)
+        if data != nil {
+            let nameResult = nameRegex.firstMatch(in: data ?? "")
+            return nameResult?.groups.first?.value ?? hwModel
+        }
+
+        return hwModel
+    }
+
+    static var hwSerial: String {
+        HWInfo(forKey: "IOPlatformSerialNumber")
+    }
+
+    static let logEntries = { () -> [String] in
+        var logs = [String]()
+
+        logs.append("Location: \(Bundle.main.path)")
+        logs.append("Build:")
+
+        logs.append("\nLogs:")
+        logs.append("Please copy the logs from the Console app by searching for the Pareto Updater.")
+        return logs
+    }
+}
+
+func HWInfo(forKey key: String) -> String {
+    let service = IOServiceGetMatchingService(kIOMasterPortDefault,
+                                              IOServiceMatching("IOPlatformExpertDevice"))
+
+    guard let info = (IORegistryEntryCreateCFProperty(service, key as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+        return "Unknown"
+    }
+    IOObjectRelease(service)
+    return info
 }

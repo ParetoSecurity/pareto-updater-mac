@@ -46,6 +46,9 @@ struct AppList: View {
                             NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
                             NSApp.activate(ignoringOtherApps: true)
                         })
+                        Button("Contact Support", action: {
+                            NSWorkspace.shared.open(Constants.bugReportURL)
+                        })
                         Button("Quit", action: {
                             NSApplication.shared.terminate(self)
                         })
@@ -53,34 +56,33 @@ struct AppList: View {
             }
 
             if viewModel.haveUpdatableApps {
-                Text("Available Updates").font(.caption2)
-                List(viewModel.updatableApps) { app in
-                    AppRow(app: app, onUpdate: {
-                        viewModel.fetching = true
-                        app.updateApp { _ in
-                            viewModel.fetching = false
-                            viewModel.fetchData()
-                        }
-                    })
+                VStack(alignment: .leading) {
+                    Text("Available Updates").font(.caption2)
+                    ForEach(viewModel.updatableApps) { app in
+                        AppRow(app: app, onUpdate: {
+                            viewModel.updateApp(withApp: app)
+                        })
+                    }
                 }
-                .padding(0)
             } else {
+                Group{
                 if viewModel.fetching {
                     HStack(alignment: .center) {
+                        Text("Checking for updates").font(.body)
                         ProgressView().frame(width: 18.0, height: 18.0)
                             .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
-                        Text("Checking for updates").font(.body).multilineTextAlignment(.center).padding(5)
                     }
                 } else {
                     HStack(alignment: .center) {
-                        Text("All Apps are up to date!").font(.body).multilineTextAlignment(.center).padding(5)
+                        Text("All Apps are up to date!").font(.body)
                     }
                 }
+                }.frame(minHeight: 20.0)
             }
 
-        }.padding(10).onAppear {
+        }.padding(15).onAppear {
             viewModel.fetchData()
-        }.frame(minHeight: viewModel.haveUpdatableApps ? 200 : 50)
+        }
     }
 }
 

@@ -21,7 +21,6 @@ enum AppUpdaterStatus {
     case Failed
 }
 
-
 public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public static func == (lhs: AppUpdater, rhs: AppUpdater) -> Bool {
         lhs.UUID == rhs.UUID
@@ -91,63 +90,61 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             fractionCompleted = 0.0
         }
 
-        DispatchQueue.global(qos: .background).async { [self] in
-            downloadLatest { [self] sourceFile, appFile in
-                DispatchQueue.main.async { [self] in
-                    fetching = true
-                    fractionCompleted = 0.0
-                }
-                let processes = NSRunningApplication.runningApplications(withBundleIdentifier: appBundle)
-                for process in processes {
-                    process.forceTerminate()
-                }
-                DispatchQueue.main.async { [self] in
-                    fetching = true
-                    fractionCompleted = 0.0
-                }
-                if sourceFile.pathExtension == "dmg" {
-                    let mountPoint = URL(string: "/Volumes/" + appBundle)!
-                    os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
-                    if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
-                        do {
-                            let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
-                            let downloadedAppBundle = Bundle(url: app!)!
-                            let installedAppBundle = Bundle(path: applicationPath!)!
-                            os_log("Delete installedAppBundle: \(installedAppBundle)")
-                            try installedAppBundle.path.delete()
-                            os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
-                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                            DMGMounter.detach(mountPoint: mountPoint)
-                            completion(AppUpdaterStatus.Updated)
-                        } catch {
-                            DMGMounter.detach(mountPoint: mountPoint)
-                            os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
-                            completion(AppUpdaterStatus.Failed)
-                        }
-                    }
-                }
-                if sourceFile.pathExtension == "zip" {
-                    os_log("Unzipped %{public}s is %{public}s%", appFile.debugDescription)
+        downloadLatest { [self] sourceFile, appFile in
+            DispatchQueue.main.async { [self] in
+                fetching = true
+                fractionCompleted = 0.5
+            }
+            let processes = NSRunningApplication.runningApplications(withBundleIdentifier: appBundle)
+            for process in processes {
+                process.forceTerminate()
+            }
+            DispatchQueue.main.async { [self] in
+                fetching = true
+                fractionCompleted = 0.9
+            }
+            if sourceFile.pathExtension == "dmg" {
+                let mountPoint = URL(string: "/Volumes/" + appBundle)!
+                os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
+                if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
                     do {
-                        let app = unzip(sourceFile)
-                        let downloadedAppBundle = Bundle(url: app)!
+                        let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
+                        let downloadedAppBundle = Bundle(url: app!)!
                         let installedAppBundle = Bundle(path: applicationPath!)!
                         os_log("Delete installedAppBundle: \(installedAppBundle)")
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        DMGMounter.detach(mountPoint: mountPoint)
                         completion(AppUpdaterStatus.Updated)
                     } catch {
+                        DMGMounter.detach(mountPoint: mountPoint)
                         os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
                         completion(AppUpdaterStatus.Failed)
                     }
                 }
-                
-                DispatchQueue.main.async { [self] in
-                    fetching = false
-                    updatable = false
-                    fractionCompleted = 0.0
+            }
+            if sourceFile.pathExtension == "zip" {
+                os_log("Unzipped %{public}s is %{public}s%", appFile.debugDescription)
+                do {
+                    let app = unzip(sourceFile)
+                    let downloadedAppBundle = Bundle(url: app)!
+                    let installedAppBundle = Bundle(path: applicationPath!)!
+                    os_log("Delete installedAppBundle: \(installedAppBundle)")
+                    try installedAppBundle.path.delete()
+                    os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
+                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                    completion(AppUpdaterStatus.Updated)
+                } catch {
+                    os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
+                    completion(AppUpdaterStatus.Failed)
                 }
+            }
+
+            DispatchQueue.main.async { [self] in
+                fetching = false
+                updatable = false
+                fractionCompleted = 0.0
             }
         }
     }

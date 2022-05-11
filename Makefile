@@ -54,9 +54,11 @@ fmt:
 	mint run swiftformat --swiftversion 5 .
 	mint run swiftlint . --fix
 
-notarize:
-	xcrun notarytool submit ParetoUpdater.dmg --team-id PM784W7B8X --progress --wait --password
-	xcrun notarytool submit ParetoUpdater.zip --team-id PM784W7B8X --progress --wait --password
+notarize-dmg:
+	xcrun notarytool submit ParetoUpdater.dmg --team-id PM784W7B8X --progress --wait
+
+notarize-zip:
+	xcrun notarytool submit ParetoUpdater.zip --team-id PM784W7B8X --progress --wait
 
 clean:
 	rm -rf SourcePackages
@@ -64,7 +66,7 @@ clean:
 	rm -rf SetAppExport
 
 zip:
-	ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoUpdater.app.zip
+	ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoUpdater.zip
 
 sentry-debug-upload:
 	sentry-cli --auth-token ${SENTRY_AUTH_TOKEN} upload-dif app.xcarchive --org teamniteo --project pareto-mac
