@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+
 class AppBundles: ObservableObject {
     @Published var apps: [AppUpdater]
 

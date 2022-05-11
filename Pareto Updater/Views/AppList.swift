@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppList: View {
-    @StateObject var viewModel = AppBundles()
+    @StateObject var viewModel: AppBundles
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -87,7 +87,7 @@ struct AppList: View {
 struct AppList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            AppList()
+            AppList(viewModel: AppBundles())
         }
     }
 }

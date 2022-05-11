@@ -12,6 +12,10 @@ import OSLog
 import Regex
 import Version
 
+enum AppUpdaterState: String {
+    case GAter
+}
+
 class AppSpyBuster: AppUpdater {
     static let sharedInstance = AppSpyBuster()
 

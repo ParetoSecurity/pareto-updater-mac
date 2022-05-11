@@ -8,13 +8,14 @@
 import AppUpdater
 import Cache
 import Foundation
+import os.log
 import SwiftUI
 import Version
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
     var popOver = NSPopover()
-    let view = AppList()
+    let bundleModel = AppBundles()
 
     static let updater = GithubAppUpdater(
         updateURL: "https://api.github.com/repos/paretosecurity/pareto-updater-mac/releases",
@@ -23,11 +24,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         interval: 60 * 60
     )
 
+    func applicationWillFinishLaunching(_: Notification) {
+        if CommandLine.arguments.contains("-update") {
+            for app in bundleModel.apps {
+                if app.latestVersion > app.currentVersion {
+                    app.updateApp { _ in
+                        os_log("Update of %{public}s  done.", app.appBundle)
+                        app.updatable = false
+                        app.fetching = false
+                    }
+                }
+            }
+            exit(0)
+        }
+    }
+
+    func scheduleHourlyCheck() {
+        let activity = NSBackgroundActivityScheduler(identifier: "\(String(describing: Bundle.main.bundleIdentifier)).Updater")
+        activity.repeats = true
+        activity.interval = 60 * 60
+        activity.schedule { completion in
+            self.bundleModel.fetchData()
+            completion(.finished)
+        }
+    }
+
     func applicationDidFinishLaunching(_: Notification) {
         popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: view)
+        popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: self.bundleModel))
         popOver.contentViewController?.view.window?.makeKey()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -35,8 +61,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menuButton.image = NSImage(systemSymbolName: "square.and.arrow.down.on.square", accessibilityDescription: nil)
             menuButton.action = #selector(menuButtonToggle)
         }
-        DispatchQueue.main.async {
+
+        DispatchQueue.main.async { [self] in
             _ = AppDelegate.updater.checkAndUpdate()
+            scheduleHourlyCheck()
         }
     }
 
@@ -66,7 +94,7 @@ struct ParetoUpdaterApp: App {
 public enum Constants {
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
-    static let useEdgeCache = false
+    static let useEdgeCache = true
     static let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     static let buildVersion: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     static let machineName: String = Host.current().localizedName!

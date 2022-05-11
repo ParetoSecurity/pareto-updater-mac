@@ -187,12 +187,13 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
 
         var version = Version(0, 0, 0)
-
+        let lock = DispatchSemaphore(value: 0)
         getLatestVersion { [self] latestVersion in
             latestVersionCached = latestVersion
             version = Version(latestVersion) ?? Version(0, 0, 0)
+            lock.signal()
         }
-
+        lock.wait()
         return version
     }
 
