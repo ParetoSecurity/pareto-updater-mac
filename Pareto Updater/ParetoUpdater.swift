@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem?
     var statusMenu: NSMenu?
     var popOver = NSPopover()
-    let bundleModel = AppBundles()
+    static let bundleModel = AppBundles()
 
     static let updater = GithubAppUpdater(
         updateURL: "https://api.github.com/repos/paretosecurity/pareto-updater-mac/releases",
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillFinishLaunching(_: Notification) {
         if CommandLine.arguments.contains("-update") {
-            for app in bundleModel.apps {
+            for app in AppDelegate.bundleModel.apps {
                 if app.latestVersion > app.currentVersion {
                     app.updateApp { _ in
                         os_log("Update of %{public}s  done.", app.appBundle)
@@ -46,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         activity.repeats = true
         activity.interval = 60 * 60
         activity.schedule { completion in
-            self.bundleModel.fetchData()
+            AppDelegate.bundleModel.fetchData()
             completion(.finished)
         }
     }
@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_: Notification) {
         popOver.animates = true
         popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: self.bundleModel))
+        popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
         popOver.contentViewController?.view.window?.makeKey()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -66,11 +66,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         statusMenu = NSMenu(title: "ParetoUpdater")
 
-        let showItem = NSMenuItem(title: "Show", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
+        let showItem = NSMenuItem(title: "Show / Hide", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
         showItem.target = NSApp.delegate
         statusMenu?.addItem(showItem)
 
-        let quitItem = NSMenuItem(title: "Quit Pareto Updater", action: #selector(AppDelegate.quitApp), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: "Quit", action: #selector(AppDelegate.quitApp), keyEquivalent: "q")
         quitItem.target = NSApp.delegate
         statusMenu?.addItem(quitItem)
 

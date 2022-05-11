@@ -184,12 +184,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         applicationPath != nil
     }
 
-    public var icon: NSImage {
-        let defaultImage = NSImage(systemSymbolName: "app.dashed", accessibilityDescription: nil)!
-        if applicationPath != nil {
-            return NSWorkspace.shared.icon(forFile: (URL(string: applicationPath!)?.standardizedFileURL.path)!)
+    public var icon: NSImage? {
+        if let appPath = URL(string: applicationPath!)?.path {
+            return NSWorkspace.shared.icon(forFile: appPath)
         }
-        return defaultImage
+        return nil
     }
 
     public var latestVersion: Version {

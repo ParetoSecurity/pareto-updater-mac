@@ -65,18 +65,18 @@ struct AppList: View {
                     }
                 }
             } else {
-                Group{
-                if viewModel.fetching {
-                    HStack(alignment: .center) {
-                        Text("Checking for updates").font(.body)
-                        ProgressView().frame(width: 18.0, height: 18.0)
-                            .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                Group {
+                    if viewModel.fetching {
+                        HStack(alignment: .center) {
+                            Text("Checking for updates").font(.body)
+                            ProgressView().frame(width: 18.0, height: 18.0)
+                                .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                        }
+                    } else {
+                        HStack(alignment: .center) {
+                            Text("All Apps are up to date!").font(.body)
+                        }
                     }
-                } else {
-                    HStack(alignment: .center) {
-                        Text("All Apps are up to date!").font(.body)
-                    }
-                }
                 }.frame(minHeight: 20.0)
             }
 

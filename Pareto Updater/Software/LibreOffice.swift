@@ -5,7 +5,6 @@
 //  Created by Janez Troha on 11/05/2022.
 //
 
-import Foundation
 import Alamofire
 import AppKit
 import Combine
@@ -17,15 +16,15 @@ import Version
 
 class AppLibreOffice: AppUpdater {
     static let sharedInstance = AppLibreOffice()
-    
+
     override var appName: String { "LibreOffice" }
     override var appMarketingName: String { "LibreOffice" }
     override var appBundle: String { "org.libreoffice.script" }
-    
+
     override var UUID: String {
         "5726931a-264a-5758-b7dd-d09285ac4b7f"
     }
-    
+
     override var currentVersion: Version {
         if applicationPath == nil {
             return Version(0, 0, 0)
@@ -33,7 +32,7 @@ class AppLibreOffice: AppUpdater {
         let v = appVersion(path: applicationPath ?? "1.2.3.4")!.split(separator: ".")
         return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
     }
-    
+
     func getLatestVersions(completion: @escaping ([String]) -> Void) {
         let url = viaEdgeCache("https://www.libreoffice.org/download/download/")
         os_log("Requesting %{public}s", url)
@@ -49,7 +48,7 @@ class AppLibreOffice: AppUpdater {
             }
         })
     }
-    
+
     public var latestVersions: [Version] {
         var tempVersions = [Version(0, 0, 0)]
         let lock = DispatchSemaphore(value: 0)
@@ -60,5 +59,4 @@ class AppLibreOffice: AppUpdater {
         lock.wait()
         return tempVersions
     }
-    
 }

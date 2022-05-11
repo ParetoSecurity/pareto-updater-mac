@@ -13,14 +13,21 @@ import SwiftUI
 
 struct AppRow: View {
     @ObservedObject var app: AppUpdater
-    var onUpdate: () -> Void
+    var onUpdate: (() -> Void)?
 
     var body: some View {
         HStack {
-            Image(nsImage: app.icon)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 21)
+            if let appIcon = app.icon {
+                Image(nsImage: appIcon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 21)
+            } else {
+                Image(systemName: "app.dashed")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 21)
+            }
 
             Text(app.appMarketingName)
                 .font(.body)
@@ -36,16 +43,25 @@ struct AppRow: View {
 
             } else {
                 if app.updatable {
-                    Button {
-                        onUpdate()
-                    }
-                label: {
+                    if onUpdate != nil {
+                        Button {
+                            onUpdate?()
+                        }
+                    label: {
+                            Image(systemName: "arrow.down.app")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 18
+                                ).foregroundColor(.blue)
+                        }.buttonStyle(.plain).help("Update app")
+                    } else {
                         Image(systemName: "arrow.down.app")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 18
                             ).foregroundColor(.blue)
-                    }.buttonStyle(.plain).help("Update app")
+                    }
+
                 } else {
                     Image(systemName: "checkmark.square")
                         .resizable()
