@@ -36,7 +36,7 @@ struct AboutView: View {
                             HStack(spacing: 0) {
                                 Text("Failed to update ")
                                 Link("download manually",
-                                     destination: URL(string: "https://github.com/teamniteo/work-hours-mac/releases/latest/download/WorkHours.dmg")!)
+                                     destination: URL(string: "https://github.com/paretosecurity/pareto-updater-mac/releases/latest/download/ParetoUpdater.dmg")!)
                             }
                         } else {
                             Text(status.rawValue)

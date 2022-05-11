@@ -13,6 +13,15 @@ import Path
 import SwiftUI
 import Version
 
+enum AppUpdaterStatus {
+    case GatheringInfo
+    case DownloadingUpdate
+    case InstallingUpdate
+    case Updated
+    case Failed
+}
+
+
 public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public static func == (lhs: AppUpdater, rhs: AppUpdater) -> Bool {
         lhs.UUID == rhs.UUID
@@ -76,7 +85,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         fatalError("latestURL() is not implemented")
     }
 
-    func updateApp(completion: @escaping (String) -> Void) {
+    func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
         DispatchQueue.main.async { [self] in
             fetching = true
             fractionCompleted = 0.0
@@ -92,7 +101,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 for process in processes {
                     process.forceTerminate()
                 }
-
+                DispatchQueue.main.async { [self] in
+                    fetching = true
+                    fractionCompleted = 0.0
+                }
                 if sourceFile.pathExtension == "dmg" {
                     let mountPoint = URL(string: "/Volumes/" + appBundle)!
                     os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
@@ -106,11 +118,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                             try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                             DMGMounter.detach(mountPoint: mountPoint)
-                            completion("0.0.0")
+                            completion(AppUpdaterStatus.Updated)
                         } catch {
                             DMGMounter.detach(mountPoint: mountPoint)
                             os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
-                            completion("0.0.0")
+                            completion(AppUpdaterStatus.Failed)
                         }
                     }
                 }
@@ -124,11 +136,13 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        completion(AppUpdaterStatus.Updated)
                     } catch {
                         os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
-                        completion("0.0.0")
+                        completion(AppUpdaterStatus.Failed)
                     }
                 }
+                
                 DispatchQueue.main.async { [self] in
                     fetching = false
                     updatable = false
