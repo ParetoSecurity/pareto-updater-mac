@@ -33,21 +33,21 @@ struct AppRow: View {
                 .font(.body)
 
             Spacer()
-            if app.fetching {
-                if app.fractionCompleted > 0 {
-                    ProgressView(value: app.fractionCompleted)
-                } else {
-                    ProgressView().frame(width: 18.0, height: 18.0)
-                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
-                }
-
-            } else {
+            switch app.status {
+            case .GatheringInfo:
+                ProgressView().frame(width: 18.0, height: 18.0)
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+            case .DownloadingUpdate:
+                ProgressView(value: app.fractionCompleted)
+            case .InstallingUpdate:
+                ProgressView(value: 1.0).blinking()
+            default:
                 if app.updatable {
                     if onUpdate != nil {
                         Button {
                             onUpdate?()
                         }
-                    label: {
+                        label: {
                             Image(systemName: "arrow.down.app")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

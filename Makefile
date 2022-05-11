@@ -55,10 +55,10 @@ fmt:
 	mint run swiftlint . --fix
 
 notarize-dmg:
-	xcrun notarytool submit ParetoUpdater.dmg --team-id PM784W7B8X --progress --wait
+	xcrun notarytool submit ParetoUpdater.dmg --team-id PM784W7B8X --progress --wait ${APPLE_AUTH_TOKEN}
 
 notarize-zip:
-	xcrun notarytool submit ParetoUpdater.zip --team-id PM784W7B8X --progress --wait
+	xcrun notarytool submit ParetoUpdater.zip --team-id PM784W7B8X --progress --wait ${APPLE_AUTH_TOKEN}
 
 clean:
 	rm -rf SourcePackages

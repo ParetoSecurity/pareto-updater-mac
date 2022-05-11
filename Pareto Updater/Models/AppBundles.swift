@@ -11,7 +11,7 @@ import os.log
 class AppBundles: ObservableObject {
     @Published var apps: [AppUpdater]
 
-    @Published var fetching = false
+    @Published var fetching: Bool = false
 
     public var haveUpdatableApps: Bool {
         !updatableApps.isEmpty
@@ -30,48 +30,36 @@ class AppBundles: ObservableObject {
     }
 
     func updateApp(withApp: AppUpdater) {
-        DispatchQueue.main.async {
-            self.fetching = true
-        }
         DispatchQueue.global(qos: .background).async { [self] in
             withApp.updateApp { _ in
-                self.fetching = false
                 self.fetchData()
             }
         }
     }
 
     func updateAll() {
-        fetching = true
         DispatchQueue.global(qos: .background).async { [self] in
             for app in updatableApps {
-                DispatchQueue.global(qos: .background).async {
-                    app.updateApp { _ in
-                        os_log("Update of %{public}s  done.", app.appBundle)
-                        app.updatable = false
-                        app.fetching = false
-                    }
+                app.updateApp { _ in
+                    os_log("Update of %{public}s done.", app.appBundle)
+                    self.fetchData()
                 }
             }
         }
     }
 
     func fetchData() {
-        DispatchQueue.global(qos: .background).async {
-            if self.fetching {
-                os_log("Prevent refresh one already running.")
-                return
-            }
+        if self.fetching {
+            return
+        }
+        DispatchQueue.global(qos: .background).async { [self] in
             DispatchQueue.main.async {
-                os_log("Refresh starting.")
                 self.fetching = true
             }
             for app in self.apps {
                 DispatchQueue.main.async {
-                    app.fetching = true
-                    app.fractionCompleted = 0.0
+                    app.status = .GatheringInfo
                 }
-
                 if app.latestVersion > app.currentVersion {
                     DispatchQueue.main.async {
                         app.updatable = true
@@ -83,13 +71,12 @@ class AppBundles: ObservableObject {
                 }
                 os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersion.description, app.currentVersion.description, app.updatable.description)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    app.fetching = false
+                    app.status = .Idle
                 }
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.fetching = false
-                os_log("Refresh done.")
             }
         }
     }

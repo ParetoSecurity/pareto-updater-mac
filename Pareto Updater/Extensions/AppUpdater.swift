@@ -14,6 +14,7 @@ import SwiftUI
 import Version
 
 enum AppUpdaterStatus {
+    case Idle
     case GatheringInfo
     case DownloadingUpdate
     case InstallingUpdate
@@ -36,11 +37,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     var appMarketingName: String { "" } // Pareto Updater
     var appBundle: String { "" } // like co.niteo.paretoupdater
 
-    private let cachePath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".pareto-updater").resolvingSymlinksInPath()
-
-    @Published var fetching: Bool = false
+    @Published var status: AppUpdaterStatus = .Idle
     @Published var updatable: Bool = false
     @Published var fractionCompleted: Double = 0.0
+
+    var workItem: DispatchWorkItem?
 
     func getLatestVersion(completion _: @escaping (String) -> Void) {
         fatalError("getLatestVersion() is not implemented")
@@ -51,7 +52,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
-        let cachedPath = cachePath.appendingPathComponent(latestURL.lastPathComponent)
+        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURL.pathExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path) {
             os_log("Update from cache at \(cachedPath.debugDescription)")
             completion(latestURL, cachedPath)
@@ -59,17 +60,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
 
         AF.download(latestURL).responseData { [self] response in
-            if !FileManager.default.fileExists(atPath: cachePath.path) {
-                do {
-                    try FileManager.default.createDirectory(atPath: cachePath.path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
             do {
-                if FileManager.default.fileExists(atPath: cachedPath.path) {
-                    try FileManager.default.removeItem(atPath: cachedPath.path)
-                }
                 try FileManager.default.moveItem(atPath: response.fileURL!.path, toPath: cachedPath.path)
                 os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
                 completion(latestURL, cachedPath)
@@ -87,66 +78,68 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
         DispatchQueue.main.async { [self] in
-            fetching = true
+            status = .GatheringInfo
             fractionCompleted = 0.0
         }
-
+        DispatchQueue.main.async { [self] in
+            status = .DownloadingUpdate
+            fractionCompleted = 0.0
+        }
         downloadLatest { [self] sourceFile, appFile in
-            DispatchQueue.main.async { [self] in
-                fetching = true
-                fractionCompleted = 0.5
-            }
+
             let processes = NSRunningApplication.runningApplications(withBundleIdentifier: appBundle)
             for process in processes {
                 process.forceTerminate()
             }
-            DispatchQueue.main.async { [self] in
-                fetching = true
-                fractionCompleted = 0.9
-            }
-            if sourceFile.pathExtension == "dmg" {
-                let mountPoint = URL(string: "/Volumes/" + appBundle)!
-                os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
-                if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
+            workItem?.cancel()
+            workItem = DispatchWorkItem { [self] in
+                if sourceFile.pathExtension == "dmg" {
+                    let mountPoint = URL(string: "/Volumes/" + appBundle)!
+                    os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
+                    if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
+                        do {
+                            let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
+                            let downloadedAppBundle = Bundle(url: app!)!
+                            let installedAppBundle = Bundle(path: applicationPath!)!
+                            os_log("Delete installedAppBundle: \(installedAppBundle)")
+                            try installedAppBundle.path.delete()
+                            os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
+                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                            DMGMounter.detach(mountPoint: mountPoint)
+                            completion(AppUpdaterStatus.Updated)
+                        } catch {
+                            DMGMounter.detach(mountPoint: mountPoint)
+                            os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
+                            completion(AppUpdaterStatus.Failed)
+                        }
+                    }
+                }
+                if sourceFile.pathExtension == "zip" {
+                    os_log("Unzipped %{public}s is %{public}s%", appFile.debugDescription)
                     do {
-                        let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
-                        let downloadedAppBundle = Bundle(url: app!)!
+                        let app = unzip(sourceFile)
+                        let downloadedAppBundle = Bundle(url: app)!
                         let installedAppBundle = Bundle(path: applicationPath!)!
                         os_log("Delete installedAppBundle: \(installedAppBundle)")
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                        DMGMounter.detach(mountPoint: mountPoint)
                         completion(AppUpdaterStatus.Updated)
                     } catch {
-                        DMGMounter.detach(mountPoint: mountPoint)
                         os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
                         completion(AppUpdaterStatus.Failed)
                     }
                 }
             }
-            if sourceFile.pathExtension == "zip" {
-                os_log("Unzipped %{public}s is %{public}s%", appFile.debugDescription)
-                do {
-                    let app = unzip(sourceFile)
-                    let downloadedAppBundle = Bundle(url: app)!
-                    let installedAppBundle = Bundle(path: applicationPath!)!
-                    os_log("Delete installedAppBundle: \(installedAppBundle)")
-                    try installedAppBundle.path.delete()
-                    os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
-                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                    completion(AppUpdaterStatus.Updated)
-                } catch {
-                    os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
-                    completion(AppUpdaterStatus.Failed)
-                }
-            }
-
             DispatchQueue.main.async { [self] in
-                fetching = false
+                status = .InstallingUpdate
+            }
+            workItem?.notify(queue: .main) { [self] in
+                status = .Idle
                 updatable = false
                 fractionCompleted = 0.0
             }
+            DispatchQueue.global(qos: .background).async(execute: workItem!)
         }
     }
 
@@ -193,10 +186,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: Version {
+        
         if latestVersionCached != "0.0.0" {
             return Version(latestVersionCached) ?? Version(0, 0, 0)
         }
-
+    
         var version = Version(0, 0, 0)
         let lock = DispatchSemaphore(value: 0)
         getLatestVersion { [self] latestVersion in
@@ -206,17 +200,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
         lock.wait()
         return version
-    }
-
-    public var usedRecently: Bool {
-        if isInstalled {
-            let app = applicationPath!
-            let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
-            let attributes = NSMetadataItem(url: URL(fileURLWithPath: app))
-            guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else { return false }
-            return lastUse >= weekAgo
-        }
-        return false
     }
 }
 

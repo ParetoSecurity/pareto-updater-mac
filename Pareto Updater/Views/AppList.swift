@@ -36,23 +36,14 @@ struct AppList: View {
                 }.buttonStyle(.plain).disabled(viewModel.fetching)
                     .help("Refresh the status of the apps")
 
-                Button {} label: {
+                Button {
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    NSApp.activate(ignoringOtherApps: true)
+                } label: {
                     Image(systemName: "gearshape").resizable().aspectRatio(contentMode: .fit)
                         .frame(height: 15
                         )
-                }.buttonStyle(PlainButtonStyle())
-                    .contextMenu {
-                        Button("Preferences", action: {
-                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                            NSApp.activate(ignoringOtherApps: true)
-                        })
-                        Button("Contact Support", action: {
-                            NSWorkspace.shared.open(Constants.bugReportURL)
-                        })
-                        Button("Quit", action: {
-                            NSApplication.shared.terminate(self)
-                        })
-                    }
+                }.buttonStyle(.plain)
             }
 
             if viewModel.haveUpdatableApps {

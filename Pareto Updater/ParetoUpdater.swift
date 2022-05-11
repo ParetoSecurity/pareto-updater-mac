@@ -32,8 +32,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 if app.latestVersion > app.currentVersion {
                     app.updateApp { _ in
                         os_log("Update of %{public}s  done.", app.appBundle)
-                        app.updatable = false
-                        app.fetching = false
                     }
                 }
             }
@@ -52,6 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {
+        popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
@@ -69,6 +68,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let showItem = NSMenuItem(title: "Show / Hide", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
         showItem.target = NSApp.delegate
         statusMenu?.addItem(showItem)
+
+        let preferencesItem = NSMenuItem(title: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: ",")
+        preferencesItem.target = NSApp.delegate
+        statusMenu?.addItem(preferencesItem)
+
+        let contactItem = NSMenuItem(title: "Contact Support", action: #selector(AppDelegate.contact), keyEquivalent: "c")
+        contactItem.target = NSApp.delegate
+        statusMenu?.addItem(contactItem)
 
         let quitItem = NSMenuItem(title: "Quit", action: #selector(AppDelegate.quitApp), keyEquivalent: "q")
         quitItem.target = NSApp.delegate
@@ -101,6 +108,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func quitApp() {
         NSApplication.shared.terminate(self)
     }
+
+    @objc
+    func contact() {
+        NSWorkspace.shared.open(Constants.bugReportURL)
+    }
+
+    @objc
+    func preferences() {
+        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
 }
 
 @main
@@ -122,6 +140,7 @@ public enum Constants {
     static let buildVersion: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     static let machineName: String = Host.current().localizedName!
     static let macOSVersion = ProcessInfo.processInfo.operatingSystemVersion
+    static let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     static let macOSVersionString = "\(macOSVersion.majorVersion).\(macOSVersion.minorVersion).\(macOSVersion.patchVersion)"
     static var isRunningTests: Bool {
         ProcessInfo.processInfo.arguments.contains("isRunningTests") || ProcessInfo.processInfo.environment["CI"] ?? "false" != "false"
