@@ -44,19 +44,14 @@ class AppBundles: ObservableObject {
     func updateAll() {
         fetching = true
         DispatchQueue.global(qos: .background).async { [self] in
-            for app in apps {
-                if app.updatable {
-                    DispatchQueue.global(qos: .background).async {
-                        app.updateApp { _ in
-                            os_log("Update of %{public}s  done.", app.appBundle)
-                            app.updatable = false
-                            app.fetching = false
-                        }
+            for app in updatableApps {
+                DispatchQueue.global(qos: .background).async {
+                    app.updateApp { _ in
+                        os_log("Update of %{public}s  done.", app.appBundle)
+                        app.updatable = false
+                        app.fetching = false
                     }
                 }
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.fetching = false
             }
         }
     }
@@ -106,7 +101,8 @@ class AppBundles: ObservableObject {
             AppGoogleChrome.sharedInstance,
             AppSublimeText.sharedInstance,
             AppSlack.sharedInstance,
-            AppDocker.sharedInstance
+            AppDocker.sharedInstance,
+            AppLibreOffice.sharedInstance
         ].sorted(by: { lha, rha in
             lha.appMarketingName > rha.appMarketingName
         })

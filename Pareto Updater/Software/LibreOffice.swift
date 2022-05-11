@@ -25,6 +25,14 @@ class AppLibreOffice: AppUpdater {
         "5726931a-264a-5758-b7dd-d09285ac4b7f"
     }
 
+    override var latestURL: URL {
+        #if arch(arm64)
+            return URL(string: "https://www.libreoffice.org/donate/dl/mac-aarch64/\(latestVersionCached)/en-US/LibreOffice_\(latestVersionCached)_MacOS_aarch64.dmg")!
+        #else
+            return URL(string: "https://www.libreoffice.org/donate/dl/mac-x86_64/\(latestVersionCached)/en-US/LibreOffice_\(latestVersionCached)_MacOS_x86-64.dmg")!
+        #endif
+    }
+
     override var currentVersion: Version {
         if applicationPath == nil {
             return Version(0, 0, 0)
@@ -58,5 +66,9 @@ class AppLibreOffice: AppUpdater {
         }
         lock.wait()
         return tempVersions
+    }
+
+    override func getLatestVersion(completion: @escaping (String) -> Void) {
+        completion(latestVersions.first?.description ?? "0.0.0")
     }
 }
