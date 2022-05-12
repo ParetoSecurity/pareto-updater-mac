@@ -10,7 +10,6 @@ import os.log
 
 class AppBundles: ObservableObject {
     @Published var apps: [AppUpdater]
-
     @Published var fetching: Bool = false
 
     public var haveUpdatableApps: Bool {

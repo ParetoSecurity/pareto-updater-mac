@@ -10,4 +10,5 @@ import Foundation
 
 extension Defaults.Keys {
     static let hideWhenNoUpdates = Key<Bool>("hideWhenNoUpdates", default: false)
+    static let checkForUpdatesRecentOnly = Key<Bool>("checkForUpdatesRecentOnly", default: true)
 }

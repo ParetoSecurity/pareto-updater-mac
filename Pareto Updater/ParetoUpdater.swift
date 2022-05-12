@@ -7,6 +7,8 @@
 
 import AppUpdater
 import Cache
+import Combine
+import Defaults
 import Foundation
 import os.log
 import Regex
@@ -14,10 +16,15 @@ import SwiftUI
 import Version
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    var statusItem: NSStatusItem?
-    var statusMenu: NSMenu?
-    var popOver = NSPopover()
+    private var statusItem: NSStatusItem?
+    private var statusMenu: NSMenu?
+    private var popOver = NSPopover()
     static let bundleModel = AppBundles()
+
+    @Default(.hideWhenNoUpdates) private var hideWhenNoUpdates
+    private var noUpdatesSink: AnyCancellable?
+    private var fetchSink: AnyCancellable?
+    private var finishedLaunch: Bool = false
 
     static let updater = GithubAppUpdater(
         updateURL: "https://api.github.com/repos/paretosecurity/pareto-updater-mac/releases",
@@ -25,6 +32,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         autoGuard: true,
         interval: 60 * 60
     )
+
+    func updateHiddenState() {
+        if hideWhenNoUpdates, finishedLaunch {
+            statusItem?.isVisible = AppDelegate.bundleModel.haveUpdatableApps
+        }
+    }
 
     func applicationWillFinishLaunching(_: Notification) {
         if CommandLine.arguments.contains("-update") {
@@ -49,6 +62,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
+    func applicationDidBecomeActive(_: Notification) {
+        if hideWhenNoUpdates {
+            statusItem?.isVisible = true
+            finishedLaunch = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+                finishedLaunch = true
+                updateHiddenState()
+            }
+        }
+    }
+
     func applicationDidFinishLaunching(_: Notification) {
         popOver.behavior = .transient
         popOver.animates = true
@@ -57,6 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popOver.contentViewController?.view.window?.makeKey()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem?.isVisible = true
         if let menuButton = statusItem?.button {
             menuButton.image = NSImage(systemSymbolName: "square.and.arrow.down.on.square", accessibilityDescription: nil)
             menuButton.action = #selector(menuButtonToggle(sender:))
@@ -81,10 +106,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         quitItem.target = NSApp.delegate
         statusMenu?.addItem(quitItem)
 
+        if hideWhenNoUpdates {
+            statusItem?.isVisible = true
+            finishedLaunch = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+                finishedLaunch = true
+                updateHiddenState()
+            }
+        }
+
         DispatchQueue.main.async { [self] in
             _ = AppDelegate.updater.checkAndUpdate()
             scheduleHourlyCheck()
         }
+
+        // update state on all changes
+        fetchSink = AppDelegate.bundleModel.$fetching.sink { _ in
+            self.updateHiddenState()
+        }
+        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { _ in
+            self.updateHiddenState()
+        }
+        AppDelegate.bundleModel.fetchData()
     }
 
     @objc
