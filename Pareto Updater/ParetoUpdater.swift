@@ -135,7 +135,7 @@ struct ParetoUpdaterApp: App {
 public enum Constants {
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
-    static let useEdgeCache = true
+    static let useEdgeCache = false
     static let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     static let buildVersion: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     static let machineName: String = Host.current().localizedName!

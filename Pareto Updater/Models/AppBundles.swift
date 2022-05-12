@@ -49,9 +49,10 @@ class AppBundles: ObservableObject {
     }
 
     func fetchData() {
-        if self.fetching {
+        if fetching {
             return
         }
+
         DispatchQueue.global(qos: .background).async { [self] in
             DispatchQueue.main.async {
                 self.fetching = true
@@ -70,6 +71,7 @@ class AppBundles: ObservableObject {
                     }
                 }
                 os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersion.description, app.currentVersion.description, app.updatable.description)
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     app.status = .Idle
                 }
@@ -89,9 +91,10 @@ class AppBundles: ObservableObject {
             AppSublimeText.sharedInstance,
             AppSlack.sharedInstance,
             AppDocker.sharedInstance,
-            AppLibreOffice.sharedInstance
+            AppLibreOffice.sharedInstance,
+            AppSpyBuster.sharedInstance
         ].sorted(by: { lha, rha in
-            lha.appMarketingName > rha.appMarketingName
+            lha.appMarketingName < rha.appMarketingName
         })
     }
 }

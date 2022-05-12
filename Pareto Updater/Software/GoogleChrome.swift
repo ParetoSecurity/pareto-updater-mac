@@ -36,6 +36,10 @@ class AppGoogleChrome: AppUpdater {
         "d34ee340-67a7-5e3e-be8b-aef4e3133de0"
     }
 
+    override var latestURL: URL {
+        return URL(string: "https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg")!
+    }
+
     // Special treatment follows
     // Use build number as definite version comparator
     // https://www.chromium.org/developers/version-numbers

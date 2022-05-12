@@ -23,6 +23,9 @@ struct AppsView: View {
         }
         .frame(width: 350)
         .padding(25)
+        .onAppear {
+            viewModel.fetchData()
+        }
     }
 }
 

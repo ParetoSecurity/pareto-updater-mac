@@ -72,6 +72,15 @@ class AppLibreOffice: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        completion(latestVersions.first?.description ?? "0.0.0")
+        if currentVersion.major == latestVersions.first?.major, currentVersion.minor == latestVersions.first?.minor {
+            // bugfix for latest
+            completion(latestVersions.first?.description ?? "0.0.0")
+        } else if currentVersion.major == latestVersions.last?.major, currentVersion.minor == latestVersions.last?.minor {
+            // bugfix for LTS
+            completion(latestVersions.last?.description ?? "0.0.0")
+        } else {
+            // latest
+            completion(latestVersions.first?.description ?? "0.0.0")
+        }
     }
 }

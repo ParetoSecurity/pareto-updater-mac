@@ -32,16 +32,22 @@ class AppSpyBuster: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = viaEdgeCache("https://updates.signal.org/desktop/latest-mac.yml")
-        let versionRegex = Regex("version: ?([\\.\\d]+)")
-        os_log("Requesting %{public}s", url)
+        let url = viaEdgeCache("https://updates.devmate.com/com.macpaw-labs.snitch.xml?test=1&beta=1")
+        let versionRegex = Regex("sparkle:shortVersionString=\"([\\.\\d]+)\"")
 
         AF.request(url).responseString(queue: Constants.httpQueue, completionHandler: { response in
             if response.error == nil {
-                let yaml = response.value ?? "version: 1.25.0"
-                let version = versionRegex.firstMatch(in: yaml)?.groups.first?.value ?? "1.25.0"
-                os_log("%{public}s version=%{public}s", self.appBundle, version)
-                completion(version)
+                let versionNew = versionRegex.allMatches(in: response.value ?? "")
+                if !versionNew.isEmpty {
+                    let versions = versionNew.map { $0.groups.first?.value ?? "0.0.0" }
+                    let version = versions.sorted().last ?? "0.0.0"
+                    os_log("%{public}s sparkle:shortVersionString=%{public}s", self.appBundle, version)
+                    completion(version)
+                } else {
+                    os_log("%{public}s failed:Sparkle=0.0.0", self.appBundle)
+                    completion("0.0.0")
+                }
+
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")

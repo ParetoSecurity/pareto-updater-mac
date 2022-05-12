@@ -57,7 +57,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             os_log("Update from cache at \(cachedPath.debugDescription)")
             completion(latestURL, cachedPath)
         }
-        os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
+        // os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(latestURL.debugDescription)")
 
         AF.download(latestURL).responseData { [self] response in
             do {
@@ -115,15 +115,15 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     }
                 }
                 if sourceFile.pathExtension == "zip" {
-                    os_log("Unzipped %{public}s is %{public}s%", appFile.debugDescription)
                     do {
-                        let app = unzip(sourceFile)
+                        let app = unzip(appFile)
                         let downloadedAppBundle = Bundle(url: app)!
                         let installedAppBundle = Bundle(path: applicationPath!)!
                         os_log("Delete installedAppBundle: \(installedAppBundle)")
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        try downloadedAppBundle.path.delete()
                         completion(AppUpdaterStatus.Updated)
                     } catch {
                         os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
@@ -189,11 +189,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: Version {
-        
         if latestVersionCached != "0.0.0" {
             return Version(latestVersionCached) ?? Version(0, 0, 0)
         }
-    
+
         var version = Version(0, 0, 0)
         let lock = DispatchSemaphore(value: 0)
         getLatestVersion { [self] latestVersion in
