@@ -32,7 +32,7 @@ class AppSublimeText: AppUpdater {
         if applicationPath == nil {
             return Version(0, 0, 0)
         }
-        let version = appVersion(path: applicationPath ?? "Build 3121")!.split(separator: " ")[1]
+        let version = Bundle.appVersion(path: applicationPath ?? "Build 3121")!.split(separator: " ")[1]
         return Version("\(version.prefix(1)).\(version.suffix(3)).0") ?? Version(0, 0, 0)
     }
 

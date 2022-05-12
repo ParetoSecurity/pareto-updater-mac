@@ -21,9 +21,9 @@ struct AppList: View {
 
                 } label: {
                     Image(systemName: "arrow.down.square").resizable().aspectRatio(contentMode: .fit)
-                        .frame(height: 15
+                        .frame(height: 13
                         )
-                }.buttonStyle(.plain).disabled(viewModel.fetching)
+                }.buttonStyle(.bordered).disabled(viewModel.fetching)
                     .help("Download and update all").disabled(!viewModel.haveUpdatableApps || viewModel.fetching)
 
                 Button {
@@ -31,9 +31,9 @@ struct AppList: View {
 
                 } label: {
                     Image(systemName: "arrow.clockwise").resizable().aspectRatio(contentMode: .fit)
-                        .frame(height: 15
+                        .frame(height: 13
                         )
-                }.buttonStyle(.plain).disabled(viewModel.fetching)
+                }.buttonStyle(.bordered).disabled(viewModel.fetching)
                     .help("Refresh the status of the apps")
 
                 Button {
@@ -41,9 +41,9 @@ struct AppList: View {
                     NSApp.activate(ignoringOtherApps: true)
                 } label: {
                     Image(systemName: "gearshape").resizable().aspectRatio(contentMode: .fit)
-                        .frame(height: 15
+                        .frame(height: 13
                         )
-                }.buttonStyle(.plain)
+                }.buttonStyle(.bordered)
             }
 
             if viewModel.haveUpdatableApps {

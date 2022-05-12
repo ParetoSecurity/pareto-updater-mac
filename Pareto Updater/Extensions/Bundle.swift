@@ -23,6 +23,16 @@ extension Bundle {
         }
         return nil
     }
+    
+    static func appVersion(path: String, key: String = "CFBundleShortVersionString") -> String? {
+        let plist = "\(path)/Contents/Info.plist"
+        guard let dictionary = NSDictionary(contentsOfFile: plist) else {
+            return nil
+        }
+        // print("\(app): \(dictionary as AnyObject)")
+        return dictionary.value(forKey: key) as? String
+    }
+
 }
 
 func runCMD(app: String, args: [String]) -> String {
@@ -41,11 +51,3 @@ func runCMD(app: String, args: [String]) -> String {
     return output
 }
 
-func appVersion(path: String, key: String = "CFBundleShortVersionString") -> String? {
-    let plist = "\(path)/Contents/Info.plist"
-    guard let dictionary = NSDictionary(contentsOfFile: plist) else {
-        return nil
-    }
-    // print("\(app): \(dictionary as AnyObject)")
-    return dictionary.value(forKey: key) as? String
-}

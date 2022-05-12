@@ -40,7 +40,7 @@ class AppLibreOffice: AppUpdater {
         if applicationPath == nil {
             return Version(0, 0, 0)
         }
-        let v = appVersion(path: applicationPath ?? "1.2.3.4")!.split(separator: ".")
+        let v = Bundle.appVersion(path: applicationPath ?? "1.2.3.4")!.split(separator: ".")
         return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
     }
 

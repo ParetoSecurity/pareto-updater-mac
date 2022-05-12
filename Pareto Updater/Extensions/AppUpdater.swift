@@ -147,7 +147,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if !isInstalled {
             return Version(0, 0, 0)
         }
-        var version = (appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
+        var version = (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
         if version.contains("alpha") {
             version = version.replacingOccurrences(of: "alpha", with: "-alpha")
         }

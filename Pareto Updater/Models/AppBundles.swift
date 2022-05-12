@@ -42,7 +42,6 @@ class AppBundles: ObservableObject {
             for app in updatableApps {
                 app.updateApp { _ in
                     os_log("Update of %{public}s done.", app.appBundle)
-                    self.fetchData()
                 }
             }
         }
@@ -57,7 +56,7 @@ class AppBundles: ObservableObject {
             DispatchQueue.main.async {
                 self.fetching = true
             }
-            for app in self.apps {
+            for app in self.installedApps {
                 DispatchQueue.main.async {
                     app.status = .GatheringInfo
                 }

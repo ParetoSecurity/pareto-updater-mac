@@ -53,7 +53,7 @@ struct AppRow: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 18
                                 ).foregroundColor(.blue)
-                        }.buttonStyle(.plain).help("Update app")
+                        }.buttonStyle(.bordered).help("Update app")
                     } else {
                         Image(systemName: "arrow.down.app")
                             .resizable()

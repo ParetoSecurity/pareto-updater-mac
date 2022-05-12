@@ -35,10 +35,10 @@ class AppFirefox: AppUpdater {
     }
 
     override var currentVersion: Version {
-        if applicationPath == nil {
+        if !isInstalled {
             return Version(0, 0, 0)
         }
-        return normalizedVersion(appVersion(path: applicationPath!)!)
+        return normalizedVersion(Bundle.appVersion(path: applicationPath!)!)
     }
 
     override var latestURL: URL {
