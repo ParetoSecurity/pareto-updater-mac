@@ -27,12 +27,11 @@ class AppLibreOffice: AppUpdater {
 
     override var latestURL: URL {
         #if arch(arm64)
+            // https://download.documentfoundation.org/libreoffice/stable/7.2.7/mac/aarch64/LibreOffice_7.2.7_MacOS_aarch64.dmg
             return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/aarch64/LibreOffice_\(latestVersionCached)_MacOS_aarch64.dmg")!
-
         #else
-
+            // https://download.documentfoundation.org/libreoffice/stable/7.2.7/mac/x86_64/LibreOffice_7.2.7_MacOS_x86-64.dmg
             return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/x86_64/LibreOffice_\(latestVersionCached)_MacOS_x86_64.dmg")!
-
         #endif
     }
 
@@ -40,8 +39,8 @@ class AppLibreOffice: AppUpdater {
         if applicationPath == nil {
             return Version(0, 0, 0)
         }
-        let v = Bundle.appVersion(path: applicationPath ?? "1.2.3.4")!.split(separator: ".")
-        return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
+        let v = Bundle.appVersion(path: applicationPath ?? "1.2.3.4")?.split(separator: ".")
+        return Version(Int(v?[0] ?? "0") ?? 0, Int(v?[1] ?? "0") ?? 0, Int(v?[2] ?? "0") ?? 0)
     }
 
     func getLatestVersions(completion: @escaping ([String]) -> Void) {
@@ -79,8 +78,8 @@ class AppLibreOffice: AppUpdater {
             // bugfix for LTS
             completion(latestVersions.last?.description ?? "0.0.0")
         } else {
-            // latest
-            completion(latestVersions.first?.description ?? "0.0.0")
+            // very-old version, assume LTS should be used
+            completion(latestVersions.last?.description ?? "0.0.0")
         }
     }
 }

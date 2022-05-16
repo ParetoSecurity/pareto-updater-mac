@@ -31,12 +31,14 @@ struct AppRow: View {
 
             Text(app.appMarketingName)
                 .font(.body)
-
+            Text(app.currentVersion.description)
+                .font(.caption)
+                .multilineTextAlignment(.center)
             Spacer()
             switch app.status {
             case .GatheringInfo:
-                ProgressView().frame(width: 18.0, height: 18.0)
-                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                ProgressView().frame(width: 15.0, height: 15.0)
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
             case .DownloadingUpdate:
                 ProgressView(value: app.fractionCompleted)
             case .InstallingUpdate:
@@ -48,30 +50,30 @@ struct AppRow: View {
                             onUpdate?()
                         }
                         label: {
-                            Image(systemName: "arrow.down.app")
+                            Image(systemName: "arrow.down.app.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height: 18
-                                ).foregroundColor(.blue)
-                        }.buttonStyle(.bordered).help("Update app")
+                                .frame(height: 15)
+                        }
+                        .buttonStyle(ClipButton())
+                        .help("Update \(app.appMarketingName) to \(app.latestVersionCached)")
                     } else {
-                        Image(systemName: "arrow.down.app")
+                        Image(systemName: "arrow.down.app.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 18
-                            ).foregroundColor(.blue)
+                            .frame(height: 15)
                     }
 
                 } else {
                     Image(systemName: "checkmark.square")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 18
-                        ).foregroundColor(.green)
+                        .frame(height: 15
+                        ).foregroundColor(.secondary)
                 }
             }
 
-        }.padding(0).help(app.help)
+        }.help(app.help)
     }
 }
 

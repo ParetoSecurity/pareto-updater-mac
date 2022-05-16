@@ -8,9 +8,16 @@
 import Foundation
 import os.log
 
-class AppBundles: ObservableObject {
+protocol AppBundle {
+    var apps: [AppUpdater] { get set }
+    var updating: Bool { get set }
+    var installing: Bool { get set }
+}
+
+class AppBundles: AppBundle, ObservableObject {
     @Published var apps: [AppUpdater]
-    @Published var fetching: Bool = false
+    @Published var updating: Bool = false
+    @Published var installing: Bool = false
 
     public var haveUpdatableApps: Bool {
         !updatableApps.isEmpty
@@ -21,7 +28,13 @@ class AppBundles: ObservableObject {
             app.updatable && app.isInstalled
         }
     }
-
+    
+    public var installingApps: Bool {
+        apps.allSatisfy { app in
+            app.status != .Idle
+        }
+    }
+    
     public var installedApps: [AppUpdater] {
         apps.filter { app in
             app.isInstalled
@@ -29,31 +42,48 @@ class AppBundles: ObservableObject {
     }
 
     func updateApp(withApp: AppUpdater) {
-        DispatchQueue.global(qos: .background).async { [self] in
-            withApp.updateApp { _ in
+        DispatchQueue.main.async {
+            self.installing = true
+        }
+        DispatchQueue.global(qos: .background).async {
+            let lock = DispatchSemaphore(value: 0)
+            withApp.updateApp { [self] _ in
+                lock.wait()
+                DispatchQueue.main.async {
+                    self.installing = false
+                }
                 self.fetchData()
             }
         }
     }
 
     func updateAll() {
+        let lock = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .background).async { [self] in
             for app in updatableApps {
+                DispatchQueue.main.async {
+                    self.installing = true
+                }
                 app.updateApp { _ in
                     os_log("Update of %{public}s done.", app.appBundle)
+                    lock.signal()
                 }
+                lock.wait()
+            }
+            DispatchQueue.main.async {
+                self.installing = self.installingApps
             }
         }
     }
 
     func fetchData() {
-        if fetching {
+        if updating || installing {
             return
         }
 
         DispatchQueue.global(qos: .background).async { [self] in
             DispatchQueue.main.async {
-                self.fetching = true
+                self.updating = true
             }
             for app in self.installedApps {
                 DispatchQueue.main.async {
@@ -76,7 +106,7 @@ class AppBundles: ObservableObject {
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.fetching = false
+                self.updating = false
             }
         }
     }

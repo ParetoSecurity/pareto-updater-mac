@@ -53,7 +53,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURL.pathExtension)")
-        if FileManager.default.fileExists(atPath: cachedPath.path) {
+        if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
             os_log("Update from cache at \(cachedPath.debugDescription)")
             completion(latestURL, cachedPath)
         }
@@ -61,6 +61,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
         AF.download(latestURL).responseData { [self] response in
             do {
+                if FileManager.default.fileExists(atPath: cachedPath.path) {
+                    try FileManager.default.removeItem(at: cachedPath)
+                }
                 try FileManager.default.moveItem(atPath: response.fileURL!.path, toPath: cachedPath.path)
                 os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
                 completion(latestURL, cachedPath)
@@ -77,10 +80,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
-        DispatchQueue.main.async { [self] in
-            status = .GatheringInfo
-            fractionCompleted = 0.0
-        }
+
         DispatchQueue.main.async { [self] in
             status = .DownloadingUpdate
             fractionCompleted = 0.0
@@ -116,7 +116,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 }
                 if sourceFile.pathExtension == "zip" {
                     do {
-                        let app = unzip(appFile)
+                        let app = FileManager.default.unzip(appFile)
                         let downloadedAppBundle = Bundle(url: app)!
                         let installedAppBundle = Bundle(path: applicationPath!)!
                         os_log("Delete installedAppBundle: \(installedAppBundle)")
@@ -205,34 +205,3 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 }
 
-func viaEdgeCache(_ url: String) -> String {
-    if Constants.useEdgeCache {
-        return url.replacingOccurrences(of: "https://", with: "https://pareto-cache.team-niteo.workers.dev/")
-    }
-    return url
-}
-
-private func unzip(_ url: URL) -> URL {
-    let proc = Process()
-    if #available(OSX 10.13, *) {
-        proc.currentDirectoryURL = url.deletingLastPathComponent()
-    } else {
-        proc.currentDirectoryPath = url.deletingLastPathComponent().path
-    }
-
-    proc.launchPath = "/usr/bin/unzip"
-    proc.arguments = [url.path]
-
-    func findApp() throws -> URL? {
-        let files = try FileManager.default.contentsOfDirectory(at: url.deletingLastPathComponent(), includingPropertiesForKeys: [.isDirectoryKey], options: .skipsSubdirectoryDescendants)
-        for url in files {
-            guard url.pathExtension == "app" else { continue }
-            guard let foo = try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory, foo else { continue }
-            return url
-        }
-        return nil
-    }
-    proc.launch()
-    proc.waitUntilExit()
-    return try! findApp()!
-}
