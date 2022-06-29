@@ -28,13 +28,13 @@ class AppBundles: AppBundle, ObservableObject {
             app.updatable && app.isInstalled
         }
     }
-    
+
     public var installingApps: Bool {
         apps.allSatisfy { app in
             app.status != .Idle
         }
     }
-    
+
     public var installedApps: [AppUpdater] {
         apps.filter { app in
             app.isInstalled
@@ -45,7 +45,7 @@ class AppBundles: AppBundle, ObservableObject {
         DispatchQueue.main.async {
             self.installing = true
         }
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
             withApp.updateApp { [self] _ in
                 lock.wait()
@@ -59,7 +59,7 @@ class AppBundles: AppBundle, ObservableObject {
 
     func updateAll() {
         let lock = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             for app in updatableApps {
                 DispatchQueue.main.async {
                     self.installing = true
@@ -81,7 +81,7 @@ class AppBundles: AppBundle, ObservableObject {
             return
         }
 
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
                 self.updating = true
             }

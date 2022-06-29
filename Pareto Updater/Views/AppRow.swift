@@ -42,7 +42,11 @@ struct AppRow: View {
             case .DownloadingUpdate:
                 ProgressView(value: app.fractionCompleted)
             case .InstallingUpdate:
-                ProgressView(value: 1.0).blinking()
+                HStack {
+                    ProgressView().frame(width: 15.0, height: 15.0)
+                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
+                    Text("Installing ...")
+                }
             default:
                 if app.updatable {
                     if onUpdate != nil {

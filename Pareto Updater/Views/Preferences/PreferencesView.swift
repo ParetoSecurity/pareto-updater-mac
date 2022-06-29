@@ -22,11 +22,13 @@ struct PreferencesView: View {
                     Label("General", systemImage: "gear")
                 }
                 .tag(Tabs.general)
-            AppsView(viewModel: AppDelegate.bundleModel)
-                .tabItem {
-                    Label("Apps", systemImage: "app.badge")
-                }
-                .tag(Tabs.apps)
+            #if DEBUG
+                AppsView(viewModel: AppDelegate.bundleModel)
+                    .tabItem {
+                        Label("Apps", systemImage: "app.badge")
+                    }
+                    .tag(Tabs.apps)
+            #endif
             AboutView()
                 .tabItem {
                     Label("About", systemImage: "info")

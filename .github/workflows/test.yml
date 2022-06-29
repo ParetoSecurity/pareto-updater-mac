@@ -1,0 +1,178 @@
+name: Test and Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-12
+    timeout-minutes: 15
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-lint
+      cancel-in-progress: true
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "latest-stable"
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Cache mint modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-mint-v2
+        with:
+          path: ~/.mint
+          key: ${{ runner.os }}-mint-${{ env.cache-name }}-${{ hashFiles('Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-${{ env.cache-name }}-
+      - name: Install mint and packages
+        run: brew install mint && mint bootstrap
+      - name: Lint
+        run: make lint
+  test:
+    name: Unit and UI Tests
+    runs-on: macos-12
+    needs: lint
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-test
+      cancel-in-progress: true
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "latest-stable"
+      - name: "Import Certificate: Development"
+        uses: devbotsxyz/xcode-import-certificate@master
+        with:
+          certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      - name: "Import Certificate: Developer ID Application"
+        uses: devbotsxyz/xcode-import-certificate@master
+        with:
+          certificate-data: ${{ secrets.APPLICATION_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Cache mint modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-mint-v2
+        with:
+          path: ~/.mint
+          key: ${{ runner.os }}-mint-${{ env.cache-name }}-${{ hashFiles('Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-${{ env.cache-name }}-
+      - name: Install mint and packages
+        run: brew install mint && mint bootstrap
+      - name: Cache SPM modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-spm-v2
+        with:
+          path: SourcePackages
+          key: ${{ runner.os }}-spm-${{ env.cache-name }}-${{ hashFiles('Pareto Updater.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-${{ env.cache-name }}-
+      - name: Tests
+        run: set -o pipefail && make test 2>&1 | mint run xcbeautify
+      - name: Update coverage
+        run: bash <(curl -s https://codecov.io/bash)
+      - name: Gather screenshots
+        run: |
+          mkdir -p "${{ runner.temp }}/screenshots/"
+          # export the screenshots
+          mint run ChargePoint/xcparse xcparse screenshots --test ./test.xcresult '${{ runner.temp }}/screenshots'
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots-${{ github.run_number }}
+          path: ${{ runner.temp }}/screenshots
+      - uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            You can find the app screenshots under the Artifacts at https://github.com/ParetoSecurity/pareto-mac/actions/runs/${{ github.run_id }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+  build:
+    name: Build and Archive Native
+    needs: lint
+    runs-on: macos-12
+    timeout-minutes: 15
+    permissions:
+      issues: write
+      pull-requests: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-build
+      cancel-in-progress: true
+    steps:
+      - uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            You can find the built app under the Artifacts at https://github.com/ParetoSecurity/pareto-mac/actions/runs/${{ github.run_id }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "latest-stable"
+      - name: "Import Certificate: Development"
+        uses: devbotsxyz/xcode-import-certificate@master
+        with:
+          certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      - name: "Import Certificate: Developer ID Application"
+        uses: devbotsxyz/xcode-import-certificate@master
+        with:
+          certificate-data: ${{ secrets.APPLICATION_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Cache mint modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-mint-v2
+        with:
+          path: ~/.mint
+          key: ${{ runner.os }}-mint-${{ env.cache-name }}-${{ hashFiles('Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-${{ env.cache-name }}-
+      - name: Install mint and packages
+        run: brew install mint && mint bootstrap
+      - name: Cache SPM modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-spm-v2
+        with:
+          path: SourcePackages
+          key: ${{ runner.os }}-spm-${{ env.cache-name }}-${{ hashFiles('Pareto Updater.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-${{ env.cache-name }}-
+      - name: Cache DerivedData
+        uses: actions/cache@v2
+        env:
+          cache-name: build-derived-data-v2
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+      - name: Build
+        run: set -o pipefail && make archive-debug 2>&1 | mint run xcbeautify
+      - name: Compress app for storage
+        run: ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoSecurity.app.zip
+      - name: Upload App to Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ParetoSecurity.app
+          path: ParetoSecurity.app.zip
+  
