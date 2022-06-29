@@ -43,7 +43,11 @@ struct AppList: View {
                 .help("Refresh the status of the apps")
 
                 Button {
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    if #available(macOS 13.0, *) {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    } else {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    }
                     NSApp.activate(ignoringOtherApps: true)
                 } label: {
                     Image(systemName: "gearshape")
@@ -53,18 +57,20 @@ struct AppList: View {
                 }.buttonStyle(ClipButton())
             }
 
-            if (viewModel.haveUpdatableApps && !viewModel.updating)  {
-                VStack(alignment: .leading) {
-                    Text("Available Updates").font(.caption2)
-                    ForEach(viewModel.updatableApps) { app in
-                        AppRow(app: app, onUpdate: {
-                            viewModel.updateApp(withApp: app)
-                        })
+            if viewModel.haveUpdatableApps && !viewModel.updating {
+                Text("Available Updates").font(.caption2)
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        ForEach(viewModel.updatableApps) { app in
+                            AppRow(app: app, onUpdate: {
+                                viewModel.updateApp(withApp: app)
+                            })
+                        }
                     }
-                }.frame( minHeight: CGFloat(viewModel.updatableApps.count) * 35)
+                }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
             } else {
                 Group {
-                    if (viewModel.updating) {
+                    if viewModel.updating {
                         HStack(alignment: .center) {
                             Text("Checking for updates").font(.body)
                             ProgressView()
@@ -79,7 +85,8 @@ struct AppList: View {
                 }.frame(minHeight: 20.0)
             }
         }
-        .padding(15)
+        .padding(.vertical, 25)
+        .padding(.horizontal, 10)
         .onAppear {
             viewModel.fetchData()
         }
@@ -88,25 +95,24 @@ struct AppList: View {
 
 #if DEBUG
 
-class AppBundlesFake: AppBundles {
-    
-    convenience init(updating: Bool) {
-        self.init()
-        self.updating = updating
-    }
-    
-    convenience init(installing: Bool) {
-        self.init()
-        self.installing = installing
-    }
-}
+    class AppBundlesFake: AppBundles {
+        convenience init(updating: Bool) {
+            self.init()
+            self.updating = updating
+        }
 
-struct AppList_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            AppList(viewModel: AppBundlesFake(updating: true))
-            AppList(viewModel: AppBundlesFake(installing: true))
+        convenience init(installing: Bool) {
+            self.init()
+            self.installing = installing
         }
     }
-}
+
+    struct AppList_Previews: PreviewProvider {
+        static var previews: some View {
+            Group {
+                AppList(viewModel: AppBundlesFake(updating: true))
+                AppList(viewModel: AppBundlesFake(installing: true))
+            }
+        }
+    }
 #endif

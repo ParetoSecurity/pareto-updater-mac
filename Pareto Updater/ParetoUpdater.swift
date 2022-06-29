@@ -15,6 +15,11 @@ import Regex
 import SwiftUI
 import Version
 
+import Alamofire
+
+#if !DEBUG
+    import Sentry
+#endif
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem?
     private var statusMenu: NSMenu?
@@ -22,13 +27,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     static let bundleModel = AppBundles()
 
     @Default(.hideWhenNoUpdates) private var hideWhenNoUpdates
+
     private var noUpdatesSink: AnyCancellable?
     private var fetchSink: AnyCancellable?
     private var finishedLaunch: Bool = false
 
     static let updater = GithubAppUpdater(
-        updateURL: "https://api.github.com/repos/paretosecurity/pareto-updater-mac/releases",
-        allowPrereleases: false,
+        updateURL: "https://paretosecurity.app/api/updates?app=updater&uuid=\(Defaults[.machineUUID])&version=\(Constants.appVersion)&os_version=\(Constants.macOSVersionString)&distribution=\(Constants.utmSource)",
+        allowPrereleases: Defaults[.betaChannel],
         autoGuard: true,
         interval: 60 * 60
     )
@@ -39,19 +45,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    func applicationWillFinishLaunching(_: Notification) {
-        if CommandLine.arguments.contains("-update") {
-            for app in AppDelegate.bundleModel.apps {
-                if app.latestVersion > app.currentVersion {
-                    app.updateApp { _ in
-                        os_log("Update of %{public}s  done.", app.appBundle)
-                    }
-                }
-            }
-            exit(0)
-        }
-    }
-
     func scheduleHourlyCheck() {
         let activity = NSBackgroundActivityScheduler(identifier: "\(String(describing: Bundle.main.bundleIdentifier)).Updater")
         activity.repeats = true
@@ -59,6 +52,115 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         activity.schedule { completion in
             AppDelegate.bundleModel.fetchData()
             completion(.finished)
+        }
+    }
+
+    public func processAction(_ url: URL) {
+        #if !DEBUG
+            let crumb = Breadcrumb()
+            crumb.level = SentryLevel.info
+            crumb.category = "processAction"
+            crumb.message = url.debugDescription
+            SentrySDK.addBreadcrumb(crumb: crumb)
+        #endif
+        switch url.host {
+        #if !SETAPP_ENABLED
+            case "enrollSingle":
+                let jwt = url.queryParams()["token"] ?? ""
+                do {
+                    let license = try VerifyLicense(withLicense: jwt)
+                    Defaults[.license] = jwt
+                    Defaults[.userEmail] = license.subject
+                    Defaults[.userID] = license.uuid
+                    Constants.Licensed = true
+                    Defaults[.reportingRole] = .personal
+
+                    // If we don't need to verify license return early
+                    if license.role != "verify" {
+                        return
+                    }
+                    let parameters: [String: String] = [
+                        "uuid": license.uuid,
+                        "machineUUID": Defaults[.machineUUID]
+                    ]
+                    let verifyURL = "https://dash.paretosecurity.com/api/v1/enroll/verify"
+                    AF.request(verifyURL, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default).responseString(queue: Constants.httpQueue, completionHandler: { response in
+                        if response.error == nil {
+                            DispatchQueue.main.async {
+                                let alert = NSAlert()
+                                alert.messageText = "Pareto Updater is now licensed."
+                                alert.alertStyle = NSAlert.Style.informational
+                                alert.addButton(withTitle: "OK")
+                                #if !DEBUG
+                                    alert.runModal()
+                                #endif
+                            }
+                        } else {
+                            License.toFree()
+                            DispatchQueue.main.async {
+                                let alert = NSAlert()
+                                alert.messageText = "No more licenses available for this account!"
+                                alert.alertStyle = NSAlert.Style.critical
+                                alert.addButton(withTitle: "OK")
+                                #if !DEBUG
+                                    alert.runModal()
+                                #endif
+                            }
+                        }
+                    })
+
+                } catch {
+                    License.toFree()
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = "License is not valid. Please email support@paretosecurity.com."
+                        alert.alertStyle = NSAlert.Style.informational
+                        alert.addButton(withTitle: "OK")
+                        #if !DEBUG
+                            alert.runModal()
+                        #endif
+                    }
+                }
+
+            case "enrollTeam":
+                if Constants.Licensed || !Defaults[.teamAuth].isEmpty {
+                    return
+                }
+
+                let jwt = url.queryParams()["token"] ?? ""
+                do {
+                    let ticket = try VerifyTeamTicket(withTicket: jwt)
+                    Defaults[.license] = jwt
+                    Defaults[.userID] = ""
+                    Defaults[.teamAuth] = ticket.teamAuth
+                    Defaults[.teamID] = ticket.teamUUID
+                    Constants.Licensed = true
+                    Defaults[.reportingRole] = .team
+                    Defaults[.isTeamOwner] = ticket.isTeamOwner
+
+                } catch {
+                    License.toFree()
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = "Team ticket is not valid. Please email support@paretosecurity.com."
+                        alert.alertStyle = NSAlert.Style.informational
+                        alert.addButton(withTitle: "OK")
+                        #if !DEBUG
+                            alert.runModal()
+                        #endif
+                    }
+                }
+        #endif
+        case "reset":
+            Defaults.removeAll()
+            UserDefaults.standard.removeAll()
+            UserDefaults.standard.synchronize()
+
+            if !Constants.isRunningTests {
+                NSApplication.shared.terminate(self)
+            }
+        default:
+            os_log("Unknown command \(url)")
         }
     }
 
@@ -74,24 +176,67 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {
+        // Verify license
+        #if !SETAPP_ENABLED
+            do {
+                switch Defaults[.reportingRole] {
+                case .personal:
+                    _ = try VerifyLicense(withLicense: Defaults[.license])
+                    Constants.Licensed = true
+                case .team:
+                    _ = try VerifyTeamTicket(withTicket: Defaults[.license])
+                    Constants.Licensed = true
+                default:
+                    License.toFree()
+                }
+            } catch {
+                License.toFree()
+            }
+        #else
+            Constants.Licensed = true
+        #endif
+
+        #if !DEBUG
+            if !Constants.isRunningTests {
+                SentrySDK.start { options in
+                    options.dsn = "https://9f78692775d244589bf08c21749f20fb@o32789.ingest.sentry.io/6539843"
+                    options.enableAutoSessionTracking = true
+                    options.enableAutoPerformanceTracking = true
+                    options.tracesSampleRate = 1.0
+
+                    let user = User()
+                    user.userId = Defaults[.machineUUID]
+                    SentrySDK.setUser(user)
+                }
+            }
+
+        #endif
+
         popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
 
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.isVisible = true
+
         if let menuButton = statusItem?.button {
-            menuButton.image = NSImage(systemSymbolName: "square.and.arrow.down.on.square", accessibilityDescription: nil)
+            let view = NSHostingView(rootView: Menubar())
+            view.translatesAutoresizingMaskIntoConstraints = false
+            menuButton.addSubview(view)
+            menuButton.target = self
+            menuButton.isEnabled = true
             menuButton.action = #selector(menuButtonToggle(sender:))
             menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
+                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
+                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
+                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
+            ])
         }
 
         statusMenu = NSMenu(title: "ParetoUpdater")
-
-        let showItem = NSMenuItem(title: "Show / Hide", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
-        showItem.target = NSApp.delegate
-        statusMenu?.addItem(showItem)
 
         let preferencesItem = NSMenuItem(title: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: ",")
         preferencesItem.target = NSApp.delegate
@@ -114,9 +259,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
 
-        DispatchQueue.main.async { [self] in
-            _ = AppDelegate.updater.checkAndUpdate()
-            scheduleHourlyCheck()
+        if !Constants.isRunningTests {
+            DispatchQueue.main.async { [self] in
+                _ = AppDelegate.updater.checkAndUpdate()
+                scheduleHourlyCheck()
+            }
         }
 
         // update state on all changes
@@ -125,7 +272,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
         }
-        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink {  [self] _ in
+        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { [self] _ in
             updateHiddenState()
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
@@ -134,8 +281,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc
-    func menuButtonToggle(sender _: NSStatusBarButton) {
-        let event = NSApp.currentEvent!
+    func menuButtonToggle(sender: NSStatusBarButton) {
+        guard let event = NSApp.currentEvent else { return }
 
         if event.type == NSEvent.EventType.rightMouseUp {
             statusItem?.popUpMenu(statusMenu!)
@@ -144,11 +291,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if popOver.isShown {
                 popOver.close()
             } else {
-                if let menuButton = statusItem?.button {
-                    popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .minY)
-                    popOver.contentViewController?.view.window?.makeKey()
-                    popOver.contentViewController?.view.window?.level = .floating
-                }
+                popOver.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
+                popOver.contentViewController?.view.window?.makeKey()
+                popOver.contentViewController?.view.window?.level = .floating
             }
         }
     }
@@ -165,7 +310,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc
     func preferences() {
-        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        if #available(macOS 13.0, *) {
+            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        } else {
+            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        }
         NSApp.activate(ignoringOtherApps: true)
     }
 }

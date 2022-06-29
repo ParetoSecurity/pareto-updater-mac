@@ -7,15 +7,16 @@
 
 import Foundation
 import os.log
+import Sentry
 
 protocol AppBundle {
-    var apps: [AppUpdater] { get set }
+    var apps: [AppUpdater] { get }
     var updating: Bool { get set }
     var installing: Bool { get set }
 }
 
 class AppBundles: AppBundle, ObservableObject {
-    @Published var apps: [AppUpdater]
+    @Published var customApps: [AppUpdater]
     @Published var updating: Bool = false
     @Published var installing: Bool = false
 
@@ -23,18 +24,32 @@ class AppBundles: AppBundle, ObservableObject {
         !updatableApps.isEmpty
     }
 
+    public var apps: [AppUpdater] {
+        (customApps + SparkleApp.all.filter { app in
+            !customAppBundles.contains(app.appBundle)
+        }).sorted(by: { lha, rha in
+            lha.appMarketingName < rha.appMarketingName
+        })
+    }
+
+    public var customAppBundles: Set<String> {
+        Set(customApps.map { app in
+            app.appBundle
+        })
+    }
+
     public var updatableApps: [AppUpdater] {
         apps.filter { app in
             app.updatable && app.isInstalled
         }
     }
-    
+
     public var installingApps: Bool {
         apps.allSatisfy { app in
             app.status != .Idle
         }
     }
-    
+
     public var installedApps: [AppUpdater] {
         apps.filter { app in
             app.isInstalled
@@ -45,12 +60,16 @@ class AppBundles: AppBundle, ObservableObject {
         DispatchQueue.main.async {
             self.installing = true
         }
-        DispatchQueue.global(qos: .background).async {
+        let transaction = SentrySDK.startTransaction(name: "Update App", operation: "updater")
+        DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
             withApp.updateApp { [self] _ in
+                let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
                 lock.wait()
                 DispatchQueue.main.async {
                     self.installing = false
+                    transaction.finish()
+                    span.finish()
                 }
                 self.fetchData()
             }
@@ -58,30 +77,34 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     func updateAll() {
+        let transaction = SentrySDK.startTransaction(name: "Update All Apps", operation: "updater")
         let lock = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             for app in updatableApps {
+                let span = transaction.startChild(operation: "updater", description: app.appMarketingName)
                 DispatchQueue.main.async {
                     self.installing = true
                 }
                 app.updateApp { _ in
                     os_log("Update of %{public}s done.", app.appBundle)
                     lock.signal()
+                    span.finish()
                 }
                 lock.wait()
             }
             DispatchQueue.main.async {
                 self.installing = self.installingApps
             }
+            transaction.finish()
         }
     }
 
     func fetchData() {
-        if updating || installing {
+        if updating {
             return
         }
 
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
                 self.updating = true
             }
@@ -89,7 +112,8 @@ class AppBundles: AppBundle, ObservableObject {
                 DispatchQueue.main.async {
                     app.status = .GatheringInfo
                 }
-                if app.latestVersion > app.currentVersion {
+                print(app.latestVersion)
+                if app.hasUpdate {
                     DispatchQueue.main.async {
                         app.updatable = true
                     }
@@ -98,7 +122,7 @@ class AppBundles: AppBundle, ObservableObject {
                         app.updatable = false
                     }
                 }
-                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersion.description, app.currentVersion.description, app.updatable.description)
+                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersionCached, app.textVersion, app.latestVersion.description)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     app.status = .Idle
@@ -111,8 +135,18 @@ class AppBundles: AppBundle, ObservableObject {
         }
     }
 
+    static func readPlistFile(fileURL: URL) -> [String: Any]? {
+        guard let data = try? Data(contentsOf: fileURL) else {
+            return nil
+        }
+        guard let result = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
+            return nil
+        }
+        return result
+    }
+
     init() {
-        apps = [
+        customApps = [
             AppSignal.sharedInstance,
             AppFirefox.sharedInstance,
             AppGoogleChrome.sharedInstance,

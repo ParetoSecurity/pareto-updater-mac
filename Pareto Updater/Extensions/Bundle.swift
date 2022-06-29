@@ -29,7 +29,6 @@ extension Bundle {
         guard let dictionary = NSDictionary(contentsOfFile: plist) else {
             return nil
         }
-        // print("\(app): \(dictionary as AnyObject)")
         return dictionary.value(forKey: key) as? String
     }
 }

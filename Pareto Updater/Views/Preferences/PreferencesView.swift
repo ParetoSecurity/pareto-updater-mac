@@ -6,11 +6,14 @@
 //
 
 import AppKit
+import Defaults
 import Foundation
 import SwiftUI
 
 struct PreferencesView: View {
     @State var selected: Tabs
+    @Default(.showBeta) var showBeta
+
     enum Tabs: Hashable {
         case general, about, apps
     }
@@ -22,11 +25,13 @@ struct PreferencesView: View {
                     Label("General", systemImage: "gear")
                 }
                 .tag(Tabs.general)
-            AppsView(viewModel: AppDelegate.bundleModel)
-                .tabItem {
-                    Label("Apps", systemImage: "app.badge")
-                }
-                .tag(Tabs.apps)
+            if showBeta {
+                AppsView(viewModel: AppDelegate.bundleModel)
+                    .tabItem {
+                        Label("Apps", systemImage: "app.badge")
+                    }
+                    .tag(Tabs.apps)
+            }
             AboutView()
                 .tabItem {
                     Label("About", systemImage: "info")

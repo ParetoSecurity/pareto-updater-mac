@@ -10,6 +10,7 @@ import AppKit
 import Foundation
 import os.log
 import Path
+import Regex
 import SwiftUI
 import Version
 
@@ -32,7 +33,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     private(set) var UUID = "UUID"
-    private(set) var latestVersionCached = "0.0.0"
+    private(set) var latestVersionCached = ""
     var appName: String { "" } // Updater for Pareto
     var appMarketingName: String { "" } // Pareto Updater
     var appBundle: String { "" } // like co.niteo.paretoupdater
@@ -48,7 +49,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var help: String {
-        "Installed: \(currentVersion), latest: \(latestVersion)"
+        "Installed: \(textVersion), latest: \(latestVersionCached)"
+    }
+
+    var hasUpdate: Bool {
+        latestVersion > currentVersion
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
@@ -80,7 +85,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
-
         DispatchQueue.main.async { [self] in
             status = .DownloadingUpdate
             fractionCompleted = 0.0
@@ -139,15 +143,19 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 updatable = false
                 fractionCompleted = 0.0
             }
-            DispatchQueue.global(qos: .background).async(execute: workItem!)
+            DispatchQueue.global(qos: .userInteractive).async(execute: workItem!)
         }
+    }
+
+    var textVersion: String {
+        (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
     }
 
     var currentVersion: Version {
         if !isInstalled {
             return Version(0, 0, 0)
         }
-        var version = (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
+        var version = textVersion
         if version.contains("alpha") {
             version = version.replacingOccurrences(of: "alpha", with: "-alpha")
         }
@@ -189,7 +197,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: Version {
-        if latestVersionCached != "0.0.0" {
+        if !latestVersionCached.isEmpty {
             return Version(latestVersionCached) ?? Version(0, 0, 0)
         }
 
@@ -204,4 +212,3 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return version
     }
 }
-

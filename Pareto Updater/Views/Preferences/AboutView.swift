@@ -5,12 +5,15 @@
 //  Created by Janez Troha on 26/04/2022.
 //
 
+import Defaults
 import Foundation
 import SwiftUI
 
 struct AboutView: View {
     @State private var isLoading = false
     @State private var status = UpdateStates.Checking
+    @State private var konami = 0
+    @Default(.showBeta) var showBeta
 
     enum UpdateStates: String {
         case Checking = "Checking for updates"
@@ -23,7 +26,27 @@ struct AboutView: View {
     var body: some View {
         HStack {
             Image("Logo").resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fit).onTapGesture {
+                    if !showBeta {
+                        konami += 1
+                        if konami == 3 {
+                            showBeta = true
+                            konami = 0
+                            let alert = NSAlert()
+                            alert.messageText = "You are now part of a secret society seeing somewhat mysterious things."
+                            alert.alertStyle = NSAlert.Style.informational
+                            alert.addButton(withTitle: "Let me in")
+                            alert.runModal()
+                        }
+
+                    } else {
+                        konami += 1
+                        if konami >= 3 {
+                            showBeta = false
+                            konami = 0
+                        }
+                    }
+                }
 
             VStack(alignment: .leading) {
                 Link("Pareto Updater",
@@ -31,6 +54,7 @@ struct AboutView: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Version: \(Constants.appVersion) - \(Constants.buildVersion)")
+                    Text("Channel: \(Constants.utmSource)")
                     HStack(spacing: 10) {
                         if status == UpdateStates.Failed {
                             HStack(spacing: 0) {
@@ -66,24 +90,29 @@ struct AboutView: View {
     }
 
     private func fetch() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            isLoading = true
-            status = UpdateStates.Checking
-            let currentVersion = Bundle.main.version
-            if let release = try? AppDelegate.updater.getLatestRelease(allowPrereleases: false) {
-                isLoading = false
-                if currentVersion < release.version {
-                    status = UpdateStates.NewVersion
-                    if let zipURL = release.assets.filter({ $0.browserDownloadURL.path.hasSuffix(".zip") }).first {
-                        status = UpdateStates.Installing
-                        isLoading = true
+        #if !DEBUG
+            DispatchQueue.global(qos: .userInitiated).async {
+                isLoading = true
+                status = UpdateStates.Checking
+                let currentVersion = Bundle.main.version
+                if let release = try? AppDelegate.updater.getLatestRelease(allowPrereleases: false) {
+                    isLoading = false
+                    if currentVersion < release.version {
+                        status = UpdateStates.NewVersion
+                        if let zipURL = release.assets.filter({ $0.browserDownloadURL.path.hasSuffix(".zip") }).first {
+                            status = UpdateStates.Installing
+                            isLoading = true
 
-                        let done = AppDelegate.updater.downloadAndUpdate(withAsset: zipURL)
-                        if !done {
-                            status = UpdateStates.Failed
+                            let done = AppDelegate.updater.downloadAndUpdate(withAsset: zipURL)
+                            if !done {
+                                status = UpdateStates.Failed
+                                isLoading = false
+                            }
+
+                        } else {
+                            status = UpdateStates.Updated
                             isLoading = false
                         }
-
                     } else {
                         status = UpdateStates.Updated
                         isLoading = false
@@ -92,11 +121,10 @@ struct AboutView: View {
                     status = UpdateStates.Updated
                     isLoading = false
                 }
-            } else {
-                status = UpdateStates.Updated
-                isLoading = false
             }
-        }
+        #else
+            status = UpdateStates.Updated
+        #endif
     }
 }
 
