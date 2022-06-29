@@ -69,7 +69,7 @@ zip:
 	ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoUpdater.zip
 
 sentry-debug-upload:
-	sentry-cli --auth-token ${SENTRY_AUTH_TOKEN} upload-dif app.xcarchive --org teamniteo --project pareto-mac
+	sentry-cli --auth-token ${SENTRY_AUTH_TOKEN} upload-dif app.xcarchive --org teamniteo --project pareto-updater
 
 sentry-debug-upload-setapp:
-	sentry-cli --auth-token ${SENTRY_AUTH_TOKEN} upload-dif setapp.xcarchive --org teamniteo --project pareto-mac
+	sentry-cli --auth-token ${SENTRY_AUTH_TOKEN} upload-dif setapp.xcarchive --org teamniteo --project pareto-updater

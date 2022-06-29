@@ -29,21 +29,21 @@ public enum Constants {
     static var isRunningTests: Bool {
         ProcessInfo.processInfo.arguments.contains("isRunningTests") || ProcessInfo.processInfo.environment["CI"] ?? "false" != "false"
     }
-    
-#if DEBUG
-    static let versionStorage = try! Storage<String, Version>(
-        diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(1)),
-        memoryConfig: MemoryConfig(expiry: .seconds(1)),
-        transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
-    )
-#else
-    static let versionStorage = try! Storage<String, Version>(
-        diskConfig: DiskConfig(name: "Version+Bundles", expiry: .seconds(3600 * 24)),
-        memoryConfig: MemoryConfig(expiry: .seconds(3600 * 24 * 2)),
-        transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
-    )
-#endif
-    
+
+    #if DEBUG
+        static let versionStorage = try! Storage<String, Version>(
+            diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(1)),
+            memoryConfig: MemoryConfig(expiry: .seconds(1)),
+            transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
+        )
+    #else
+        static let versionStorage = try! Storage<String, Version>(
+            diskConfig: DiskConfig(name: "Version+Bundles", expiry: .seconds(3600 * 24)),
+            memoryConfig: MemoryConfig(expiry: .seconds(3600 * 24 * 2)),
+            transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
+        )
+    #endif
+
     static let bugReportURL = { () -> URL in
         let baseURL = "https://paretosecurity.com/report-bug?"
         let logs = logEntries().joined(separator: "\n").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
@@ -51,18 +51,26 @@ public enum Constants {
         if let url = URL(string: baseURL + "&logs=" + logs! + "&version=" + versions!) {
             return url
         }
-        
+
         return URL(string: baseURL)!
     }()
-    
+
     static let getVersions = { () -> String in
         "HW: \(hwModelName)\nmacOS: \(macOSVersionString)\nApp: Pareto Updater\nApp Version: \(appVersion)\nBuild: \(buildVersion)"
     }
-    
+
     static var hwModel: String {
         HWInfo(forKey: "model")
     }
-    
+
+    public static func getSystemUUID() -> String? {
+        let dev = IOServiceMatching("IOPlatformExpertDevice")
+        let platformExpert: io_service_t = IOServiceGetMatchingService(kIOMasterPortDefault, dev)
+        let serialNumberAsCFString = IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformUUIDKey as CFString, kCFAllocatorDefault, 0)
+        IOObjectRelease(platformExpert)
+        return serialNumberAsCFString!.takeUnretainedValue() as? String
+    }
+
     static var hwModelName: String {
         // Depending on if your serial number is 11 or 12 characters long take the last 3 or 4 characters, respectively, and feed that to the following URL after the ?cc=XXXX part.
         let nameRegex = Regex("<configCode>(.+)</configCode>")
@@ -73,30 +81,63 @@ public enum Constants {
             let nameResult = nameRegex.firstMatch(in: data ?? "")
             return nameResult?.groups.first?.value ?? hwModel
         }
-        
+
         return hwModel
     }
-    
+
     static var hwSerial: String {
         HWInfo(forKey: "IOPlatformSerialNumber")
     }
-    
+
     static let logEntries = { () -> [String] in
         var logs = [String]()
-        
+
         logs.append("Location: \(Bundle.main.path)")
         logs.append("Build:")
-        
+
         logs.append("\nLogs:")
         logs.append("Please copy the logs from the Console app by searching for the Pareto Updater.")
         return logs
+    }
+
+    static var utmSource: String {
+        var source = "app"
+
+        #if DEBUG
+            source += "-debug"
+        #else
+
+            if Defaults[.betaChannel] {
+                source += "-pre"
+            } else {
+                source += "-live"
+            }
+
+        #endif
+
+        #if SETAPP_ENABLED
+            source += "-setapp"
+        #else
+//            if Licensed {
+//                if Defaults[.teamID].isEmpty {
+//                    source += "-personal"
+//                } else {
+//                    source += "-team"
+//                }
+//            } else {
+//                source += "-opensource"
+//            }
+            source += "-opensource"
+        #endif
+
+        return source
     }
 }
 
 func HWInfo(forKey key: String) -> String {
     let service = IOServiceGetMatchingService(kIOMasterPortDefault,
                                               IOServiceMatching("IOPlatformExpertDevice"))
-    
+
     guard let info = (IORegistryEntryCreateCFProperty(service, key as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
         return "Unknown"
     }
@@ -111,4 +152,19 @@ func viaEdgeCache(_ url: String) -> String {
     return url
 }
 
+// magic here
+enum Window: String, CaseIterable {
+    case installer = "Installer"
+    case settings = "Settings"
 
+    func open() {
+        if let url = URL(string: "paretoupdater://\(rawValue)") {
+            print("opening \(rawValue)")
+            NSWorkspace.shared.open(url)
+        }
+    }
+
+    var handle: Set<String> {
+        Set(arrayLiteral: rawValue)
+    }
+}

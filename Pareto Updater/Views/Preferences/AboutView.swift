@@ -5,12 +5,15 @@
 //  Created by Janez Troha on 26/04/2022.
 //
 
+import Defaults
 import Foundation
 import SwiftUI
 
 struct AboutView: View {
     @State private var isLoading = false
     @State private var status = UpdateStates.Checking
+    @State private var konami = 0
+    @Default(.showBeta) var showBeta
 
     enum UpdateStates: String {
         case Checking = "Checking for updates"
@@ -23,7 +26,27 @@ struct AboutView: View {
     var body: some View {
         HStack {
             Image("Logo").resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fit).onTapGesture {
+                    if !showBeta {
+                        konami += 1
+                        if konami == 3 {
+                            showBeta = true
+                            konami = 0
+                            let alert = NSAlert()
+                            alert.messageText = "You are now part of a secret society seeing somewhat mysterious things."
+                            alert.alertStyle = NSAlert.Style.informational
+                            alert.addButton(withTitle: "Let me in")
+                            alert.runModal()
+                        }
+
+                    } else {
+                        konami += 1
+                        if konami >= 3 {
+                            showBeta = false
+                            konami = 0
+                        }
+                    }
+                }
 
             VStack(alignment: .leading) {
                 Link("Pareto Updater",
