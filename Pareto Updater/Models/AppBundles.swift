@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+import Sentry
 
 protocol AppBundle {
     var apps: [AppUpdater] { get set }
@@ -28,13 +29,13 @@ class AppBundles: AppBundle, ObservableObject {
             app.updatable && app.isInstalled
         }
     }
-    
+
     public var installingApps: Bool {
         apps.allSatisfy { app in
             app.status != .Idle
         }
     }
-    
+
     public var installedApps: [AppUpdater] {
         apps.filter { app in
             app.isInstalled
@@ -45,12 +46,16 @@ class AppBundles: AppBundle, ObservableObject {
         DispatchQueue.main.async {
             self.installing = true
         }
-        DispatchQueue.global(qos: .background).async {
+        let transaction = SentrySDK.startTransaction(name: "Update App", operation: "updater")
+        DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
             withApp.updateApp { [self] _ in
+                let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
                 lock.wait()
                 DispatchQueue.main.async {
                     self.installing = false
+                    transaction.finish()
+                    span.finish()
                 }
                 self.fetchData()
             }
@@ -58,21 +63,25 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     func updateAll() {
+        let transaction = SentrySDK.startTransaction(name: "Update All Apps", operation: "updater")
         let lock = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             for app in updatableApps {
+                let span = transaction.startChild(operation: "updater", description: app.appMarketingName)
                 DispatchQueue.main.async {
                     self.installing = true
                 }
                 app.updateApp { _ in
                     os_log("Update of %{public}s done.", app.appBundle)
                     lock.signal()
+                    span.finish()
                 }
                 lock.wait()
             }
             DispatchQueue.main.async {
                 self.installing = self.installingApps
             }
+            transaction.finish()
         }
     }
 
@@ -81,7 +90,7 @@ class AppBundles: AppBundle, ObservableObject {
             return
         }
 
-        DispatchQueue.global(qos: .background).async { [self] in
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
                 self.updating = true
             }
