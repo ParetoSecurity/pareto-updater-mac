@@ -1,0 +1,70 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
+          "branch": null,
+          "revision": "354dda32d89fc8cd4f5c46487f64957d355f53d8",
+          "version": "5.6.1"
+        }
+      },
+      {
+        "package": "AppUpdater",
+        "repositoryURL": "https://github.com/teamniteo/AppUpdater",
+        "state": {
+          "branch": "master",
+          "revision": "c1474858811608f23ee1ec6c4a8ea2f3ecd0e62b",
+          "version": null
+        }
+      },
+      {
+        "package": "Cache",
+        "repositoryURL": "https://github.com/hyperoslo/Cache",
+        "state": {
+          "branch": "master",
+          "revision": "b6214827d5d212b20dae03833ae18d5d147439dd",
+          "version": null
+        }
+      },
+      {
+        "package": "Defaults",
+        "repositoryURL": "https://github.com/sindresorhus/Defaults",
+        "state": {
+          "branch": "main",
+          "revision": "001adc694b78005baf3a42a715b98f7f5610f650",
+          "version": null
+        }
+      },
+      {
+        "package": "LaunchAtLogin",
+        "repositoryURL": "https://github.com/sindresorhus/LaunchAtLogin",
+        "state": {
+          "branch": "main",
+          "revision": "e8171b3e38a2816f579f58f3dac1522aa39efe41",
+          "version": null
+        }
+      },
+      {
+        "package": "Path.swift",
+        "repositoryURL": "https://github.com/mxcl/Path.swift",
+        "state": {
+          "branch": null,
+          "revision": "9c6f807b0a76be0e27aecc908bc6f173400d839e",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "package": "Regex",
+        "repositoryURL": "https://github.com/sindresorhus/Regex",
+        "state": {
+          "branch": "main",
+          "revision": "030fff85e600ddb1c09412d4687fe34cf7a9c7d9",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

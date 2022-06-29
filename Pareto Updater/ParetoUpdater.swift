@@ -79,19 +79,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
 
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.isVisible = true
+
         if let menuButton = statusItem?.button {
-            menuButton.image = NSImage(systemSymbolName: "square.and.arrow.down.on.square", accessibilityDescription: nil)
+            let view = NSHostingView(rootView: Menubar())
+            view.translatesAutoresizingMaskIntoConstraints = false
+            menuButton.addSubview(view)
+            menuButton.target = self
+            menuButton.isEnabled = true
             menuButton.action = #selector(menuButtonToggle(sender:))
             menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
+                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
+                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
+                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
+            ])
         }
 
         statusMenu = NSMenu(title: "ParetoUpdater")
-
-        let showItem = NSMenuItem(title: "Show / Hide", action: #selector(AppDelegate.menuButtonToggle(sender:)), keyEquivalent: "s")
-        showItem.target = NSApp.delegate
-        statusMenu?.addItem(showItem)
 
         let preferencesItem = NSMenuItem(title: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: ",")
         preferencesItem.target = NSApp.delegate
@@ -125,7 +132,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
         }
-        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink {  [self] _ in
+        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { [self] _ in
             updateHiddenState()
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
@@ -134,8 +141,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc
-    func menuButtonToggle(sender _: NSStatusBarButton) {
-        let event = NSApp.currentEvent!
+    func menuButtonToggle(sender: NSStatusBarButton) {
+        guard let event = NSApp.currentEvent else { return }
 
         if event.type == NSEvent.EventType.rightMouseUp {
             statusItem?.popUpMenu(statusMenu!)
@@ -144,11 +151,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if popOver.isShown {
                 popOver.close()
             } else {
-                if let menuButton = statusItem?.button {
-                    popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: .minY)
-                    popOver.contentViewController?.view.window?.makeKey()
-                    popOver.contentViewController?.view.window?.level = .floating
-                }
+                popOver.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
+                popOver.contentViewController?.view.window?.makeKey()
+                popOver.contentViewController?.view.window?.level = .floating
             }
         }
     }
@@ -165,7 +170,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc
     func preferences() {
-        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        if #available(macOS 13.0, *) {
+            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        } else {
+            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        }
         NSApp.activate(ignoringOtherApps: true)
     }
 }

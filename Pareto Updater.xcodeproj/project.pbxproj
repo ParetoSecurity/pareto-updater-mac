@@ -1,0 +1,934 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4F0E43F7280E9E820093B51A /* AppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E43F6280E9E820093B51A /* AppRow.swift */; };
+		4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E441B280EA49A0093B51A /* AppUpdater.swift */; };
+		4F2C834C2817E33500B40361 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C834B2817E33500B40361 /* Bundle.swift */; };
+		4F2C83512817FEA400B40361 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83502817FEA400B40361 /* Signal.swift */; };
+		4F2C83532818155300B40361 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83522818155300B40361 /* PreferencesView.swift */; };
+		4F2C83552818158600B40361 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83542818158500B40361 /* GeneralView.swift */; };
+		4F2C835A2818188300B40361 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83592818188300B40361 /* AboutView.swift */; };
+		4F2C835C2819331A00B40361 /* Firefox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C835B2819331900B40361 /* Firefox.swift */; };
+		4F2C835E2819357C00B40361 /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C835D2819357C00B40361 /* Slack.swift */; };
+		4F2C8361281935D000B40361 /* AppBundles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C8360281935D000B40361 /* AppBundles.swift */; };
+		4F2C836828193E9D00B40361 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C836728193E9D00B40361 /* Defaults.swift */; };
+		4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE34280808C000585E5A /* ParetoUpdater.swift */; };
+		4F33FE37280808C000585E5A /* AppList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE36280808C000585E5A /* AppList.swift */; };
+		4F33FE39280808C200585E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE38280808C200585E5A /* Assets.xcassets */; };
+		4F33FE3C280808C200585E5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE3B280808C200585E5A /* Preview Assets.xcassets */; };
+		4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */; };
+		4F33FE53280808C200585E5A /* TestPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE52280808C200585E5A /* TestPreferences.swift */; };
+		4F5CD066282C3C4A000A5536 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5CD065282C3C4A000A5536 /* View.swift */; };
+		4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
+		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
+		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
+		4F868ED5286B224800383328 /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F868ED4286B224800383328 /* Menubar.swift */; };
+		4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DB282BBD7D007897A6 /* Docker.swift */; };
+		4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DD282BBDEF007897A6 /* SublimeText.swift */; };
+		4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DF282BBE05007897A6 /* LibreOffice.swift */; };
+		4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E1282BBED2007897A6 /* GoogleChrome.swift */; };
+		4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E3282BDEFE007897A6 /* AppsView.swift */; };
+		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
+		4FCF098A282D3A9200597F70 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCF0989282D3A9200597F70 /* TestPopUp.swift */; };
+		4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE610C5282A56A30060C002 /* SpyBuster.swift */; };
+		4FE610DB282A87F40060C002 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610DA282A87F40060C002 /* Defaults */; };
+		4FE610DE282A87FF0060C002 /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610DD282A87FF0060C002 /* AppUpdater */; };
+		4FE610E1282A88260060C002 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E0282A88260060C002 /* Version */; };
+		4FE610E4282A88400060C002 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E3282A88400060C002 /* Alamofire */; };
+		4FE610E7282A88540060C002 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E6282A88540060C002 /* Regex */; };
+		4FE610EA282A88660060C002 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E9282A88660060C002 /* Regex */; };
+		4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EC282A887A0060C002 /* LaunchAtLogin */; };
+		4FE610F0282A888C0060C002 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EF282A888C0060C002 /* Cache */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F33FE43280808C200585E5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F33FE29280808C000585E5A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F33FE30280808C000585E5A;
+			remoteInfo = "Pareto Updater";
+		};
+		4F33FE4D280808C200585E5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F33FE29280808C000585E5A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F33FE30280808C000585E5A;
+			remoteInfo = "Pareto Updater";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4F0E43F6280E9E820093B51A /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
+		4F0E441B280EA49A0093B51A /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		4F2C834A2817E25800B40361 /* Pareto-Updater-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pareto-Updater-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4F2C834B2817E33500B40361 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		4F2C83502817FEA400B40361 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		4F2C83522818155300B40361 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		4F2C83542818158500B40361 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
+		4F2C83592818188300B40361 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		4F2C835B2819331900B40361 /* Firefox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firefox.swift; sourceTree = "<group>"; };
+		4F2C835D2819357C00B40361 /* Slack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slack.swift; sourceTree = "<group>"; };
+		4F2C8360281935D000B40361 /* AppBundles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundles.swift; sourceTree = "<group>"; };
+		4F2C836728193E9D00B40361 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		4F33FE31280808C000585E5A /* Pareto Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pareto Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F33FE34280808C000585E5A /* ParetoUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParetoUpdater.swift; sourceTree = "<group>"; };
+		4F33FE36280808C000585E5A /* AppList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppList.swift; sourceTree = "<group>"; };
+		4F33FE38280808C200585E5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4F33FE3B280808C200585E5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4F33FE3D280808C200585E5A /* Pareto_Updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pareto_Updater.entitlements; sourceTree = "<group>"; };
+		4F33FE42280808C200585E5A /* Pareto UpdaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pareto UpdaterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParetoUpdaterTests.swift; sourceTree = "<group>"; };
+		4F33FE4C280808C200585E5A /* Pareto UpdaterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pareto UpdaterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F33FE52280808C200585E5A /* TestPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreferences.swift; sourceTree = "<group>"; };
+		4F5CD065282C3C4A000A5536 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4F7D6FFB28324179007D6E8A /* ClipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipButton.swift; sourceTree = "<group>"; };
+		4F7D6FFD28327BC4007D6E8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4F7D6FFF28327FE4007D6E8A /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		4F868ED4286B224800383328 /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
+		4F9209DB282BBD7D007897A6 /* Docker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Docker.swift; sourceTree = "<group>"; };
+		4F9209DD282BBDEF007897A6 /* SublimeText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SublimeText.swift; sourceTree = "<group>"; };
+		4F9209DF282BBE05007897A6 /* LibreOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibreOffice.swift; sourceTree = "<group>"; };
+		4F9209E1282BBED2007897A6 /* GoogleChrome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleChrome.swift; sourceTree = "<group>"; };
+		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
+		4FCF0989282D3A9200597F70 /* TestPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
+		4FE610C5282A56A30060C002 /* SpyBuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpyBuster.swift; sourceTree = "<group>"; };
+		4FE610D8282A87870060C002 /* Version */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Version; path = "/Users/dz0ny/Library/Developer/Xcode/DerivedData/Pareto_Updater-bhcgnniayqiwsbetsqyqyfbxelpj/SourcePackages/checkouts/Version"; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4F33FE2E280808C000585E5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FE610EA282A88660060C002 /* Regex in Frameworks */,
+				4FE610F0282A888C0060C002 /* Cache in Frameworks */,
+				4FE610E1282A88260060C002 /* Version in Frameworks */,
+				4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */,
+				4FE610E4282A88400060C002 /* Alamofire in Frameworks */,
+				4FE610E7282A88540060C002 /* Regex in Frameworks */,
+				4FE610DE282A87FF0060C002 /* AppUpdater in Frameworks */,
+				4FE610DB282A87F40060C002 /* Defaults in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE3F280808C200585E5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE49280808C200585E5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4F0E43F3280E9D9A0093B51A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C836928193EEC00B40361 /* Preferences */,
+				4F33FE36280808C000585E5A /* AppList.swift */,
+				4F0E43F6280E9E820093B51A /* AppRow.swift */,
+				4F7D6FFB28324179007D6E8A /* ClipButton.swift */,
+				4F868ED4286B224800383328 /* Menubar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4F0E4403280EA4770093B51A /* Software */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C83502817FEA400B40361 /* Signal.swift */,
+				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
+				4F2C835B2819331900B40361 /* Firefox.swift */,
+				4F2C835D2819357C00B40361 /* Slack.swift */,
+				4F9209DB282BBD7D007897A6 /* Docker.swift */,
+				4F9209DF282BBE05007897A6 /* LibreOffice.swift */,
+				4F9209DD282BBDEF007897A6 /* SublimeText.swift */,
+				4F9209E1282BBED2007897A6 /* GoogleChrome.swift */,
+			);
+			path = Software;
+			sourceTree = "<group>";
+		};
+		4F2C835F281935C300B40361 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C8360281935D000B40361 /* AppBundles.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4F2C836928193EEC00B40361 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C83542818158500B40361 /* GeneralView.swift */,
+				4F9209E3282BDEFE007897A6 /* AppsView.swift */,
+				4F2C83592818188300B40361 /* AboutView.swift */,
+				4F2C83522818155300B40361 /* PreferencesView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		4F33FE28280808C000585E5A = {
+			isa = PBXGroup;
+			children = (
+				4F33FE33280808C000585E5A /* Pareto Updater */,
+				4F33FE45280808C200585E5A /* Pareto UpdaterTests */,
+				4F33FE4F280808C200585E5A /* Pareto UpdaterUITests */,
+				4F33FE32280808C000585E5A /* Products */,
+				4FE610D7282A87870060C002 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4F33FE32280808C000585E5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F33FE31280808C000585E5A /* Pareto Updater.app */,
+				4F33FE42280808C200585E5A /* Pareto UpdaterTests.xctest */,
+				4F33FE4C280808C200585E5A /* Pareto UpdaterUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4F33FE33280808C000585E5A /* Pareto Updater */ = {
+			isa = PBXGroup;
+			children = (
+				4F33FE3A280808C200585E5A /* Preview Content */,
+				4F2C835F281935C300B40361 /* Models */,
+				4FB98F942810317100B9B627 /* Extensions */,
+				4F0E4403280EA4770093B51A /* Software */,
+				4F0E43F3280E9D9A0093B51A /* Views */,
+				4F33FE34280808C000585E5A /* ParetoUpdater.swift */,
+				4F33FE38280808C200585E5A /* Assets.xcassets */,
+				4F33FE3D280808C200585E5A /* Pareto_Updater.entitlements */,
+				4F2C834A2817E25800B40361 /* Pareto-Updater-Info.plist */,
+				4F7D6FFD28327BC4007D6E8A /* Constants.swift */,
+			);
+			path = "Pareto Updater";
+			sourceTree = "<group>";
+		};
+		4F33FE3A280808C200585E5A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4F33FE3B280808C200585E5A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4F33FE45280808C200585E5A /* Pareto UpdaterTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */,
+			);
+			path = "Pareto UpdaterTests";
+			sourceTree = "<group>";
+		};
+		4F33FE4F280808C200585E5A /* Pareto UpdaterUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4F33FE52280808C200585E5A /* TestPreferences.swift */,
+				4FCF0989282D3A9200597F70 /* TestPopUp.swift */,
+			);
+			path = "Pareto UpdaterUITests";
+			sourceTree = "<group>";
+		};
+		4FB98F942810317100B9B627 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C836728193E9D00B40361 /* Defaults.swift */,
+				4F7D6FFF28327FE4007D6E8A /* FileManager.swift */,
+				4F0E441B280EA49A0093B51A /* AppUpdater.swift */,
+				4FB98F922810313100B9B627 /* DMG.swift */,
+				4F2C834B2817E33500B40361 /* Bundle.swift */,
+				4F5CD065282C3C4A000A5536 /* View.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4FE610D7282A87870060C002 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4FE610D8282A87870060C002 /* Version */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4F33FE30280808C000585E5A /* Pareto Updater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F33FE56280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto Updater" */;
+			buildPhases = (
+				4F33FE2D280808C000585E5A /* Sources */,
+				4F33FE2E280808C000585E5A /* Frameworks */,
+				4F33FE2F280808C000585E5A /* Resources */,
+				4FE610F1282A898B0060C002 /* Bundle login */,
+				4F9209DA282BA27D007897A6 /* Update build number */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pareto Updater";
+			packageProductDependencies = (
+				4FE610DA282A87F40060C002 /* Defaults */,
+				4FE610DD282A87FF0060C002 /* AppUpdater */,
+				4FE610E0282A88260060C002 /* Version */,
+				4FE610E3282A88400060C002 /* Alamofire */,
+				4FE610E6282A88540060C002 /* Regex */,
+				4FE610E9282A88660060C002 /* Regex */,
+				4FE610EC282A887A0060C002 /* LaunchAtLogin */,
+				4FE610EF282A888C0060C002 /* Cache */,
+			);
+			productName = "Pareto Updater";
+			productReference = 4F33FE31280808C000585E5A /* Pareto Updater.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4F33FE41280808C200585E5A /* Pareto UpdaterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F33FE59280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto UpdaterTests" */;
+			buildPhases = (
+				4F33FE3E280808C200585E5A /* Sources */,
+				4F33FE3F280808C200585E5A /* Frameworks */,
+				4F33FE40280808C200585E5A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F33FE44280808C200585E5A /* PBXTargetDependency */,
+			);
+			name = "Pareto UpdaterTests";
+			productName = "Pareto UpdaterTests";
+			productReference = 4F33FE42280808C200585E5A /* Pareto UpdaterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4F33FE4B280808C200585E5A /* Pareto UpdaterUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F33FE5C280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto UpdaterUITests" */;
+			buildPhases = (
+				4F33FE48280808C200585E5A /* Sources */,
+				4F33FE49280808C200585E5A /* Frameworks */,
+				4F33FE4A280808C200585E5A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F33FE4E280808C200585E5A /* PBXTargetDependency */,
+			);
+			name = "Pareto UpdaterUITests";
+			productName = "Pareto UpdaterUITests";
+			productReference = 4F33FE4C280808C200585E5A /* Pareto UpdaterUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4F33FE29280808C000585E5A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					4F33FE30280808C000585E5A = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					4F33FE41280808C200585E5A = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 4F33FE30280808C000585E5A;
+					};
+					4F33FE4B280808C200585E5A = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = 4F33FE30280808C000585E5A;
+					};
+				};
+			};
+			buildConfigurationList = 4F33FE2C280808C000585E5A /* Build configuration list for PBXProject "Pareto Updater" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4F33FE28280808C000585E5A;
+			packageReferences = (
+				4FE610D9282A87F40060C002 /* XCRemoteSwiftPackageReference "Defaults" */,
+				4FE610DC282A87FF0060C002 /* XCRemoteSwiftPackageReference "AppUpdater" */,
+				4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */,
+				4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */,
+				4FE610E8282A88660060C002 /* XCRemoteSwiftPackageReference "Regex" */,
+				4FE610EB282A887A0060C002 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+				4FE610EE282A888C0060C002 /* XCRemoteSwiftPackageReference "Cache" */,
+			);
+			productRefGroup = 4F33FE32280808C000585E5A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4F33FE30280808C000585E5A /* Pareto Updater */,
+				4F33FE41280808C200585E5A /* Pareto UpdaterTests */,
+				4F33FE4B280808C200585E5A /* Pareto UpdaterUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4F33FE2F280808C000585E5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F33FE3C280808C200585E5A /* Preview Assets.xcassets in Resources */,
+				4F33FE39280808C200585E5A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE40280808C200585E5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE4A280808C200585E5A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4F9209DA282BA27D007897A6 /* Update build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update build number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n# taken from blog post: http://www.mokacoding.com/blog/automatic-xcode-versioning-with-git/\n# Automatically sets version of target based on most recent tag in git\n# Automatically sets build number to number of commits\n#\n# Add script to build phase in xcode at the top of the chain named \"set build number\"\n# put this script in the root of the xcode project in a directory called scripts (good idea to version control this too)\n# call the script as $SRCROOT/scripts/set_build_number_by_git_commits.sh in xcode\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\ngit_release_version=$(\"$git\" describe --tags --always --abbrev=0)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\n  if [ -f \"$plist\" ]; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${git_release_version#*v}\" \"$plist\"\n  fi\ndone\n";
+		};
+		4FE610F1282A898B0060C002 /* Bundle login */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle login";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4F33FE2D280808C000585E5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F2C835C2819331A00B40361 /* Firefox.swift in Sources */,
+				4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */,
+				4F2C83512817FEA400B40361 /* Signal.swift in Sources */,
+				4F2C83532818155300B40361 /* PreferencesView.swift in Sources */,
+				4F2C83552818158600B40361 /* GeneralView.swift in Sources */,
+				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,
+				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
+				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
+				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
+				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
+				4F2C835E2819357C00B40361 /* Slack.swift in Sources */,
+				4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */,
+				4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */,
+				4F2C836828193E9D00B40361 /* Defaults.swift in Sources */,
+				4F0E43F7280E9E820093B51A /* AppRow.swift in Sources */,
+				4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */,
+				4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */,
+				4F33FE37280808C000585E5A /* AppList.swift in Sources */,
+				4F2C8361281935D000B40361 /* AppBundles.swift in Sources */,
+				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
+				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
+				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
+				4F5CD066282C3C4A000A5536 /* View.swift in Sources */,
+				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,
+				4F868ED5286B224800383328 /* Menubar.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE3E280808C200585E5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F33FE48280808C200585E5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FCF098A282D3A9200597F70 /* TestPopUp.swift in Sources */,
+				4F33FE53280808C200585E5A /* TestPreferences.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F33FE44280808C200585E5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F33FE30280808C000585E5A /* Pareto Updater */;
+			targetProxy = 4F33FE43280808C200585E5A /* PBXContainerItemProxy */;
+		};
+		4F33FE4E280808C200585E5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F33FE30280808C000585E5A /* Pareto Updater */;
+			targetProxy = 4F33FE4D280808C200585E5A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4F33FE54280808C200585E5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4F33FE55280808C200585E5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		4F33FE57280808C200585E5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Pareto Updater/Pareto_Updater.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 44;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Pareto Updater/Preview Content\"";
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pareto-Updater-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = co.niteo.ParetoUpdater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4F33FE58280808C200585E5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Pareto Updater/Pareto_Updater.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 44;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Pareto Updater/Preview Content\"";
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Pareto-Updater-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = co.niteo.ParetoUpdater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4F33FE5A280808C200585E5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.niteo.Pareto-UpdaterTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/Contents/MacOS/Pareto Updater";
+			};
+			name = Debug;
+		};
+		4F33FE5B280808C200585E5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.niteo.Pareto-UpdaterTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/Contents/MacOS/Pareto Updater";
+			};
+			name = Release;
+		};
+		4F33FE5D280808C200585E5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.niteo.Pareto-UpdaterUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Pareto Updater";
+			};
+			name = Debug;
+		};
+		4F33FE5E280808C200585E5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = PM784W7B8X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.niteo.Pareto-UpdaterUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Pareto Updater";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4F33FE2C280808C000585E5A /* Build configuration list for PBXProject "Pareto Updater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F33FE54280808C200585E5A /* Debug */,
+				4F33FE55280808C200585E5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F33FE56280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto Updater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F33FE57280808C200585E5A /* Debug */,
+				4F33FE58280808C200585E5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F33FE59280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto UpdaterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F33FE5A280808C200585E5A /* Debug */,
+				4F33FE5B280808C200585E5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F33FE5C280808C200585E5A /* Build configuration list for PBXNativeTarget "Pareto UpdaterUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F33FE5D280808C200585E5A /* Debug */,
+				4F33FE5E280808C200585E5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4FE610D9282A87F40060C002 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4FE610DC282A87FF0060C002 /* XCRemoteSwiftPackageReference "AppUpdater" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/teamniteo/AppUpdater";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/Version";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 3.0.0;
+				minimumVersion = 1.0.0;
+			};
+		};
+		4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Regex";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4FE610E8282A88660060C002 /* XCRemoteSwiftPackageReference "Regex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Regex";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4FE610EB282A887A0060C002 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4FE610EE282A888C0060C002 /* XCRemoteSwiftPackageReference "Cache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hyperoslo/Cache";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4FE610DA282A87F40060C002 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610D9282A87F40060C002 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		4FE610DD282A87FF0060C002 /* AppUpdater */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610DC282A87FF0060C002 /* XCRemoteSwiftPackageReference "AppUpdater" */;
+			productName = AppUpdater;
+		};
+		4FE610E0282A88260060C002 /* Version */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */;
+			productName = Version;
+		};
+		4FE610E3282A88400060C002 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		4FE610E6282A88540060C002 /* Regex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */;
+			productName = Regex;
+		};
+		4FE610E9282A88660060C002 /* Regex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */;
+			productName = Regex;
+		};
+		4FE610EC282A887A0060C002 /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610EB282A887A0060C002 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			productName = LaunchAtLogin;
+		};
+		4FE610EF282A888C0060C002 /* Cache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FE610EE282A888C0060C002 /* XCRemoteSwiftPackageReference "Cache" */;
+			productName = Cache;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4F33FE29280808C000585E5A /* Project object */;
+}
