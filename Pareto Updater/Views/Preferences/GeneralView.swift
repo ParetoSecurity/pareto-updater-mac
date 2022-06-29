@@ -14,7 +14,8 @@ struct GeneralView: View {
     @ObservedObject private var atLogin = LaunchAtLogin.observable
     @Default(.hideWhenNoUpdates) var hideWhenNoUpdates
     @Default(.checkForUpdatesRecentOnly) var checkForUpdatesRecentOnly
-
+    @Default(.showBeta) var showBeta
+    @Default(.betaChannel) var betaChannel
     var body: some View {
         Form {
             Section(
@@ -29,6 +30,14 @@ struct GeneralView: View {
                         Toggle("Only show in menu bar when the updates are available", isOn: $hideWhenNoUpdates)
                     }
                 }
+            if showBeta {
+                Section(
+                    footer: Text("Latest features but potentially bugs to report.").font(.footnote)) {
+                        VStack(alignment: .leading) {
+                            Toggle("Update app to pre-release builds", isOn: $betaChannel)
+                        }
+                    }
+            }
             Section(
                 footer: Text("Only scan for updates for recently used apps.").font(.footnote)) {
                     VStack(alignment: .leading) {

@@ -80,7 +80,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
-
         DispatchQueue.main.async { [self] in
             status = .DownloadingUpdate
             fractionCompleted = 0.0
@@ -139,7 +138,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 updatable = false
                 fractionCompleted = 0.0
             }
-            DispatchQueue.global(qos: .background).async(execute: workItem!)
+            DispatchQueue.global(qos: .userInteractive).async(execute: workItem!)
         }
     }
 
@@ -204,4 +203,3 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return version
     }
 }
-
