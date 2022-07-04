@@ -85,7 +85,7 @@ struct AppList: View {
                 }.frame(minHeight: 20.0)
             }
         }
-        .padding(.vertical, 25)
+        .padding(.vertical, 15)
         .padding(.horizontal, 10)
         .onAppear {
             viewModel.fetchData()

@@ -49,11 +49,26 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var help: String {
-        "Installed: \(textVersion), latest: \(latestVersionCached)"
+        "\(textVersion) Latest: \(latestVersionCached)"
     }
 
     var hasUpdate: Bool {
         latestVersion > currentVersion
+    }
+
+    func nibbles(version: String, sep: Character = ".") -> Int {
+        var total = 0
+        var round = 0
+        let safeVersion = version.lowercased().replacingAllMatches(of: Regex("[a-z]+"), with: "")
+        let levels = safeVersion.split(separator: sep).reversed()
+        for level in levels {
+            if level.contains("-") {
+                total = nibbles(version: String(level), sep: "-")
+            }
+            total += (Int(level) ?? 1) * Int(10 << round)
+            round += 1
+        }
+        return total
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {

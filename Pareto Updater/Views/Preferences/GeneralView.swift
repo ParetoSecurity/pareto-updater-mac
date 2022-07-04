@@ -44,6 +44,11 @@ struct GeneralView: View {
                         Toggle("Update check only for apps used in the last week", isOn: $checkForUpdatesRecentOnly)
                     }
                 }
+            if showBeta {
+                HStack {
+                    Button("Show Apps") {}
+                }
+            }
         }
 
         .frame(width: 350).padding(25)

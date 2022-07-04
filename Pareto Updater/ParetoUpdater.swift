@@ -32,6 +32,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var fetchSink: AnyCancellable?
     private var finishedLaunch: Bool = false
 
+    func application(_: NSApplication, open urls: [URL]) {
+        for url in urls {
+            processAction(url)
+        }
+    }
+
     static let updater = GithubAppUpdater(
         updateURL: "https://paretosecurity.app/api/updates?app=updater&uuid=\(Defaults[.machineUUID])&version=\(Constants.appVersion)&os_version=\(Constants.macOSVersionString)&distribution=\(Constants.utmSource)",
         allowPrereleases: Defaults[.betaChannel],
@@ -165,6 +171,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidBecomeActive(_: Notification) {
+        if Constants.isRunningTests {
+            return
+        }
         if hideWhenNoUpdates {
             statusItem?.isVisible = true
             finishedLaunch = false
@@ -176,6 +185,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {
+        if Constants.isRunningTests {
+            return
+        }
         // Verify license
         #if !SETAPP_ENABLED
             do {
@@ -212,7 +224,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         #endif
 
-        popOver.behavior = .transient
+        popOver.behavior = .applicationDefined
         popOver.animates = true
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
@@ -221,7 +233,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusItem?.isVisible = true
 
         if let menuButton = statusItem?.button {
-            let view = NSHostingView(rootView: Menubar())
+            let view = NSHostingView(rootView: MenuBarView())
             view.translatesAutoresizingMaskIntoConstraints = false
             menuButton.addSubview(view)
             menuButton.target = self
@@ -271,11 +283,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             updateHiddenState()
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
+            // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
         }
         noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { [self] _ in
             updateHiddenState()
             popOver.contentViewController?.viewDidLayout()
             popOver.contentViewController?.viewDidAppear()
+            // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
         }
         AppDelegate.bundleModel.fetchData()
     }
@@ -294,6 +308,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 popOver.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
                 popOver.contentViewController?.view.window?.makeKey()
                 popOver.contentViewController?.view.window?.level = .floating
+                popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSSize(width: 10, height: 10)
             }
         }
     }
@@ -322,7 +337,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 @main
 struct ParetoUpdaterApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    @AppStorage("showMenuBar") var showMenuBar = true
     var body: some Scene {
         Settings {
             PreferencesView(selected: PreferencesView.Tabs.general)

@@ -15,7 +15,7 @@ struct PreferencesView: View {
     @Default(.showBeta) var showBeta
 
     enum Tabs: Hashable {
-        case general, about, apps
+        case general, about, apps, license
     }
 
     var body: some View {
@@ -32,6 +32,11 @@ struct PreferencesView: View {
                     }
                     .tag(Tabs.apps)
             }
+            LicenseView()
+                .tabItem {
+                    Label("License", systemImage: "rectangle.badge.person.crop")
+                }
+                .tag(Tabs.license)
             AboutView()
                 .tabItem {
                     Label("About", systemImage: "info")

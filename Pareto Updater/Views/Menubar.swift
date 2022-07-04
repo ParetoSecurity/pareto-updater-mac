@@ -7,7 +7,7 @@
 import Defaults
 import SwiftUI
 
-struct Menubar: View {
+struct MenuBarView: View {
     var body: some View {
         ZStack {
             // Moves in from leading out, out to trailing edge.
@@ -21,10 +21,10 @@ struct Menubar: View {
     }
 }
 
-struct TimerView_Previews: PreviewProvider {
+struct MenuBarView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            Menubar().preferredColorScheme($0)
+            MenuBarView().preferredColorScheme($0)
         }
     }
 }
