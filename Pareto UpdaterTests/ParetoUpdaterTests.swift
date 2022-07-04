@@ -79,4 +79,21 @@ class ParetoUpdaterTests: XCTestCase {
         assert(app.version == "2.17")
         assert(app.url == "http://apps.shinynode.com/apps/update/image2icon_943.zip")
     }
+
+    func testAppNibble() throws {
+        let app = AppUpdater()
+        assert(app.nibbles(version: "1.1.1") == 70)
+        assert(app.nibbles(version: "1.1.1.1") == 150)
+        assert(app.nibbles(version: "17.1") == 350)
+        assert(app.nibbles(version: "17.1.1") == 710)
+    }
+
+    func testAppNibbleSubversion() throws {
+        let app = AppUpdater()
+        assert(app.nibbles(version: "17.1-1alpha") == 380)
+        assert(app.nibbles(version: "17.1-2alpha") == 390)
+        assert(app.nibbles(version: "1.1.1-2") == 110)
+        assert(app.nibbles(version: "1.1.1-3") == 120)
+        assert(app.nibbles(version: "17.1-1") == 380)
+    }
 }
