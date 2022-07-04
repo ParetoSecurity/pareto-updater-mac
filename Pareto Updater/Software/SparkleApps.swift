@@ -55,20 +55,6 @@ class SparkleApp: AppUpdater {
         return update
     }
 
-    func nibbles(version: String, sep: Character = ".") -> Int {
-        var total = 0
-        var round = 0
-        let levels = version.split(separator: sep).reversed()
-        for level in levels {
-            if level.contains("-") {
-                total = nibbles(version: String(level), sep: "-")
-            }
-            total = (Int(level) ?? 1) * Int(2 << round)
-            round += 1
-        }
-        return total
-    }
-
     override var hasUpdate: Bool {
         nibbles(version: latestVersionCached) > nibbles(version: textVersion)
     }

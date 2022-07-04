@@ -31,7 +31,7 @@ struct AppRow: View {
             VStack(alignment: .leading) {
                 Text(app.appMarketingName)
                     .font(.body)
-                Text(app.textVersion)
+                Text(app.help)
                     .font(.caption2)
                     .multilineTextAlignment(.center)
             }
@@ -78,8 +78,7 @@ struct AppRow: View {
                         ).foregroundColor(.secondary)
                 }
             }
-
-        }.help(app.help)
+        }
     }
 }
 

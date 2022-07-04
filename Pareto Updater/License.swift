@@ -43,6 +43,10 @@ private extension JWT {
         return claim(name: "teamID").string
     }
 
+    var plan: String? {
+        return claim(name: "plan").string
+    }
+
     var isTeamOwner: Bool? {
         return claim(name: "isTeamOwner").boolean
     }
@@ -153,12 +157,26 @@ struct LicensePayload: Decodable, Equatable {
     // Custom data.
     var uuid: String
     var role: String
+    var plan: String
+    func isValid() -> Bool {
+        return role != "" && subject != "" && plan.contains("updater")
+    }
 }
 
 func VerifyLicense(withLicense data: String, publicKey: String = rsaPublicKey) throws -> LicensePayload {
     if try License.verify(jwt: data, withKey: publicKey) {
         let jwt = try decode(jwt: data)
-        return LicensePayload(subject: jwt.subject!, issuedAt: jwt.issuedAt!, uuid: jwt.uuid!, role: jwt.role!)
+        let ticket = LicensePayload(
+            subject: jwt.subject!,
+            issuedAt: jwt.issuedAt!,
+            uuid: jwt.uuid!,
+            role: jwt.role!,
+            plan: jwt.plan ?? "auditor"
+        )
+        if !ticket.isValid() {
+            throw License.Error.invalidLicense
+        }
+        return ticket
     }
     throw License.Error.invalidLicense
 }

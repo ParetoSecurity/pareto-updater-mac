@@ -43,6 +43,7 @@
 		4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E1282BBED2007897A6 /* GoogleChrome.swift */; };
 		4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E3282BDEFE007897A6 /* AppsView.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
+		4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */; };
 		4FCF098A282D3A9200597F70 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCF0989282D3A9200597F70 /* TestPopUp.swift */; };
 		4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE610C5282A56A30060C002 /* SpyBuster.swift */; };
 		4FE610DB282A87F40060C002 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610DA282A87F40060C002 /* Defaults */; };
@@ -111,6 +112,7 @@
 		4F9209E1282BBED2007897A6 /* GoogleChrome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleChrome.swift; sourceTree = "<group>"; };
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
+		4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		4FCF0989282D3A9200597F70 /* TestPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		4FE610C5282A56A30060C002 /* SpyBuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpyBuster.swift; sourceTree = "<group>"; };
 		4FE610D8282A87870060C002 /* Version */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Version; path = "/Users/dz0ny/Library/Developer/Xcode/DerivedData/Pareto_Updater-bhcgnniayqiwsbetsqyqyfbxelpj/SourcePackages/checkouts/Version"; sourceTree = "<absolute>"; };
@@ -196,6 +198,7 @@
 				4F9209E3282BDEFE007897A6 /* AppsView.swift */,
 				4F2C83592818188300B40361 /* AboutView.swift */,
 				4F2C83522818155300B40361 /* PreferencesView.swift */,
+				4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
 				4F5CD066282C3C4A000A5536 /* View.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,
+				4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */,
 				4F868ED5286B224800383328 /* Menubar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -749,7 +753,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/Contents/MacOS/Pareto Updater";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pareto Updater";
 			};
 			name = Debug;
 		};
@@ -769,7 +773,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/Contents/MacOS/Pareto Updater";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pareto Updater.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pareto Updater";
 			};
 			name = Release;
 		};

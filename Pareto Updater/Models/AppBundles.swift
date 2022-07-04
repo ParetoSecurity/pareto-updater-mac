@@ -63,16 +63,17 @@ class AppBundles: AppBundle, ObservableObject {
         let transaction = SentrySDK.startTransaction(name: "Update App", operation: "updater")
         DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
+            let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
             withApp.updateApp { [self] _ in
-                let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
-                lock.wait()
-                DispatchQueue.main.async {
-                    self.installing = false
-                    transaction.finish()
-                    span.finish()
-                }
-                self.fetchData()
+                lock.signal()
             }
+            lock.wait()
+            DispatchQueue.main.async {
+                self.installing = false
+                transaction.finish()
+                span.finish()
+            }
+            self.fetchData()
         }
     }
 

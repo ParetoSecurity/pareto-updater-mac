@@ -125,10 +125,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install sentry-cli
-        run: brew install getsentry/tools/sentry-cli
+      # - name: Install sentry-cli
+      #   run: brew install getsentry/tools/sentry-cli
 
-      - name: "Upload debug symbols"
-        run: make sentry-debug-upload
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      # - name: "Upload debug symbols"
+      #   run: make sentry-debug-upload
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
