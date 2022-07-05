@@ -85,7 +85,7 @@ class SparkleApp: AppUpdater {
         for app in allApps {
             let plist = AppBundles.readPlistFile(fileURL: app.appendingPathComponent("Contents/Info.plist"))
             if let url = plist?["SUFeedURL"] as? String, let appName = plist?["CFBundleName"] as? String, let appBundle = plist?["CFBundleName"] as? String {
-                if url.contains("https://") {
+                if url.contains("https://"), !Constants.unsupportedBundles.contains(appBundle) {
                     let bundleApp = SparkleApp(
                         name: appName,
                         bundle: appBundle,

@@ -102,6 +102,34 @@ let sourceXML3 = """
 </rss>
 """
 
+let sourceXML4 = """
+
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+
+                       <item>
+            <sparkle:minimumSystemVersion>10.13.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>
+                https://updates.folivora.ai/needs_manual_upgrade.html
+            </sparkle:releaseNotesLink>
+            <BTTPaidUpgradeCheckEnabled>false</BTTPaidUpgradeCheckEnabled>
+
+            <pubDate>Mon, 03 Aug 2020 16:25:35 +0200</pubDate>
+            <hashes>A73DFC1D8E3BD27CD1EE79D86D971D2956287F4D::D57D7B1F897AD24351BD7DF58C230F510C3C4AE5::d2d36e8c0ec63783bf1163eb3e570da9::FB5F79BF2B8829F11A87D1D30171808374EFE533::62B7890BDEA94DC72B2246F920DD00C7A2F7F2B8::98995FA9C57D959FD08B130ABBA020E6CE8620FF::C422AA08A78995C085B515CA4C57D3DF9919D2D3::9D7E11B98A91A3CFC7B601D056E05F5FB430EC7E::84B1AB4B40CAFB6B58D8B89DEC6C6804A97C785D::B38F6CD317E3E2DAEFD1CEF64801D9A91C425D9C::7A4282DE2E9840A66B6A39C713900DA870AEF8F2::3965978617BC7291613927E4D611D7DCC050F569::63D907FEB7284BD6DC8A3588A363F31920B28133::191052552388D34B9882530440FDF80DA3B61AEA::C5CBD6266463132A87948E735B82B0AA97976678::EBA215BA2B337685BF1827BFD018D91F129A0555::88922BDB7630C269FE117FC6FFAD10BE9D38D81C::127D9BB93A1E335A30C18645BE32C6FA83A87C49::0106D0EB2699C8BD82B8D0FE462E8EF3E625A3AB::4248B4705BFCED43FD9C887BCA44A4DB9971D847::C8DCA529208BFE6E9C659A49F947F9ACEF5F3C2AC::71B9D233CE39FA7773249C7D8BD3CEE083E7D340::951A9FE8DABC188A13807F6D8D5E1630CB22775F::F8602A28B9A12C01C01CCB7BD5BF0F33B690F451::74CEC8DDEA2CDB6806FAEE0F56F2497C2F89E809::176342EE82A2AA31381181C0BEDD094E1EC8858E::::</hashes>
+<enclosure
+                url="https://folivora.ai/releases/doesnotexist.zip"
+                sparkle:version="1631"
+                sparkle:shortVersionString="3.401"
+                 type="application/octet-stream"
+                length="18859402"
+                sparkle:dsaSignature="MC0CFD5gUc5iOrUTmJt9cn6MBtT0sqdmAhUAvQG9bOXqPkG7nmGpLYTSCud7Yqs="
+            />
+        </item>
+    </channel>
+</rss>
+
+"""
 class ParetoUpdaterTests: XCTestCase {
     func testCurrentVersion() throws {
         let bundles = AppBundles()
@@ -142,6 +170,12 @@ class ParetoUpdaterTests: XCTestCase {
         let app = AppCast(data: Data(sourceXML3.utf8))
         assert(app.version == "1.3.0")
         assert(app.url == "https://dl-portal.iina.io/IINA.v1.3.0.dmg")
+    }
+
+    func testAppCast4() throws {
+        let app = AppCast(data: Data(sourceXML4.utf8))
+        assert(app.version == "0.0.0")
+        assert(app.url == "")
     }
 
     func testAppNibble() throws {

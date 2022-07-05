@@ -16,6 +16,10 @@ import SwiftUI
 import Version
 
 public enum Constants {
+    static let unsupportedBundles: Set<String> = [
+        "com.hegenberg.BetterTouchTool",
+        "com.culturedcode.ThingsMac"
+    ]
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
     static let useEdgeCache = true
@@ -25,7 +29,7 @@ public enum Constants {
     static let buildVersion: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     static let machineName: String = Host.current().localizedName!
     static let macOSVersion = ProcessInfo.processInfo.operatingSystemVersion
-    static let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    static let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent(Bundle.main.bundleIdentifier ?? "co.niteo.pareto-updater")
     static let macOSVersionString = "\(macOSVersion.majorVersion).\(macOSVersion.minorVersion).\(macOSVersion.patchVersion)"
     static var isRunningTests: Bool {
         let env = ProcessInfo.processInfo.environment

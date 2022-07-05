@@ -106,7 +106,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersionCached).\(latestURL.pathExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
-            os_log("Update from cache at \(cachedPath.debugDescription)")
+            os_log("Update from cache at %{public}", cachedPath.debugDescription)
             completion(latestURL, cachedPath)
         }
         // os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(latestURL.debugDescription)")
@@ -117,7 +117,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     try FileManager.default.removeItem(at: cachedPath)
                 }
                 try FileManager.default.moveItem(atPath: response.fileURL!.path, toPath: cachedPath.path)
-                os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(self.latestURL.debugDescription)")
+                os_log("Update downloadLatest: %{public} from %{public}", cachedPath.debugDescription, self.latestURL.debugDescription)
                 completion(latestURL, cachedPath)
             } catch {
                 completion(latestURL, response.fileURL!)

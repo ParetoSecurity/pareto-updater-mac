@@ -46,7 +46,7 @@ struct GeneralView: View {
                 }
             if showBeta {
                 HStack {
-                    Button("Show Apps") {}
+                    Link("Caches", destination: Constants.cacheFolder)
                 }
             }
         }

@@ -27,23 +27,22 @@ struct AboutView: View {
         HStack {
             Image("Logo").resizable()
                 .aspectRatio(contentMode: .fit).onTapGesture {
-                    if !showBeta {
-                        konami += 1
-                        if konami == 3 {
-                            showBeta = true
-                            konami = 0
+                    konami += 1
+                    if konami >= 3 {
+                        showBeta.toggle()
+                        konami = 0
+                        if showBeta {
                             let alert = NSAlert()
                             alert.messageText = "You are now part of a secret society seeing somewhat mysterious things."
                             alert.alertStyle = NSAlert.Style.informational
                             alert.addButton(withTitle: "Let me in")
                             alert.runModal()
-                        }
-
-                    } else {
-                        konami += 1
-                        if konami >= 3 {
-                            showBeta = false
-                            konami = 0
+                        } else {
+                            let alert = NSAlert()
+                            alert.messageText = "Sad to see you go"
+                            alert.alertStyle = NSAlert.Style.informational
+                            alert.addButton(withTitle: "Bye")
+                            alert.runModal()
                         }
                     }
                 }
@@ -54,7 +53,7 @@ struct AboutView: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Version: \(Constants.appVersion) - \(Constants.buildVersion)")
-                    Text("Channel: \(Constants.utmSource)")
+                    Text("\(Constants.utmSource)")
                     HStack(spacing: 10) {
                         if status == UpdateStates.Failed {
                             HStack(spacing: 0) {
@@ -86,7 +85,7 @@ struct AboutView: View {
                 }
             }.padding(.leading, 20.0)
 
-        }.frame(width: 350, height: 100).padding(25).onAppear(perform: fetch)
+        }.frame(width: 350, height: 150).padding(25).onAppear(perform: fetch)
     }
 
     private func fetch() {
