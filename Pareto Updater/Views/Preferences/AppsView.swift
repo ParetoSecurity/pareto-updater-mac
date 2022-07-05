@@ -12,6 +12,16 @@ import SwiftUI
 struct AppsView: View {
     @StateObject var viewModel: AppBundles
 
+    func copy() {
+        var logs = [String]()
+        for app in viewModel.installedApps {
+            logs.append("\(app.appMarketingName), \(app.help)")
+        }
+
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(logs.joined(separator: "\n"), forType: .string)
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Installed Apps").font(.caption2)
@@ -25,7 +35,9 @@ struct AppsView: View {
         .padding(25)
         .onAppear {
             viewModel.fetchData()
-        }
+        }.contextMenu(ContextMenu(menuItems: {
+            Button("Copy app list", action: copy)
+        }))
     }
 }
 

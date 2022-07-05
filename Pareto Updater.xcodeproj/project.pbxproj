@@ -23,6 +23,7 @@
 		4F2C835E2819357C00B40361 /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C835D2819357C00B40361 /* Slack.swift */; };
 		4F2C8361281935D000B40361 /* AppBundles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C8360281935D000B40361 /* AppBundles.swift */; };
 		4F2C836828193E9D00B40361 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C836728193E9D00B40361 /* Defaults.swift */; };
+		4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F303AF42874547200C983BF /* UpdaterTests.swift */; };
 		4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE34280808C000585E5A /* ParetoUpdater.swift */; };
 		4F33FE37280808C000585E5A /* AppList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE36280808C000585E5A /* AppList.swift */; };
 		4F33FE39280808C200585E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE38280808C200585E5A /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		4F2C835D2819357C00B40361 /* Slack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slack.swift; sourceTree = "<group>"; };
 		4F2C8360281935D000B40361 /* AppBundles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundles.swift; sourceTree = "<group>"; };
 		4F2C836728193E9D00B40361 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		4F303AF42874547200C983BF /* UpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterTests.swift; sourceTree = "<group>"; };
 		4F33FE31280808C000585E5A /* Pareto Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pareto Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F33FE34280808C000585E5A /* ParetoUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParetoUpdater.swift; sourceTree = "<group>"; };
 		4F33FE36280808C000585E5A /* AppList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppList.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */,
 				4F0DEA76286D8F7700344B92 /* LicenseTests.swift */,
+				4F303AF42874547200C983BF /* UpdaterTests.swift */,
 			);
 			path = "Pareto UpdaterTests";
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */,
 				4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */,
 				4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */,
 			);

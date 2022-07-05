@@ -31,6 +31,18 @@ extension Bundle {
         }
         return dictionary.value(forKey: key) as? String
     }
+
+    var icon: NSImage? {
+        if let appPath = URL(string: path.string)?.path {
+            return NSWorkspace.shared.icon(forFile: appPath)
+        }
+
+        if let iconName = infoDictionary?["CFBundleIconFile"] as? String {
+            return NSImage(byReferencing: path.join("Contents").join("Resources").join(iconName).url)
+        }
+
+        return nil
+    }
 }
 
 func runCMD(app: String, args: [String]) -> String {

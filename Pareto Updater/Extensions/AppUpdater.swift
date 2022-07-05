@@ -228,10 +228,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if !isInstalled {
             return nil
         }
-        if let appPath = URL(string: applicationPath!)?.path {
-            return NSWorkspace.shared.icon(forFile: appPath)
-        }
-        return nil
+        return Bundle(path: applicationPath!)?.icon
     }
 
     public var latestVersion: Version {

@@ -25,13 +25,13 @@ struct PreferencesView: View {
                     Label("General", systemImage: "gear")
                 }
                 .tag(Tabs.general)
-            if showBeta {
-                AppsView(viewModel: AppDelegate.bundleModel)
-                    .tabItem {
-                        Label("Apps", systemImage: "app.badge")
-                    }
-                    .tag(Tabs.apps)
-            }
+
+            AppsView(viewModel: AppDelegate.bundleModel)
+                .tabItem {
+                    Label("Apps", systemImage: "app.badge")
+                }
+                .tag(Tabs.apps)
+
             LicenseView()
                 .tabItem {
                     Label("License", systemImage: "rectangle.badge.person.crop")
