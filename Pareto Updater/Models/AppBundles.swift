@@ -33,7 +33,7 @@ class AppBundles: AppBundle, ObservableObject {
 
     public var updatableApps: [AppUpdater] {
         apps.filter { app in
-            app.updatable && app.isInstalled
+            app.updatable && app.isInstalled && app.usedRecently
         }
     }
 

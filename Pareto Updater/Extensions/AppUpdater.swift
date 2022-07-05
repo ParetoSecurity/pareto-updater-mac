@@ -13,6 +13,7 @@ import Path
 import Regex
 import SwiftUI
 import Version
+import Defaults
 
 enum AppUpdaterStatus {
     case Idle
@@ -73,6 +74,20 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         latestVersion > currentVersion
     }
 
+    public var usedRecently: Bool {
+        if !Defaults[.checkForUpdatesRecentOnly] {
+            return true
+        }
+        
+        if let appPath = applicationPath {
+            let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
+            let attributes = NSMetadataItem(url: URL(fileURLWithPath: appPath))
+            guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else { return false }
+            return lastUse >= weekAgo
+        }
+        return true
+    }
+    
     func nibbles(version: String, sep: Character = ".") -> Int {
         var total = 0
         var round = 0
