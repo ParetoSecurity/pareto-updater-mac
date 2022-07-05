@@ -23,6 +23,23 @@ enum AppUpdaterStatus {
     case Failed
 }
 
+struct AppStoreResponse: Codable {
+    let resultCount: Int
+    let results: [AppStoreResult]
+}
+
+struct AppStoreResult: Codable {
+    let version, wrapperType: String
+    let artistID: Int
+    let artistName: String
+
+    enum CodingKeys: String, CodingKey {
+        case version, wrapperType
+        case artistID = "artistId"
+        case artistName
+    }
+}
+
 public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public static func == (lhs: AppUpdater, rhs: AppUpdater) -> Bool {
         lhs.UUID == rhs.UUID
@@ -72,7 +89,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
-        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURL.pathExtension)")
+        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersionCached).\(latestURL.pathExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
             os_log("Update from cache at \(cachedPath.debugDescription)")
             completion(latestURL, cachedPath)
@@ -163,7 +180,13 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var textVersion: String {
-        (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased()
+        if let path = applicationPath {
+            if let version = Bundle.appVersion(path: path) {
+                return version.lowercased()
+            }
+            return "0.0.0"
+        }
+        return "0.0.0"
     }
 
     var currentVersion: Version {
@@ -212,7 +235,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: Version {
-        if !latestVersionCached.isEmpty {
+        if !latestVersionCached.isEmpty, latestVersionCached != "0.0.0" {
             return Version(latestVersionCached) ?? Version(0, 0, 0)
         }
 

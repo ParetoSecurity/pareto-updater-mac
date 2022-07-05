@@ -21,19 +21,25 @@ struct AppRow: View {
                 Image(nsImage: appIcon)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 25)
+                    .frame(height: 30)
             } else {
                 Image(systemName: "app.dashed")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 25)
+                    .frame(height: 30)
             }
             VStack(alignment: .leading) {
                 Text(app.appMarketingName)
                     .font(.body)
-                Text(app.help)
-                    .font(.caption2)
-                    .multilineTextAlignment(.center)
+                switch app.status {
+                case .DownloadingUpdate:
+                    ProgressView(value: app.fractionCompleted).frame(height: 1.0)
+                case .InstallingUpdate:
+                    Text("Installing ...").font(.footnote)
+                default:
+                    Text(app.help)
+                        .font(.footnote)
+                }
             }
 
             Spacer()
@@ -42,20 +48,16 @@ struct AppRow: View {
                 ProgressView().frame(width: 15.0, height: 15.0)
                     .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
             case .DownloadingUpdate:
-                ProgressView(value: app.fractionCompleted)
+                Spacer()
             case .InstallingUpdate:
-                HStack {
-                    ProgressView().frame(width: 15.0, height: 15.0)
-                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
-                    Text("Installing ...")
-                }
+                Spacer()
             default:
                 if app.updatable {
                     if onUpdate != nil {
                         Button {
                             onUpdate?()
                         }
-                        label: {
+                    label: {
                             Image(systemName: "arrow.down.app.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

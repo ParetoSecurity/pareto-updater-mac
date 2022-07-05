@@ -17,6 +17,7 @@ protocol AppBundle {
 
 class AppBundles: AppBundle, ObservableObject {
     @Published var customApps: [AppUpdater]
+    @Published var sparkleApps: [AppUpdater]
     @Published var updating: Bool = false
     @Published var installing: Bool = false
 
@@ -25,16 +26,8 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     public var apps: [AppUpdater] {
-        (customApps + SparkleApp.all.filter { app in
-            !customAppBundles.contains(app.appBundle)
-        }).sorted(by: { lha, rha in
+        (customApps + sparkleApps).sorted(by: { lha, rha in
             lha.appMarketingName < rha.appMarketingName
-        })
-    }
-
-    public var customAppBundles: Set<String> {
-        Set(customApps.map { app in
-            app.appBundle
         })
     }
 
@@ -101,6 +94,13 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     func fetchData() {
+        let bundles = Set(customApps.map { app in
+            app.appBundle
+        })
+        sparkleApps = SparkleApp.all.filter { app in
+            !bundles.contains(app.appBundle)
+        }
+
         if updating {
             return
         }
@@ -109,7 +109,7 @@ class AppBundles: AppBundle, ObservableObject {
             DispatchQueue.main.async {
                 self.updating = true
             }
-            for app in self.installedApps {
+            for app in self.apps {
                 DispatchQueue.main.async {
                     app.status = .GatheringInfo
                 }
@@ -147,7 +147,12 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     init() {
-        customApps = [
+        let bundledApps = [
+            App1Password8AppUpdater.sharedInstance,
+            AppBitwardenUpdater.sharedInstance,
+            AppBraveBrowserUpdater.sharedInstance,
+            AppVSCodeApp.sharedInstance,
+            AppSpotify.sharedInstance,
             AppSignal.sharedInstance,
             AppFirefox.sharedInstance,
             AppGoogleChrome.sharedInstance,
@@ -159,5 +164,13 @@ class AppBundles: AppBundle, ObservableObject {
         ].sorted(by: { lha, rha in
             lha.appMarketingName < rha.appMarketingName
         })
+
+        customApps = bundledApps
+        let bundles = Set(bundledApps.map { app in
+            app.appBundle
+        })
+        sparkleApps = SparkleApp.all.filter { app in
+            !bundles.contains(app.appBundle)
+        }
     }
 }

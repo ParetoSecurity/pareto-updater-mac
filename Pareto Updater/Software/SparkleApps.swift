@@ -60,7 +60,7 @@ class SparkleApp: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = viaEdgeCache(updateURL)
+        let url = updateURL
         os_log("Requesting %{public}s", url)
         AF.request(url).responseString(queue: Constants.httpQueue, completionHandler: { response in
             if response.error == nil {
@@ -69,6 +69,7 @@ class SparkleApp: AppUpdater {
                     return
                 }
                 let app = AppCast(data: xml)
+                os_log("%{public}s version: %{public}s", self.appBundle, app.version)
                 completion(app.version)
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
@@ -83,13 +84,14 @@ class SparkleApp: AppUpdater {
         let allApps = try! FileManager.default.contentsOfDirectory(at: URL(string: "/Applications")!, includingPropertiesForKeys: [.isApplicationKey])
         for app in allApps {
             let plist = AppBundles.readPlistFile(fileURL: app.appendingPathComponent("Contents/Info.plist"))
-            if plist?["SUFeedURL"] != nil {
-                let appBundle = plist?["CFBundleName"] as! String
-                let appName = plist?["CFBundleName"] as! String
-                let url = plist?["SUFeedURL"] as! String
-                os_log("%{public}s URL: %{public}s", appBundle, url)
-                if !url.isEmpty {
-                    detectedApps.append(SparkleApp(name: appName, bundle: appBundle, url: url))
+            if let url = plist?["SUFeedURL"] as? String, let appName = plist?["CFBundleName"] as? String, let appBundle = plist?["CFBundleName"] as? String {
+                if url.contains("https://") {
+                    let bundleApp = SparkleApp(
+                        name: appName,
+                        bundle: appBundle,
+                        url: url
+                    )
+                    detectedApps.append(bundleApp)
                 }
             }
         }

@@ -22,23 +22,33 @@ struct Enclosure: Codable, DynamicNodeEncoding {
     }
 
     let url: String
-    let shortVersionString: String
+    let shortVersionString: String?
+    let version: String?
 
     enum CodingKeys: String, CodingKey {
         case url
         case shortVersionString = "sparkle:shortVersionString"
+        case version = "sparkle:version"
     }
 }
 
 struct Item: Codable {
-    let title: String
-    let pubDate: String
+    let title: String?
+    let pubDate: String?
+    let shortVersionString: String?
     let enclosure: Enclosure
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case pubDate
+        case enclosure
+        case shortVersionString
+    }
 }
 
 struct Channel: Codable {
-    let link: String
-    let title: String
+    let link: String?
+    let title: String?
     let item: [Item]
 }
 
@@ -54,7 +64,16 @@ class AppCast {
         let decoder = XMLDecoder()
         decoder.shouldProcessNamespaces = true
         let decoded = try? decoder.decode(RSS.self, from: data)
-        version = decoded?.channel.item.first?.enclosure.shortVersionString ?? "0.0.0"
+        version = "0.0.0"
+        if let ve = decoded?.channel.item.first?.enclosure.version, !ve.isEmpty {
+            version = ve
+        }
+        if let ve = decoded?.channel.item.first?.enclosure.shortVersionString, !ve.isEmpty {
+            version = ve
+        }
+        if let ve = decoded?.channel.item.first?.shortVersionString, !ve.isEmpty {
+            version = ve
+        }
         url = decoded?.channel.item.first?.enclosure.url ?? ""
     }
 }
