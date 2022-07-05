@@ -123,7 +123,7 @@ class AppBundles: AppBundle, ObservableObject {
                         app.updatable = false
                     }
                 }
-                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersionCached, app.textVersion, app.latestVersion.description)
+                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersionCached, app.currentVersion, app.latestVersion.description)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     app.status = .Idle

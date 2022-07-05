@@ -67,11 +67,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var help: String {
-        "\(textVersion) Latest: \(latestVersionCached)"
+        "\(currentVersion) Latest: \(latestVersionCached)"
     }
 
     var hasUpdate: Bool {
-        latestVersion > currentVersion
+        nibbles(version: latestVersionCached) > nibbles(version: currentVersion)
     }
 
     public var usedRecently: Bool {
@@ -199,7 +199,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
     }
 
-    var textVersion: String {
+    var currentVersion: String {
         if let path = applicationPath {
             if let version = Bundle.appVersion(path: path) {
                 return version.lowercased()
@@ -207,22 +207,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return "0.0.0"
         }
         return "0.0.0"
-    }
-
-    var currentVersion: Version {
-        if !isInstalled {
-            return Version(0, 0, 0)
-        }
-        var version = textVersion
-        if version.contains("alpha") {
-            version = version.replacingOccurrences(of: "alpha", with: "-alpha")
-        }
-        if version.contains("beta") {
-            version = version.replacingOccurrences(of: "beta", with: "-beta")
-        }
-
-        version = version.replacingOccurrences(of: ".-", with: "-")
-        return Version(version) ?? Version(0, 0, 0)
     }
 
     var applicationPath: String? {
@@ -251,16 +235,16 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return Bundle(path: applicationPath!)?.icon
     }
 
-    public var latestVersion: Version {
+    public var latestVersion: String {
         if !latestVersionCached.isEmpty, latestVersionCached != "0.0.0" {
-            return Version(latestVersionCached) ?? Version(0, 0, 0)
+            return latestVersionCached
         }
 
-        var version = Version(0, 0, 0)
+        var version = "0.0.0"
         let lock = DispatchSemaphore(value: 0)
         getLatestVersion { [self] latestVersion in
             latestVersionCached = latestVersion
-            version = Version(latestVersion) ?? Version(0, 0, 0)
+            version = latestVersion
             lock.signal()
         }
         lock.wait()

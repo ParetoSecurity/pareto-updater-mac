@@ -30,7 +30,7 @@ class AppSpotify: AppUpdater {
         #endif
     }
 
-    override var textVersion: String {
+    override var currentVersion: String {
         (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased().split(separator: ".")[0 ... 3].joined(separator: ".")
     }
 

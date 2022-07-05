@@ -55,10 +55,6 @@ class SparkleApp: AppUpdater {
         return update
     }
 
-    override var hasUpdate: Bool {
-        nibbles(version: latestVersionCached) > nibbles(version: textVersion)
-    }
-
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = updateURL
         os_log("Requesting %{public}s", url)

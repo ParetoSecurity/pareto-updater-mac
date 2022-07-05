@@ -35,15 +35,7 @@ class AppLibreOffice: AppUpdater {
         #endif
     }
 
-    override var currentVersion: Version {
-        if applicationPath == nil {
-            return Version(0, 0, 0)
-        }
-        let v = Bundle.appVersion(path: applicationPath ?? "1.2.3.4")?.split(separator: ".")
-        return Version(Int(v?[0] ?? "0") ?? 0, Int(v?[1] ?? "0") ?? 0, Int(v?[2] ?? "0") ?? 0)
-    }
-
-    func getLatestVersions(completion: @escaping ([String]) -> Void) {
+    override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://www.libreoffice.org/download/download/")
         os_log("Requesting %{public}s", url)
         let versionRegex = Regex("<span class=\"dl_version_number\">?([\\.\\d]+)</span>")
@@ -51,35 +43,11 @@ class AppLibreOffice: AppUpdater {
             if response.error == nil {
                 let html = response.value ?? "<span class=\"dl_version_number\">1.2.4</span>"
                 let versions = versionRegex.allMatches(in: html).map { $0.groups.first?.value ?? "1.2.4" }
-                completion(versions)
+                completion(versions.last ?? "0.0.0")
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
-                completion(["0.0.0"])
+                completion("0.0.0")
             }
         })
-    }
-
-    public var latestVersions: [Version] {
-        var tempVersions = [Version(0, 0, 0)]
-        let lock = DispatchSemaphore(value: 0)
-        getLatestVersions { versions in
-            tempVersions = versions.map { Version($0) ?? Version(0, 0, 0) }
-            lock.signal()
-        }
-        lock.wait()
-        return tempVersions
-    }
-
-    override func getLatestVersion(completion: @escaping (String) -> Void) {
-        if currentVersion.major == latestVersions.first?.major, currentVersion.minor == latestVersions.first?.minor {
-            // bug fix for latest
-            completion(latestVersions.first?.description ?? "0.0.0")
-        } else if currentVersion.major == latestVersions.last?.major, currentVersion.minor == latestVersions.last?.minor {
-            // bugfix for LTS
-            completion(latestVersions.last?.description ?? "0.0.0")
-        } else {
-            // very-old version, assume LTS should be used
-            completion(latestVersions.last?.description ?? "0.0.0")
-        }
     }
 }

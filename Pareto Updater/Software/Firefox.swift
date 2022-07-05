@@ -26,21 +26,6 @@ class AppFirefox: AppUpdater {
         "768a574c-75a2-536d-8785-ef9512981184"
     }
 
-    private func normalizedVersion(_ version: String) -> Version {
-        let v = version.split(separator: ".")
-        if v.count == 2 {
-            return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, 0)
-        }
-        return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
-    }
-
-    override var currentVersion: Version {
-        if !isInstalled {
-            return Version(0, 0, 0)
-        }
-        return normalizedVersion(Bundle.appVersion(path: applicationPath!)!)
-    }
-
     override var latestURL: URL {
         let lock = DispatchSemaphore(value: 0)
         var dmg = URL(string: "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US")!
@@ -61,11 +46,11 @@ class AppFirefox: AppUpdater {
         AF.request(url).responseDecodable(of: FirefoxVersions.self, queue: Constants.httpQueue) { response in
             if response.error == nil {
                 let version = response.value?.keys.sorted(by: { lhs, rhs in
-                    self.normalizedVersion(rhs) < self.normalizedVersion(lhs)
+                    self.nibbles(version: rhs) < self.nibbles(version: lhs)
                 }).first ?? "0.0.0"
 
                 os_log("%{public}s version=%{public}s", self.appBundle, version)
-                completion(self.normalizedVersion(version).description)
+                completion(version)
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")
