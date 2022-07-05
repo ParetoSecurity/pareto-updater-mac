@@ -7,13 +7,13 @@
 
 import Alamofire
 import AppKit
+import Defaults
 import Foundation
 import os.log
 import Path
 import Regex
 import SwiftUI
 import Version
-import Defaults
 
 enum AppUpdaterStatus {
     case Idle
@@ -78,7 +78,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if !Defaults[.checkForUpdatesRecentOnly] {
             return true
         }
-        
+
         if let appPath = applicationPath {
             let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
             let attributes = NSMetadataItem(url: URL(fileURLWithPath: appPath))
@@ -87,7 +87,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
         return true
     }
-    
+
     func nibbles(version: String, sep: Character = ".") -> Int {
         var total = 0
         var round = 0
@@ -137,10 +137,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             fractionCompleted = 0.0
         }
         downloadLatest { [self] sourceFile, appFile in
-
+            var needsStart = false
             let processes = NSRunningApplication.runningApplications(withBundleIdentifier: appBundle)
             for process in processes {
                 process.forceTerminate()
+                needsStart = true
             }
             workItem?.cancel()
             workItem = DispatchWorkItem { [self] in
@@ -158,6 +159,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                             DMGMounter.detach(mountPoint: mountPoint)
                             completion(AppUpdaterStatus.Updated)
+                            if needsStart {
+                                try? Process.run(installedAppBundle.bundleURL, arguments: [])
+                            }
+
                         } catch {
                             DMGMounter.detach(mountPoint: mountPoint)
                             os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
