@@ -160,7 +160,8 @@ class AppBundles: AppBundle, ObservableObject {
             AppSlack.sharedInstance,
             AppDocker.sharedInstance,
             AppLibreOffice.sharedInstance,
-            AppSpyBuster.sharedInstance
+            AppSpyBuster.sharedInstance,
+            AppTopNotch.sharedInstance
         ].sorted(by: { lha, rha in
             lha.appMarketingName < rha.appMarketingName
         })

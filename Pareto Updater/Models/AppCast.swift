@@ -8,6 +8,8 @@
 import Combine
 import Foundation
 import XMLCoder
+import Version
+
 
 struct Enclosure: Codable, DynamicNodeEncoding {
     static func nodeEncoding(for key: CodingKey) -> XMLCoder.XMLEncoder.NodeEncoding {
@@ -44,6 +46,20 @@ struct Item: Codable {
         case enclosure
         case shortVersionString
     }
+    
+    var version: String  {
+        if let ver = self.shortVersionString, !ver.isEmpty {
+            return ver
+        }
+
+        if let ver = self.enclosure.shortVersionString, !ver.isEmpty {
+            return ver
+        }
+        if let ver = self.enclosure.version, !ver.isEmpty {
+            return ver
+        }
+        return "0.0.0"
+    }
 }
 
 struct Channel: Codable {
@@ -64,16 +80,8 @@ class AppCast {
         let decoder = XMLDecoder()
         decoder.shouldProcessNamespaces = true
         let decoded = try? decoder.decode(RSS.self, from: data)
-        version = "0.0.0"
-        if let ve = decoded?.channel.item.first?.enclosure.version, !ve.isEmpty {
-            version = ve
-        }
-        if let ve = decoded?.channel.item.first?.enclosure.shortVersionString, !ve.isEmpty {
-            version = ve
-        }
-        if let ve = decoded?.channel.item.first?.shortVersionString, !ve.isEmpty {
-            version = ve
-        }
-        url = decoded?.channel.item.first?.enclosure.url ?? ""
+        let latest = decoded?.channel.item.first
+        version = latest?.version ?? ""
+        url = latest?.enclosure.url ?? ""
     }
 }

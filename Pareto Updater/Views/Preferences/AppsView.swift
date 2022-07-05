@@ -15,7 +15,7 @@ struct AppsView: View {
     func copy() {
         var logs = [String]()
         for app in viewModel.installedApps {
-            logs.append("\(app.appMarketingName), \(app.help)")
+            logs.append("\(app.appMarketingName), \(app.help), \(app.latestURL.absoluteString)")
         }
 
         NSPasteboard.general.clearContents()
