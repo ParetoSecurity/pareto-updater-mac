@@ -46,7 +46,9 @@ struct GeneralView: View {
                 }
             if showBeta {
                 HStack {
-                    Link("Caches", destination: Constants.cacheFolder)
+                    Button("Cache folder") {
+                        NSWorkspace.shared.open(Constants.cacheFolder)
+                    }
                 }
             }
         }

@@ -26,7 +26,7 @@ struct AboutView: View {
     var body: some View {
         HStack {
             Image("Logo").resizable()
-                .aspectRatio(contentMode: .fit).onTapGesture {
+                .aspectRatio(contentMode: .fit).frame(maxWidth: 96).padding(10).onTapGesture {
                     konami += 1
                     if konami >= 3 {
                         showBeta.toggle()
@@ -53,7 +53,10 @@ struct AboutView: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Version: \(Constants.appVersion) - \(Constants.buildVersion)")
-                    Text("\(Constants.utmSource)")
+                    if showBeta {
+                        Text("\(Constants.utmSource)")
+                    }
+
                     HStack(spacing: 10) {
                         if status == UpdateStates.Failed {
                             HStack(spacing: 0) {
@@ -85,7 +88,7 @@ struct AboutView: View {
                 }
             }.padding(.leading, 20.0)
 
-        }.frame(width: 350, height: 150).padding(25).onAppear(perform: fetch)
+        }.frame(width: 380, height: 180).onAppear(perform: fetch)
     }
 
     private func fetch() {

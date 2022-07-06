@@ -28,8 +28,21 @@ public enum Constants {
     static let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     static let buildVersion: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     static let machineName: String = Host.current().localizedName!
+    #if DEBUG
+        static let versionStorage = try! Storage<String, String>(
+            diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(1), directory: cacheFolder),
+            memoryConfig: MemoryConfig(expiry: .seconds(1)),
+            transformer: TransformerFactory.forCodable(ofType: String.self) // Storage<String, String>
+        )
+    #else
+        static let versionStorage = try! Storage<String, String>(
+            diskConfig: DiskConfig(name: "Version+Bundles", expiry: .seconds(3600 * 24), directory: cacheFolder),
+            memoryConfig: MemoryConfig(expiry: .seconds(3600 * 24 * 2)),
+            transformer: TransformerFactory.forCodable(ofType: String.self) // Storage<String, String>
+        )
+    #endif
     static let macOSVersion = ProcessInfo.processInfo.operatingSystemVersion
-    static let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent(Bundle.main.bundleIdentifier ?? "co.niteo.pareto-updater")
+    static let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent(Bundle.main.bundleIdentifier ?? "co.niteo.ParetoUpdater")
     static let macOSVersionString = "\(macOSVersion.majorVersion).\(macOSVersion.minorVersion).\(macOSVersion.patchVersion)"
     static var isRunningTests: Bool {
         let env = ProcessInfo.processInfo.environment
@@ -111,16 +124,15 @@ public enum Constants {
         #if SETAPP_ENABLED
             source += "-setapp"
         #else
-//            if Licensed {
-//                if Defaults[.teamID].isEmpty {
-//                    source += "-personal"
-//                } else {
-//                    source += "-team"
-//                }
-//            } else {
-//                source += "-opensource"
-//            }
-            source += "-opensource"
+            if Licensed {
+                if Defaults[.teamID].isEmpty {
+                    source += "-personal"
+                } else {
+                    source += "-team"
+                }
+            } else {
+                source += "-opensource"
+            }
         #endif
 
         return source

@@ -166,6 +166,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        while FileManager.default.contentsEqual(atPath: installedAppBundle.path.string, andPath: downloadedAppBundle.path.string) {
+                            sleep(1)
+                        }
+
                         try downloadedAppBundle.path.delete()
                         completion(AppUpdaterStatus.Updated)
                     } catch {
@@ -237,12 +241,18 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: String {
-        let lock = DispatchSemaphore(value: 0)
-        getLatestVersion { [self] latestVersion in
-            latestVersionCached = latestVersion
-            lock.signal()
+        if let found = try? Constants.versionStorage.existsObject(forKey: appBundle), found {
+            latestVersionCached = try! Constants.versionStorage.object(forKey: appBundle)
+            return latestVersionCached
+        } else {
+            let lock = DispatchSemaphore(value: 0)
+            getLatestVersion { [self] version in
+                latestVersionCached = version
+                try! Constants.versionStorage.setObject(version, forKey: self.appBundle)
+                lock.signal()
+            }
+            lock.wait()
+            return try! Constants.versionStorage.object(forKey: appBundle)
         }
-        lock.wait()
-        return latestVersionCached
     }
 }
