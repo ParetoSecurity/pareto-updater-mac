@@ -62,6 +62,7 @@
 		4FE610F0282A888C0060C002 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EF282A888C0060C002 /* Cache */; };
 		4FEBF0492875AE80002AE0F8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF0482875AE80002AE0F8 /* String.swift */; };
 		4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04A2875CDE4002AE0F8 /* VLC.swift */; };
+		4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04C2876199F002AE0F8 /* GitHub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,7 @@
 		4FE610D8282A87870060C002 /* Version */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Version; path = "/Users/dz0ny/Library/Developer/Xcode/DerivedData/Pareto_Updater-bhcgnniayqiwsbetsqyqyfbxelpj/SourcePackages/checkouts/Version"; sourceTree = "<absolute>"; };
 		4FEBF0482875AE80002AE0F8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4FEBF04A2875CDE4002AE0F8 /* VLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLC.swift; sourceTree = "<group>"; };
+		4FEBF04C2876199F002AE0F8 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 				4FBCDF4F28736C990093FB5B /* Spotify.swift */,
 				4F9209DB282BBD7D007897A6 /* Docker.swift */,
 				4F9209DF282BBE05007897A6 /* LibreOffice.swift */,
+				4FEBF04C2876199F002AE0F8 /* GitHub.swift */,
 				4FEBF04A2875CDE4002AE0F8 /* VLC.swift */,
 				4F9209DD282BBDEF007897A6 /* SublimeText.swift */,
 				4F9209E1282BBED2007897A6 /* GoogleChrome.swift */,
@@ -544,6 +547,7 @@
 				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
 				4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */,
 				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
+				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
 				4F5CD066282C3C4A000A5536 /* View.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,

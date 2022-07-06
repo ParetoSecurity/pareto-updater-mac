@@ -37,12 +37,6 @@ struct AboutView: View {
                             alert.alertStyle = NSAlert.Style.informational
                             alert.addButton(withTitle: "Let me in")
                             alert.runModal()
-                        } else {
-                            let alert = NSAlert()
-                            alert.messageText = "Sad to see you go"
-                            alert.alertStyle = NSAlert.Style.informational
-                            alert.addButton(withTitle: "Bye")
-                            alert.runModal()
                         }
                     }
                 }

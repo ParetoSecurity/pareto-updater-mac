@@ -31,7 +31,8 @@ class AppBundles: AppBundle, ObservableObject {
         AppLibreOffice.sharedInstance,
         AppSpyBuster.sharedInstance,
         AppTopNotch.sharedInstance,
-        AppVLC.sharedInstance
+        AppVLC.sharedInstance,
+        AppGitHub.sharedInstance
     ].sorted(by: { lha, rha in
         lha.appMarketingName < rha.appMarketingName
     })
