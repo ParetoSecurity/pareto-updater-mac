@@ -59,7 +59,7 @@ struct AppRow: View {
                 ProgressView().frame(width: 15.0, height: 15.0)
                     .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
             default:
-                if app.updatable {
+                if app.hasUpdate {
                     if onUpdate != nil {
                         Button {
                             onUpdate?()

@@ -277,18 +277,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         // update state on all changes
-        fetchSink = AppDelegate.bundleModel.$updating.sink { [self] _ in
-            updateHiddenState()
-            popOver.contentViewController?.viewDidLayout()
-            popOver.contentViewController?.viewDidAppear()
-            // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
-        }
-        noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { [self] _ in
-            updateHiddenState()
-            popOver.contentViewController?.viewDidLayout()
-            popOver.contentViewController?.viewDidAppear()
-            // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
-        }
+        // fetchSink = AppDelegate.bundleModel.$updating.sink { [self] _ in
+        //     updateHiddenState()
+        //     popOver.contentViewController?.viewDidLayout()
+        //     popOver.contentViewController?.viewDidAppear()
+        // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
+        //  }
+        // noUpdatesSink = Defaults.publisher(.hideWhenNoUpdates).sink { [self] _ in
+        //     updateHiddenState()
+        //     popOver.contentViewController?.viewDidLayout()
+        //     popOver.contentViewController?.viewDidAppear()
+        // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
+        // }
         AppDelegate.bundleModel.fetchData()
     }
 

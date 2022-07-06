@@ -39,8 +39,8 @@ extension Bundle {
         if let iconName = infoDictionary?["CFBundleIconName"] as? String {
             return NSImage(byReferencing: path.join("Contents").join("Resources").join("\(iconName).icns").url)
         }
-        if let iconName = infoDictionary?["CFBundleIconFile"] as? String {
-            return NSImage(byReferencing: path.join("Contents").join("Resources").join(iconName).url)
+        if let iconFile = infoDictionary?["CFBundleIconFile"] as? String {
+            return NSImage(byReferencing: path.join("Contents").join("Resources").join(iconFile).url)
         }
 
         return nil
