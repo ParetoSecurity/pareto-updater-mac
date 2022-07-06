@@ -30,7 +30,7 @@ class AppLibreOffice: AppUpdater {
             return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/aarch64/LibreOffice_\(latestVersionCached)_MacOS_aarch64.dmg")!
         #else
             // https://download.documentfoundation.org/libreoffice/stable/7.2.7/mac/x86_64/LibreOffice_7.2.7_MacOS_x86-64.dmg
-            return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/x86_64/LibreOffice_\(latestVersionCached)_MacOS_x86_64.dmg")!
+            return URL(string: "https://download.documentfoundation.org/libreoffice/stable/\(latestVersionCached)/mac/x86_64/LibreOffice_\(latestVersionCached)_MacOS_x86-64.dmg")!
         #endif
     }
 

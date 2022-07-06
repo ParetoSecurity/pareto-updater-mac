@@ -24,12 +24,11 @@ struct AppsView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Installed Apps").font(.caption2)
             List {
                 ForEach(viewModel.installedApps) { app in
                     AppRow(app: app, onUpdate: nil)
                 }
-            }.frame(minHeight: 180)
+            }.frame(minHeight: 280)
         }
         .frame(width: 350)
         .padding(25)
