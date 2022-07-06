@@ -36,7 +36,9 @@ extension Bundle {
         if let appPath = URL(string: path.string)?.path {
             return NSWorkspace.shared.icon(forFile: appPath)
         }
-
+        if let iconName = infoDictionary?["CFBundleIconName"] as? String {
+            return NSImage(byReferencing: path.join("Contents").join("Resources").join("\(iconName).icns").url)
+        }
         if let iconName = infoDictionary?["CFBundleIconFile"] as? String {
             return NSImage(byReferencing: path.join("Contents").join("Resources").join(iconName).url)
         }

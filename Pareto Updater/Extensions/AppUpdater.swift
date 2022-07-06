@@ -157,7 +157,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         }
                     }
                 }
-                if sourceFile.pathExtension == "zip" {
+                if sourceFile.pathExtension == "zip" || sourceFile.pathExtension == "zip" {
                     do {
                         let app = FileManager.default.unzip(appFile)
                         let downloadedAppBundle = Bundle(url: app)!
