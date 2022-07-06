@@ -43,6 +43,10 @@ extension Bundle {
 
         return nil
     }
+
+    func launch() {
+        NSWorkspace.shared.openApplication(at: bundleURL, configuration: NSWorkspace.OpenConfiguration())
+    }
 }
 
 func runCMD(app: String, args: [String]) -> String {

@@ -147,7 +147,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             DMGMounter.detach(mountPoint: mountPoint)
                             completion(AppUpdaterStatus.Updated)
                             if needsStart {
-                                try? Process.run(installedAppBundle.bundleURL, arguments: [])
+                                installedAppBundle.launch()
                             }
 
                         } catch {

@@ -59,15 +59,25 @@ struct AppList: View {
 
             if viewModel.haveUpdatableApps && !viewModel.updating {
                 Text("Available Updates").font(.caption2)
-                ScrollView {
+                if #available(macOS 13, *) {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            ForEach(viewModel.updatableApps) { app in
+                                AppRow(app: app, onUpdate: {
+                                    viewModel.updateApp(withApp: app)
+                                })
+                            }
+                        }
+                    }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
+                } else {
                     VStack(alignment: .leading) {
                         ForEach(viewModel.updatableApps) { app in
                             AppRow(app: app, onUpdate: {
                                 viewModel.updateApp(withApp: app)
                             })
                         }
-                    }
-                }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
+                    }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
+                }
             } else {
                 Group {
                     if viewModel.updating {
