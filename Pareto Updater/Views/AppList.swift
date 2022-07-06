@@ -59,25 +59,25 @@ struct AppList: View {
 
             if viewModel.haveUpdatableApps && !viewModel.updating {
                 Text("Available Updates").font(.caption2)
-                if #available(macOS 13, *) {
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            ForEach(viewModel.updatableApps) { app in
-                                AppRow(app: app, onUpdate: {
-                                    viewModel.updateApp(withApp: app)
-                                })
-                            }
-                        }
-                    }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
-                } else {
-                    VStack(alignment: .leading) {
-                        ForEach(viewModel.updatableApps) { app in
-                            AppRow(app: app, onUpdate: {
-                                viewModel.updateApp(withApp: app)
-                            })
-                        }
-                    }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 35)
+//                if #available(macOS 13, *) {
+//                    ScrollView {
+//                        VStack(alignment: .leading) {
+//                            ForEach(viewModel.updatableApps) { app in
+//                                AppRow(app: app, onUpdate: {
+//                                    viewModel.updateApp(withApp: app)
+//                                })
+//                            }
+//                        }
+//                    }.frame(minHeight: CGFloat(min(viewModel.updatableApps.count, 3)) * 40)
+//                } else {
+                VStack(alignment: .leading) {
+                    ForEach(viewModel.updatableApps) { app in
+                        AppRow(app: app, onUpdate: {
+                            viewModel.updateApp(withApp: app)
+                        })
+                    }
                 }
+                // }
             } else {
                 Group {
                     if viewModel.updating {
@@ -97,6 +97,7 @@ struct AppList: View {
         }
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
+        .frame(minWidth: 280)
         .onAppear {
             viewModel.fetchData()
         }
