@@ -155,6 +155,8 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     init() {
-        apps = AppBundles.bundledApps + SparkleApp.all
+        apps = (AppBundles.bundledApps + SparkleApp.all).sorted(by: { lha, rha in
+            lha.appMarketingName < rha.appMarketingName
+        })
     }
 }
