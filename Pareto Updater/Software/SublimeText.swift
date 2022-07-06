@@ -11,7 +11,6 @@ import Foundation
 import os.log
 import OSLog
 import Regex
-import Version
 
 class AppSublimeText: AppUpdater {
     static let sharedInstance = AppSublimeText()
@@ -28,14 +27,6 @@ class AppSublimeText: AppUpdater {
         URL(string: "https://download.sublimetext.com/sublime_text_build_\(latestVersionCached.split(separator: ".").joined())_mac.zip")!
     }
 
-    override var currentVersion: Version {
-        if applicationPath == nil {
-            return Version(0, 0, 0)
-        }
-        let version = Bundle.appVersion(path: applicationPath ?? "Build 3121")!.split(separator: " ")[1]
-        return Version("\(version.prefix(1)).\(version.suffix(3)).0") ?? Version(0, 0, 0)
-    }
-
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://www.sublimetext.com/download")
         let versionRegex = Regex("Build (\\d+)")
@@ -46,7 +37,7 @@ class AppSublimeText: AppUpdater {
                 let yaml = response.value ?? "Build 3121"
                 let version = versionRegex.firstMatch(in: yaml)?.groups.first?.value ?? "3121"
                 os_log("%{public}s version=%{public}s", self.appBundle, version)
-                completion("\(version.prefix(1)).\(version.suffix(3)).0")
+                completion(version)
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")

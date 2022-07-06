@@ -10,7 +10,6 @@ import Combine
 import Foundation
 import os.log
 import OSLog
-import Version
 
 // MARK: - GoogleResponse
 
@@ -40,17 +39,6 @@ class AppGoogleChrome: AppUpdater {
         return URL(string: "https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg")!
     }
 
-    // Special treatment follows
-    // Use build number as definite version comparator
-    // https://www.chromium.org/developers/version-numbers
-    override var currentVersion: Version {
-        if applicationPath == nil {
-            return Version(0, 0, 0)
-        }
-        let v = Bundle.appVersion(path: applicationPath ?? "1.2.3.4")!.split(separator: ".")
-        return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
-    }
-
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://versionhistory.googleapis.com/v1/chrome/platforms/mac/channels/stable/versions")
         os_log("Requesting %{public}s", url)
@@ -63,5 +51,16 @@ class AppGoogleChrome: AppUpdater {
                 completion("0.0.0")
             }
         })
+    }
+
+    override var textVersion: String {
+        if let path = applicationPath {
+            if let version = Bundle.appVersion(path: path) {
+                let nibbles = version.lowercased().split(separator: ".")
+                return String(nibbles[0 ... nibbles.count - 2].joined(separator: "."))
+            }
+            return "0.0.0"
+        }
+        return "0.0.0"
     }
 }

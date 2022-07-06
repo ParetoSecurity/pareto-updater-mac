@@ -16,8 +16,27 @@ protocol AppBundle {
 }
 
 class AppBundles: AppBundle, ObservableObject {
-    @Published var customApps: [AppUpdater]
-    @Published var sparkleApps: [AppUpdater]
+    static let bundledApps = [
+        App1Password8AppUpdater.sharedInstance,
+        AppBraveBrowserUpdater.sharedInstance,
+        AppBitwardenUpdater.sharedInstance,
+        AppVSCodeApp.sharedInstance,
+        AppSpotify.sharedInstance,
+        AppSignal.sharedInstance,
+        AppFirefox.sharedInstance,
+        AppGoogleChrome.sharedInstance,
+        AppSublimeText.sharedInstance,
+        AppSlack.sharedInstance,
+        AppDocker.sharedInstance,
+        AppLibreOffice.sharedInstance,
+        AppSpyBuster.sharedInstance,
+        AppTopNotch.sharedInstance
+    ].sorted(by: { lha, rha in
+        lha.appMarketingName < rha.appMarketingName
+    })
+
+    @Published var apps: [AppUpdater]
+
     @Published var updating: Bool = false
     @Published var installing: Bool = false
 
@@ -25,15 +44,9 @@ class AppBundles: AppBundle, ObservableObject {
         !updatableApps.isEmpty
     }
 
-    public var apps: [AppUpdater] {
-        (customApps + sparkleApps).sorted(by: { lha, rha in
-            lha.appMarketingName < rha.appMarketingName
-        })
-    }
-
     public var updatableApps: [AppUpdater] {
         apps.filter { app in
-            app.updatable && app.isInstalled && app.usedRecently
+            app.isInstalled && app.usedRecently && app.hasUpdate
         }
     }
 
@@ -57,7 +70,7 @@ class AppBundles: AppBundle, ObservableObject {
         DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
             let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
-            withApp.updateApp { [self] _ in
+            withApp.updateApp { _ in
                 lock.signal()
             }
             lock.wait()
@@ -94,16 +107,11 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     func fetchData() {
-        let bundles = Set(customApps.map { app in
-            app.appBundle
-        })
-        sparkleApps = SparkleApp.all.filter { app in
-            !bundles.contains(app.appBundle)
-        }
-
         if updating {
             return
         }
+
+        apps = AppBundles.bundledApps + SparkleApp.all
 
         DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
@@ -113,7 +121,6 @@ class AppBundles: AppBundle, ObservableObject {
                 DispatchQueue.main.async {
                     app.status = .GatheringInfo
                 }
-                print(app.latestVersion)
                 if app.hasUpdate {
                     DispatchQueue.main.async {
                         app.updatable = true
@@ -147,31 +154,6 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     init() {
-        let bundledApps = [
-            App1Password8AppUpdater.sharedInstance,
-            AppBitwardenUpdater.sharedInstance,
-            AppBraveBrowserUpdater.sharedInstance,
-            AppVSCodeApp.sharedInstance,
-            AppSpotify.sharedInstance,
-            AppSignal.sharedInstance,
-            AppFirefox.sharedInstance,
-            AppGoogleChrome.sharedInstance,
-            AppSublimeText.sharedInstance,
-            AppSlack.sharedInstance,
-            AppDocker.sharedInstance,
-            AppLibreOffice.sharedInstance,
-            AppSpyBuster.sharedInstance,
-            AppTopNotch.sharedInstance
-        ].sorted(by: { lha, rha in
-            lha.appMarketingName < rha.appMarketingName
-        })
-
-        customApps = bundledApps
-        let bundles = Set(bundledApps.map { app in
-            app.appBundle
-        })
-        sparkleApps = SparkleApp.all.filter { app in
-            !bundles.contains(app.appBundle)
-        }
+        apps = AppBundles.bundledApps + SparkleApp.all
     }
 }

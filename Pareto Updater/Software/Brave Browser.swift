@@ -5,7 +5,6 @@
 //  Created by Janez Troha on 11/11/2021.
 //
 import Foundation
-import Version
 
 class AppBraveBrowserUpdater: SparkleApp {
     static let sharedInstance = AppBraveBrowserUpdater(
@@ -18,7 +17,14 @@ class AppBraveBrowserUpdater: SparkleApp {
         URL(string: "https://referrals.brave.com/latest/Brave-Browser.dmg")!
     }
 
-    override var UUID: String {
-        "64026bd2-54c2-4d3e-8696-559091457dde"
+    override var textVersion: String {
+        if let path = applicationPath {
+            if let version = Bundle.appVersion(path: path) {
+                let nibbles = version.lowercased().split(separator: ".")
+                return String(nibbles[1 ... nibbles.count - 1].joined(separator: "."))
+            }
+            return "0.0.0"
+        }
+        return "0.0.0"
     }
 }

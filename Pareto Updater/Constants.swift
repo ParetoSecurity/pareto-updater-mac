@@ -13,12 +13,12 @@ import Foundation
 import os.log
 import Regex
 import SwiftUI
-import Version
 
 public enum Constants {
     static let unsupportedBundles: Set<String> = [
         "com.hegenberg.BetterTouchTool",
-        "com.culturedcode.ThingsMac"
+        "com.culturedcode.ThingsMac",
+        "com.brave.Browser"
     ]
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
@@ -36,20 +36,6 @@ public enum Constants {
         let args = ProcessInfo.processInfo.arguments
         return env["XCTestConfigurationFilePath"] != nil || args.contains("isRunningTests") || env["CI"] ?? "false" != "false"
     }
-
-    #if DEBUG
-        static let versionStorage = try! Storage<String, Version>(
-            diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(1)),
-            memoryConfig: MemoryConfig(expiry: .seconds(1)),
-            transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
-        )
-    #else
-        static let versionStorage = try! Storage<String, Version>(
-            diskConfig: DiskConfig(name: "Version+Bundles", expiry: .seconds(3600 * 24)),
-            memoryConfig: MemoryConfig(expiry: .seconds(3600 * 24 * 2)),
-            transformer: TransformerFactory.forCodable(ofType: Version.self) // Storage<String, Version>
-        )
-    #endif
 
     static let bugReportURL = { () -> URL in
         let baseURL = "https://paretosecurity.com/report-bug?"

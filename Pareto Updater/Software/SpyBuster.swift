@@ -10,7 +10,6 @@ import Foundation
 import os.log
 import OSLog
 import Regex
-import Version
 
 enum AppUpdaterState: String {
     case GAter

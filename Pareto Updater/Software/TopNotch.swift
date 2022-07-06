@@ -10,18 +10,11 @@ import Foundation
 import os.log
 import OSLog
 import Regex
-import Version
-
 
 class AppTopNotch: SparkleApp {
     static let sharedInstance = AppTopNotch(
-        name: "Brave Browser",
+        name: "Top Notch",
         bundle: "pl.maketheweb.TopNotch",
         url: "https://updates.topnotch.app/appcast.xml"
     )
-    
-    override var latestURL: URL {
-        URL(string: "https://updates.topnotch.app/TopNotch-latest.zip")!
-    }
-    
 }

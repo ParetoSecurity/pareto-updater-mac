@@ -55,12 +55,12 @@
 		4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE610C5282A56A30060C002 /* SpyBuster.swift */; };
 		4FE610DB282A87F40060C002 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610DA282A87F40060C002 /* Defaults */; };
 		4FE610DE282A87FF0060C002 /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610DD282A87FF0060C002 /* AppUpdater */; };
-		4FE610E1282A88260060C002 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E0282A88260060C002 /* Version */; };
 		4FE610E4282A88400060C002 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E3282A88400060C002 /* Alamofire */; };
 		4FE610E7282A88540060C002 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E6282A88540060C002 /* Regex */; };
 		4FE610EA282A88660060C002 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E9282A88660060C002 /* Regex */; };
 		4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EC282A887A0060C002 /* LaunchAtLogin */; };
 		4FE610F0282A888C0060C002 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EF282A888C0060C002 /* Cache */; };
+		4FEBF0492875AE80002AE0F8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF0482875AE80002AE0F8 /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +130,7 @@
 		4FCF0989282D3A9200597F70 /* TestPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		4FE610C5282A56A30060C002 /* SpyBuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpyBuster.swift; sourceTree = "<group>"; };
 		4FE610D8282A87870060C002 /* Version */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Version; path = "/Users/dz0ny/Library/Developer/Xcode/DerivedData/Pareto_Updater-bhcgnniayqiwsbetsqyqyfbxelpj/SourcePackages/checkouts/Version"; sourceTree = "<absolute>"; };
+		4FEBF0482875AE80002AE0F8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +141,6 @@
 				4FE610EA282A88660060C002 /* Regex in Frameworks */,
 				4FE610F0282A888C0060C002 /* Cache in Frameworks */,
 				4F0DEA73286D7F8200344B92 /* Sentry in Frameworks */,
-				4FE610E1282A88260060C002 /* Version in Frameworks */,
 				4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */,
 				4FE610E4282A88400060C002 /* Alamofire in Frameworks */,
 				4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */,
@@ -299,6 +299,7 @@
 				4F2C834B2817E33500B40361 /* Bundle.swift */,
 				4F5CD065282C3C4A000A5536 /* View.swift */,
 				4F0DEA7B286D93F500344B92 /* URL.swift */,
+				4FEBF0482875AE80002AE0F8 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -332,7 +333,6 @@
 			packageProductDependencies = (
 				4FE610DA282A87F40060C002 /* Defaults */,
 				4FE610DD282A87FF0060C002 /* AppUpdater */,
-				4FE610E0282A88260060C002 /* Version */,
 				4FE610E3282A88400060C002 /* Alamofire */,
 				4FE610E6282A88540060C002 /* Regex */,
 				4FE610E9282A88660060C002 /* Regex */,
@@ -417,7 +417,6 @@
 			packageReferences = (
 				4FE610D9282A87F40060C002 /* XCRemoteSwiftPackageReference "Defaults" */,
 				4FE610DC282A87FF0060C002 /* XCRemoteSwiftPackageReference "AppUpdater" */,
-				4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */,
 				4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */,
 				4FE610EB282A887A0060C002 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
@@ -536,6 +535,7 @@
 				4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */,
 				4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */,
 				4F33FE37280808C000585E5A /* AppList.swift in Sources */,
+				4FEBF0492875AE80002AE0F8 /* String.swift in Sources */,
 				4F2C8361281935D000B40361 /* AppBundles.swift in Sources */,
 				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
 				4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */,
@@ -923,15 +923,6 @@
 				kind = branch;
 			};
 		};
-		4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/Version";
-			requirement = {
-				kind = versionRange;
-				maximumVersion = 3.0.0;
-				minimumVersion = 1.0.0;
-			};
-		};
 		4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -991,11 +982,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FE610DC282A87FF0060C002 /* XCRemoteSwiftPackageReference "AppUpdater" */;
 			productName = AppUpdater;
-		};
-		4FE610E0282A88260060C002 /* Version */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4FE610DF282A88260060C002 /* XCRemoteSwiftPackageReference "Version" */;
-			productName = Version;
 		};
 		4FE610E3282A88400060C002 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

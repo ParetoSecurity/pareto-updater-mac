@@ -12,7 +12,6 @@ import Foundation
 import os.log
 import OSLog
 import Regex
-import Version
 
 class AppVSCodeApp: AppUpdater {
     static let sharedInstance = AppVSCodeApp()

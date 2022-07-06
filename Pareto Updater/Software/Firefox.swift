@@ -11,7 +11,6 @@ import Combine
 import Foundation
 import os.log
 import OSLog
-import Version
 
 private typealias FirefoxVersions = [String: String]
 
@@ -24,21 +23,6 @@ class AppFirefox: AppUpdater {
 
     override var UUID: String {
         "768a574c-75a2-536d-8785-ef9512981184"
-    }
-
-    private func normalizedVersion(_ version: String) -> Version {
-        let v = version.split(separator: ".")
-        if v.count == 2 {
-            return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, 0)
-        }
-        return Version(Int(v[0]) ?? 0, Int(v[1]) ?? 0, Int(v[2]) ?? 0)
-    }
-
-    override var currentVersion: Version {
-        if !isInstalled {
-            return Version(0, 0, 0)
-        }
-        return normalizedVersion(Bundle.appVersion(path: applicationPath!)!)
     }
 
     override var latestURL: URL {
@@ -60,12 +44,10 @@ class AppFirefox: AppUpdater {
         os_log("Requesting %{public}s", url)
         AF.request(url).responseDecodable(of: FirefoxVersions.self, queue: Constants.httpQueue) { response in
             if response.error == nil {
-                let version = response.value?.keys.sorted(by: { lhs, rhs in
-                    self.normalizedVersion(rhs) < self.normalizedVersion(lhs)
-                }).first ?? "0.0.0"
-
-                os_log("%{public}s version=%{public}s", self.appBundle, version)
-                completion(self.normalizedVersion(version).description)
+                let versions = response.value?.keys.sorted(by: { lhs, rhs in
+                    lhs.versionCompare(rhs) == .orderedDescending
+                })
+                completion(versions?.first ?? "0.0.0")
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")

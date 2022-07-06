@@ -5,6 +5,7 @@
 //  Created by Janez Troha on 14/04/2022.
 //
 
+import Alamofire
 import AppUpdater
 import Cache
 import Combine
@@ -13,9 +14,6 @@ import Foundation
 import os.log
 import Regex
 import SwiftUI
-import Version
-
-import Alamofire
 
 #if !DEBUG
     import Sentry

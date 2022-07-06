@@ -7,6 +7,7 @@
 
 import AppKit
 import Combine
+import Defaults
 import Foundation
 import os.log
 import SwiftUI
@@ -14,6 +15,7 @@ import SwiftUI
 struct AppRow: View {
     @ObservedObject var app: AppUpdater
     var onUpdate: (() -> Void)?
+    @Default(.showBeta) var showBeta
 
     var body: some View {
         HStack {
@@ -31,6 +33,10 @@ struct AppRow: View {
             VStack(alignment: .leading) {
                 Text(app.appMarketingName)
                     .font(.body)
+                if showBeta {
+                    Text(app.appBundle)
+                        .font(.footnote)
+                }
                 switch app.status {
                 case .DownloadingUpdate:
                     ProgressView(value: app.fractionCompleted).frame(height: 1.0)
@@ -50,7 +56,8 @@ struct AppRow: View {
             case .DownloadingUpdate:
                 Spacer()
             case .InstallingUpdate:
-                Spacer()
+                ProgressView().frame(width: 15.0, height: 15.0)
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
             default:
                 if app.updatable {
                     if onUpdate != nil {

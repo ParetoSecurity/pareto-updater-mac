@@ -56,7 +56,7 @@ class SparkleApp: AppUpdater {
     }
 
     override var hasUpdate: Bool {
-        nibbles(version: latestVersionCached) > nibbles(version: textVersion)
+        latestVersionCached.versionCompare(textVersion) == .orderedDescending
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
@@ -84,8 +84,11 @@ class SparkleApp: AppUpdater {
         let allApps = try! FileManager.default.contentsOfDirectory(at: URL(string: "/Applications")!, includingPropertiesForKeys: [.isApplicationKey])
         for app in allApps {
             let plist = AppBundles.readPlistFile(fileURL: app.appendingPathComponent("Contents/Info.plist"))
-            if let url = plist?["SUFeedURL"] as? String, let appName = plist?["CFBundleName"] as? String, let appBundle = plist?["CFBundleName"] as? String {
-                if url.contains("https://"), !Constants.unsupportedBundles.contains(appBundle) {
+            if let url = plist?["SUFeedURL"] as? String,
+               let appName = plist?["CFBundleName"] as? String,
+               let appBundle = plist?["CFBundleIdentifier"] as? String {
+                if !Constants.unsupportedBundles.contains(appBundle),
+                   url.contains("https://") {
                     let bundleApp = SparkleApp(
                         name: appName,
                         bundle: appBundle,

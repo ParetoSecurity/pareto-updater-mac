@@ -10,7 +10,6 @@ import Foundation
 import os.log
 import OSLog
 import Regex
-import Version
 
 class AppSignal: AppUpdater {
     static let sharedInstance = AppSignal()

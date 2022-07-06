@@ -13,7 +13,6 @@ import os.log
 import Path
 import Regex
 import SwiftUI
-import Version
 
 enum AppUpdaterStatus {
     case Idle
@@ -71,7 +70,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var hasUpdate: Bool {
-        latestVersion > currentVersion
+        if let version = currentVersion {
+            return latestVersion.versionCompare(version) == .orderedDescending
+        }
+        return false
     }
 
     public var usedRecently: Bool {
@@ -86,21 +88,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return lastUse >= weekAgo
         }
         return true
-    }
-
-    func nibbles(version: String, sep: Character = ".") -> Int {
-        var total = 0
-        var round = 0
-        let safeVersion = version.lowercased().replacingAllMatches(of: Regex("[a-z]+"), with: "")
-        let levels = safeVersion.split(separator: sep).reversed()
-        for level in levels {
-            if level.contains("-") {
-                total = nibbles(version: String(level), sep: "-")
-            }
-            total += (Int(level) ?? 1) * Int(10 << round)
-            round += 1
-        }
-        return total
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
@@ -209,9 +196,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return "0.0.0"
     }
 
-    var currentVersion: Version {
+    var currentVersion: String? {
         if !isInstalled {
-            return Version(0, 0, 0)
+            return nil
         }
         var version = textVersion
         if version.contains("alpha") {
@@ -220,9 +207,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if version.contains("beta") {
             version = version.replacingOccurrences(of: "beta", with: "-beta")
         }
-
-        version = version.replacingOccurrences(of: ".-", with: "-")
-        return Version(version) ?? Version(0, 0, 0)
+        return version.replacingOccurrences(of: ".-", with: "-")
     }
 
     var applicationPath: String? {
@@ -251,19 +236,13 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return Bundle(path: applicationPath!)?.icon
     }
 
-    public var latestVersion: Version {
-        if !latestVersionCached.isEmpty, latestVersionCached != "0.0.0" {
-            return Version(latestVersionCached) ?? Version(0, 0, 0)
-        }
-
-        var version = Version(0, 0, 0)
+    public var latestVersion: String {
         let lock = DispatchSemaphore(value: 0)
         getLatestVersion { [self] latestVersion in
             latestVersionCached = latestVersion
-            version = Version(latestVersion) ?? Version(0, 0, 0)
             lock.signal()
         }
         lock.wait()
-        return version
+        return latestVersionCached
     }
 }

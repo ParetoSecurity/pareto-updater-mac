@@ -174,24 +174,12 @@ class ParetoUpdaterTests: XCTestCase {
 
     func testAppCast4() throws {
         let app = AppCast(data: Data(sourceXML4.utf8))
-        assert(app.version == "0.0.0")
+        assert(app.version == "")
         assert(app.url == "")
     }
 
     func testAppNibble() throws {
-        let app = AppUpdater()
-        assert(app.nibbles(version: "1.1.1") == 70)
-        assert(app.nibbles(version: "1.1.1.1") == 150)
-        assert(app.nibbles(version: "17.1") == 350)
-        assert(app.nibbles(version: "17.1.1") == 710)
-    }
-
-    func testAppNibbleSubversion() throws {
-        let app = AppUpdater()
-        assert(app.nibbles(version: "17.1-1alpha") == 380)
-        assert(app.nibbles(version: "17.1-2alpha") == 390)
-        assert(app.nibbles(version: "1.1.1-2") == 110)
-        assert(app.nibbles(version: "1.1.1-3") == 120)
-        assert(app.nibbles(version: "17.1-1") == 380)
+        assert("1.1.0".versionCompare("1.0.0") == .orderedDescending)
+        assert("1.1.0-3".versionCompare("1.1.0-2") == .orderedDescending)
     }
 }

@@ -9,7 +9,6 @@ import Alamofire
 import Foundation
 import os.log
 import Regex
-import Version
 
 class AppSpotify: AppUpdater {
     static let sharedInstance = AppSpotify()
