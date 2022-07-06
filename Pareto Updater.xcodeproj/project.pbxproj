@@ -86,7 +86,7 @@
 		4F0DEA7B286D93F500344B92 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4F0E43F6280E9E820093B51A /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
 		4F0E441B280EA49A0093B51A /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
-		4F2C834A2817E25800B40361 /* Pareto-Updater-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Pareto-Updater-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4F2C834A2817E25800B40361 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		4F2C834B2817E33500B40361 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4F2C83502817FEA400B40361 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		4F2C83522818155300B40361 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 				4F33FE34280808C000585E5A /* ParetoUpdater.swift */,
 				4F33FE38280808C200585E5A /* Assets.xcassets */,
 				4F33FE3D280808C200585E5A /* Pareto_Updater.entitlements */,
-				4F2C834A2817E25800B40361 /* Pareto-Updater-Info.plist */,
+				4F2C834A2817E25800B40361 /* Info.plist */,
 				4F7D6FFD28327BC4007D6E8A /* Constants.swift */,
 				4F0DEA74286D8F3E00344B92 /* License.swift */,
 			);
@@ -715,7 +715,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Pareto-Updater-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -748,7 +748,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Pareto-Updater-Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (

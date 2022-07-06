@@ -146,8 +146,7 @@ class ParetoUpdaterTests: XCTestCase {
     }
 
     func testInstall() throws {
-        let bundles = AppBundles()
-        for app in bundles.customApps {
+        for app in AppBundles.bundledApps {
             app.updateApp { status in
                 print(status)
             }
