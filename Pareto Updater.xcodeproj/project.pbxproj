@@ -45,6 +45,7 @@
 		4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E1282BBED2007897A6 /* GoogleChrome.swift */; };
 		4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E3282BDEFE007897A6 /* AppsView.swift */; };
 		4FA75600287709960064D0ED /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA755FF287709960064D0ED /* AppUpdater */; };
+		4FA756022877286A0064D0ED /* iTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA756012877286A0064D0ED /* iTerm.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
 		4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */; };
 		4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF3D28731A360093FB5B /* VSCode.swift */; };
@@ -123,6 +124,7 @@
 		4F9209DF282BBE05007897A6 /* LibreOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibreOffice.swift; sourceTree = "<group>"; };
 		4F9209E1282BBED2007897A6 /* GoogleChrome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleChrome.swift; sourceTree = "<group>"; };
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		4FA756012877286A0064D0ED /* iTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTerm.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
 		4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		4FBCDF3D28731A360093FB5B /* VSCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCode.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				4FBCDF4428731A370093FB5B /* 1Password.swift */,
 				4FBCDF4228731A370093FB5B /* Bitwarden.swift */,
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
+				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
@@ -534,6 +537,7 @@
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
 				4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */,
+				4FA756022877286A0064D0ED /* iTerm.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
 				4FBCDF4B28731A370093FB5B /* Bitwarden.swift in Sources */,
 				4F0DEA7C286D93F500344B92 /* URL.swift in Sources */,

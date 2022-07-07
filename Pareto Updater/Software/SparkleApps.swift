@@ -89,8 +89,8 @@ class SparkleApp: AppUpdater {
                let appBundle = plist?["CFBundleIdentifier"] as? String {
                 if !Constants.unsupportedBundles.contains(appBundle),
                    !AppBundles.bundledApps.map({ b in
-                       b.appBundle
-                   }).contains(appBundle),
+                       b.appBundle.lowercased()
+                   }).contains(appBundle.lowercased()),
                    url.contains("https://") {
                     let bundleApp = SparkleApp(
                         name: appName,

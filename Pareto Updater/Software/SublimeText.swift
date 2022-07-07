@@ -23,6 +23,17 @@ class AppSublimeText: AppUpdater {
         "0ae675c9-1fbe-5fcc-8e4a-c0f53f4d8b4d"
     }
 
+    override var currentVersion: String? {
+        if !isInstalled {
+            return nil
+        }
+        let v = textVersion.versionNormalize
+        if let version = v.split(separator: " ").last {
+            return String(version)
+        }
+        return v
+    }
+
     override var latestURL: URL {
         URL(string: "https://download.sublimetext.com/sublime_text_build_\(latestVersion.split(separator: ".").joined())_mac.zip")!
     }

@@ -33,7 +33,8 @@ class AppBundles: AppBundle, ObservableObject {
         AppTopNotch.sharedInstance,
         AppVLC.sharedInstance,
         AppGitHub.sharedInstance,
-        AppCyberduck.sharedInstance
+        AppCyberduck.sharedInstance,
+        AppITerm.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
@@ -156,7 +157,7 @@ class AppBundles: AppBundle, ObservableObject {
 
     init() {
         apps = (AppBundles.bundledApps + SparkleApp.all).sorted(by: { lha, rha in
-            lha.appMarketingName < rha.appMarketingName
+            lha.appMarketingName.lowercased() < rha.appMarketingName.lowercased()
         })
     }
 }

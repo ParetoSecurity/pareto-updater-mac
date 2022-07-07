@@ -226,14 +226,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if !isInstalled {
             return nil
         }
-        var version = textVersion
-        if version.contains("alpha") {
-            version = version.replacingOccurrences(of: "alpha", with: "-alpha")
-        }
-        if version.contains("beta") {
-            version = version.replacingOccurrences(of: "beta", with: "-beta")
-        }
-        return version.replacingOccurrences(of: ".-", with: "-")
+
+        return textVersion.versionNormalize
     }
 
     var applicationPath: String? {

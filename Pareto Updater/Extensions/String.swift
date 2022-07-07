@@ -8,6 +8,18 @@
 import Foundation
 
 extension String {
+    var versionNormalize: String {
+        var version = self
+        if version.contains("alpha") {
+            version = version.replacingOccurrences(of: "alpha", with: "-alpha")
+        }
+        if version.contains("beta") {
+            version = version.replacingOccurrences(of: "beta", with: "-beta")
+        }
+        version = version.replacingOccurrences(of: ".-", with: "-")
+        return version
+    }
+
     func versionCompare(_ otherVersion: String) -> ComparisonResult {
         let versionDelimiter = "."
 
