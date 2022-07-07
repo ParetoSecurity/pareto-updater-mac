@@ -201,15 +201,24 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             status = .DownloadingUpdate
             fractionCompleted = 0.0
         }
-
-        downloadLatest { sourceFile, appFile in
-            let state = self.install(sourceFile: sourceFile, appFile: appFile)
-            DispatchQueue.main.async { [self] in
-                status = state
-                fractionCompleted = 0.0
-                completion(state)
+        workItem?.cancel()
+        workItem = DispatchWorkItem { [self] in
+            downloadLatest { sourceFile, appFile in
+                let state = self.install(sourceFile: sourceFile, appFile: appFile)
+                DispatchQueue.main.async { [self] in
+                    status = state
+                    fractionCompleted = 0.0
+                    completion(state)
+                }
             }
         }
+        workItem?.notify(queue: .main) { [self] in
+            status = .Idle
+            updatable = false
+            fractionCompleted = 0.0
+            completion(status)
+        }
+        DispatchQueue.global(qos: .userInteractive).async(execute: workItem!)
     }
 
     var textVersion: String {
