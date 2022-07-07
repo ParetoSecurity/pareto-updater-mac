@@ -24,7 +24,7 @@ class AppSublimeText: AppUpdater {
     }
 
     override var latestURL: URL {
-        URL(string: "https://download.sublimetext.com/sublime_text_build_\(latestVersionCached.split(separator: ".").joined())_mac.zip")!
+        URL(string: "https://download.sublimetext.com/sublime_text_build_\(latestVersion.split(separator: ".").joined())_mac.zip")!
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

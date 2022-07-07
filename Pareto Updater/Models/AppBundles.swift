@@ -72,6 +72,9 @@ class AppBundles: AppBundle, ObservableObject {
             let lock = DispatchSemaphore(value: 0)
             let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
             withApp.updateApp { _ in
+                DispatchQueue.main.async {
+                    withApp.updatable = false
+                }
                 lock.signal()
             }
             lock.wait()
@@ -80,7 +83,6 @@ class AppBundles: AppBundle, ObservableObject {
                 transaction.finish()
                 span.finish()
             }
-            self.fetchData()
         }
     }
 
@@ -108,11 +110,9 @@ class AppBundles: AppBundle, ObservableObject {
     }
 
     func fetchData() {
-        if updating {
+        if updating || installing {
             return
         }
-
-        apps = AppBundles.bundledApps + SparkleApp.all
 
         DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
@@ -131,7 +131,7 @@ class AppBundles: AppBundle, ObservableObject {
                         app.updatable = false
                     }
                 }
-                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersionCached, app.textVersion, app.latestVersion.description)
+                os_log("%{public}s latestVersion=%{public}s currentVersion=%{public}s updatable=%{public}s", app.appName, app.latestVersion, app.textVersion, app.latestVersion.description)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     app.status = .Idle

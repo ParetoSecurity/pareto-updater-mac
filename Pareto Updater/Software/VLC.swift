@@ -27,10 +27,10 @@ class AppVLC: AppUpdater {
     override var latestURL: URL {
         #if arch(arm64)
             // https://get.videolan.org/vlc/3.0.17.3/macosx/vlc-3.0.17.3-arm64.dmg
-            return URL(string: "https://get.videolan.org/vlc/\(latestVersionCached)/macosx/vlc-\(latestVersionCached)-arm64.dmg")!
+            return URL(string: "https://get.videolan.org/vlc/\(latestVersion)/macosx/vlc-\(latestVersion)-arm64.dmg")!
         #else
             // https://get.videolan.org/vlc/3.0.17.3/macosx/vlc-3.0.17.3-intel64.dmg
-            return URL(string: "https://get.videolan.org/vlc/\(latestVersionCached)/macosx/vlc-\(latestVersionCached)-intel64.dmg")!
+            return URL(string: "https://get.videolan.org/vlc/\(latestVersion)/macosx/vlc-\(latestVersion)-intel64.dmg")!
         #endif
     }
 

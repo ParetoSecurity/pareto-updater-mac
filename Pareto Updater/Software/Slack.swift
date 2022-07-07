@@ -22,7 +22,7 @@ class AppSlack: AppUpdater {
     }
 
     override var latestURL: URL {
-        URL(string: "https://downloads.slack-edge.com/releases/macos/\(latestVersionCached)/prod/universal/Slack-\(latestVersionCached)-macOS.dmg")!
+        URL(string: "https://downloads.slack-edge.com/releases/macos/\(latestVersion)/prod/universal/Slack-\(latestVersion)-macOS.dmg")!
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

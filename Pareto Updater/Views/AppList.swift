@@ -82,14 +82,18 @@ struct AppList: View {
                 Group {
                     if viewModel.updating {
                         HStack(alignment: .center) {
-                            Text("Checking for updates").font(.body)
+                            Spacer()
+                            Text("Fetching Versions").font(.body)
                             ProgressView()
                                 .frame(width: 18.0, height: 18.0)
                                 .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                            Spacer()
                         }
                     } else {
                         HStack(alignment: .center) {
-                            Text("All Apps are up to date!").font(.body)
+                            Spacer()
+                            Text("Apps Are Updated").font(.body)
+                            Spacer()
                         }
                     }
                 }.frame(minHeight: 20.0)
@@ -97,7 +101,7 @@ struct AppList: View {
         }
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
-        .frame(minWidth: 280)
+        .frame(minWidth: 240)
         .onAppear {
             viewModel.fetchData()
         }
