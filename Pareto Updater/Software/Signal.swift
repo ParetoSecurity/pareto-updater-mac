@@ -23,7 +23,7 @@ class AppSignal: AppUpdater {
     }
 
     override var latestURL: URL {
-        URL(string: "https://updates.signal.org/desktop/signal-desktop-mac-universal-\(latestVersionCached).dmg")!
+        URL(string: "https://updates.signal.org/desktop/signal-desktop-mac-universal-\(latestVersion).dmg")!
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

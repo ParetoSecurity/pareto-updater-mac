@@ -58,6 +58,18 @@ struct AppRow: View {
             case .InstallingUpdate:
                 ProgressView().frame(width: 15.0, height: 15.0)
                     .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
+            case .Failed:
+                Image(systemName: "exclamationmark.square")
+                    .resizable()
+                    .foregroundColor(.red)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 15)
+            case .Updated:
+                Image(systemName: "checkmark.square")
+                    .resizable()
+                    .foregroundColor(.green)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 15)
             default:
                 if app.hasUpdate {
                     if onUpdate != nil {
@@ -71,7 +83,7 @@ struct AppRow: View {
                                 .frame(height: 15)
                         }
                         .buttonStyle(ClipButton())
-                        .help("Update \(app.appMarketingName) to \(app.latestVersionCached)")
+                        .help("Update \(app.appMarketingName) to \(app.latestVersion)")
                     } else {
                         Image(systemName: "arrow.down.app.fill")
                             .resizable()
@@ -82,9 +94,9 @@ struct AppRow: View {
                 } else {
                     Image(systemName: "checkmark.square")
                         .resizable()
+                        .foregroundColor(.secondary)
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 15
-                        ).foregroundColor(.secondary)
+                        .frame(height: 15)
                 }
             }
         }
