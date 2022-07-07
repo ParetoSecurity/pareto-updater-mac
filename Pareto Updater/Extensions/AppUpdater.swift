@@ -144,20 +144,20 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             try installedAppBundle.path.delete()
                             os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                             try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                            DMGMounter.detach(mountPoint: mountPoint)
+                            _ = DMGMounter.detach(mountPoint: mountPoint)
                             completion(AppUpdaterStatus.Updated)
                             if needsStart {
                                 installedAppBundle.launch()
                             }
 
                         } catch {
-                            DMGMounter.detach(mountPoint: mountPoint)
+                            _ = DMGMounter.detach(mountPoint: mountPoint)
                             os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
                             completion(AppUpdaterStatus.Failed)
                         }
                     }
                 }
-                if sourceFile.pathExtension == "zip" || sourceFile.pathExtension == "zip" {
+                if sourceFile.pathExtension == "zip" || sourceFile.pathExtension.contains("tar") {
                     do {
                         let app = FileManager.default.unzip(appFile)
                         let downloadedAppBundle = Bundle(url: app)!
@@ -166,6 +166,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         try installedAppBundle.path.delete()
                         os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+
+                        // Wait for bundle IO ops to finish
                         while FileManager.default.contentsEqual(atPath: installedAppBundle.path.string, andPath: downloadedAppBundle.path.string) {
                             sleep(1)
                         }

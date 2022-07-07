@@ -15,9 +15,13 @@ extension FileManager {
         } else {
             proc.currentDirectoryPath = url.deletingLastPathComponent().path
         }
-
-        proc.launchPath = "/usr/bin/unzip"
-        proc.arguments = [url.path]
+        if url.pathExtension == "zip" {
+            proc.launchPath = "/usr/bin/unzip"
+            proc.arguments = [url.path]
+        } else {
+            proc.launchPath = "/usr/bin/tar"
+            proc.arguments = ["xf", url.path]
+        }
 
         func findApp() throws -> URL? {
             let files = try FileManager.default.contentsOfDirectory(at: url.deletingLastPathComponent(), includingPropertiesForKeys: [.isDirectoryKey], options: .skipsSubdirectoryDescendants)

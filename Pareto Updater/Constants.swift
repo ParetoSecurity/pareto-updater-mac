@@ -17,9 +17,9 @@ import SwiftUI
 public enum Constants {
     static let unsupportedBundles: Set<String> = [
         "com.hegenberg.BetterTouchTool",
-        "com.culturedcode.ThingsMac",
-        "com.brave.Browser"
+        "com.culturedcode.ThingsMac"
     ]
+
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
     static let useEdgeCache = true

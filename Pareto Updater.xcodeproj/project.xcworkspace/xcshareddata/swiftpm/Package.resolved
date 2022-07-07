@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire",
       "state" : {
-        "revision" : "354dda32d89fc8cd4f5c46487f64957d355f53d8",
-        "version" : "5.6.1"
+        "branch" : "master",
+        "revision" : "51d67100121d586c9d15ec0227de96442af4dd6d"
       }
     },
     {
@@ -15,7 +15,7 @@
       "location" : "https://github.com/teamniteo/AppUpdater",
       "state" : {
         "branch" : "master",
-        "revision" : "c1474858811608f23ee1ec6c4a8ea2f3ecd0e62b"
+        "revision" : "c9fe1f49cd940067de5804ccf113a8dad16b71e3"
       }
     },
     {
@@ -77,14 +77,14 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
-        "revision" : "d312243b14225623d04cda5fd9d6564d4110d36c",
-        "version" : "7.19.0"
+        "branch" : "master",
+        "revision" : "fe16a1bd675590318a6f3fa67f50850be976c175"
       }
     },
     {
       "identity" : "version",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mxcl/Version",
+      "location" : "https://github.com/ParetoSecurity/Version",
       "state" : {
         "revision" : "200046c93f6d5d78a6d72bfd9c0b27a95e9c0a2b",
         "version" : "1.2.0"

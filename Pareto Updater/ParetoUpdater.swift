@@ -297,7 +297,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let event = NSApp.currentEvent else { return }
 
         if event.type == NSEvent.EventType.rightMouseUp {
-            statusItem?.popUpMenu(statusMenu!)
+            statusItem?.menu = statusMenu!
 
         } else {
             if popOver.isShown {

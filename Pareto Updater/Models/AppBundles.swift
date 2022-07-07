@@ -32,10 +32,9 @@ class AppBundles: AppBundle, ObservableObject {
         AppSpyBuster.sharedInstance,
         AppTopNotch.sharedInstance,
         AppVLC.sharedInstance,
-        AppGitHub.sharedInstance
-    ].sorted(by: { lha, rha in
-        lha.appMarketingName < rha.appMarketingName
-    })
+        AppGitHub.sharedInstance,
+        AppCyberduck.sharedInstance
+    ]
 
     @Published var apps: [AppUpdater]
 
