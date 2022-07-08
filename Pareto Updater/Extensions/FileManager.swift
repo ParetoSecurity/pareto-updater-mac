@@ -15,6 +15,7 @@ extension FileManager {
         } else {
             proc.currentDirectoryPath = url.deletingLastPathComponent().path
         }
+
         if url.pathExtension == "zip" {
             proc.launchPath = "/usr/bin/unzip"
             proc.arguments = [url.path]

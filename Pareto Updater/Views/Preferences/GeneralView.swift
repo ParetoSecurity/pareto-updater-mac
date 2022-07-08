@@ -24,12 +24,12 @@ struct GeneralView: View {
                         Toggle("Automatically launch on system startup", isOn: $atLogin.isEnabled)
                     }
                 }
-            Section(
-                footer: Text("App is running checks even when the icon is hidden.").font(.footnote)) {
-                    VStack(alignment: .leading) {
-                        Toggle("Only show in menu bar when the updates are available", isOn: $hideWhenNoUpdates)
-                    }
-                }
+//            Section(
+//                footer: Text("App is running checks even when the icon is hidden.").font(.footnote)) {
+//                    VStack(alignment: .leading) {
+//                        Toggle("Only show in menu bar when the updates are available", isOn: $hideWhenNoUpdates)
+//                    }
+//                }
             if showBeta {
                 Section(
                     footer: Text("Latest features but potentially bugs to report.").font(.footnote)) {

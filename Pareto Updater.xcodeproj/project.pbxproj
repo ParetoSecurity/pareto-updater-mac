@@ -34,7 +34,6 @@
 		4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */; };
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
-		4F5CD066282C3C4A000A5536 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5CD065282C3C4A000A5536 /* View.swift */; };
 		4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
 		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
 		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
@@ -53,6 +52,7 @@
 		4FBCDF4C28731A370093FB5B /* Brave Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF4328731A370093FB5B /* Brave Browser.swift */; };
 		4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF4428731A370093FB5B /* 1Password.swift */; };
 		4FBCDF5028736C990093FB5B /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF4F28736C990093FB5B /* Spotify.swift */; };
+		4FCC280728782B2C004B9ED1 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC280628782B2C004B9ED1 /* Process.swift */; };
 		4FCF098A282D3A9200597F70 /* TestPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCF0989282D3A9200597F70 /* TestPopUp.swift */; };
 		4FE06A4E2876FD2D00471FA4 /* Cyberduck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE06A4D2876FD2D00471FA4 /* Cyberduck.swift */; };
 		4FE610C6282A56A30060C002 /* SpyBuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE610C5282A56A30060C002 /* SpyBuster.swift */; };
@@ -114,7 +114,6 @@
 		4F33FE52280808C200585E5A /* TestPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreferences.swift; sourceTree = "<group>"; };
 		4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleApps.swift; sourceTree = "<group>"; };
 		4F3BE0A2286EF68600DDC1AC /* AppCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCast.swift; sourceTree = "<group>"; };
-		4F5CD065282C3C4A000A5536 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4F7D6FFB28324179007D6E8A /* ClipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipButton.swift; sourceTree = "<group>"; };
 		4F7D6FFD28327BC4007D6E8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F7D6FFF28327FE4007D6E8A /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -132,6 +131,7 @@
 		4FBCDF4328731A370093FB5B /* Brave Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Brave Browser.swift"; sourceTree = "<group>"; };
 		4FBCDF4428731A370093FB5B /* 1Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 1Password.swift; sourceTree = "<group>"; };
 		4FBCDF4F28736C990093FB5B /* Spotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
+		4FCC280628782B2C004B9ED1 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		4FCF0989282D3A9200597F70 /* TestPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPopUp.swift; sourceTree = "<group>"; };
 		4FE06A4D2876FD2D00471FA4 /* Cyberduck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cyberduck.swift; sourceTree = "<group>"; };
 		4FE610C5282A56A30060C002 /* SpyBuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpyBuster.swift; sourceTree = "<group>"; };
@@ -309,9 +309,9 @@
 				4F0E441B280EA49A0093B51A /* AppUpdater.swift */,
 				4FB98F922810313100B9B627 /* DMG.swift */,
 				4F2C834B2817E33500B40361 /* Bundle.swift */,
-				4F5CD065282C3C4A000A5536 /* View.swift */,
 				4F0DEA7B286D93F500344B92 /* URL.swift */,
 				4FEBF0482875AE80002AE0F8 /* String.swift */,
+				4FCC280628782B2C004B9ED1 /* Process.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -534,6 +534,7 @@
 				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
+				4FCC280728782B2C004B9ED1 /* Process.swift in Sources */,
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
 				4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */,
@@ -557,7 +558,6 @@
 				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
 				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
-				4F5CD066282C3C4A000A5536 /* View.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,
 				4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */,
 				4F868ED5286B224800383328 /* Menubar.swift in Sources */,

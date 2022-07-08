@@ -43,11 +43,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         interval: 60 * 60
     )
 
-    func updateHiddenState() {
-        if hideWhenNoUpdates, finishedLaunch {
-            statusItem?.isVisible = AppDelegate.bundleModel.haveUpdatableApps
-        }
-    }
+//    func updateHiddenState() {
+//        if hideWhenNoUpdates, finishedLaunch {
+//            statusItem?.isVisible = AppDelegate.bundleModel.haveUpdatableApps
+//        }
+//    }
 
     func scheduleHourlyCheck() {
         let activity = NSBackgroundActivityScheduler(identifier: "\(String(describing: Bundle.main.bundleIdentifier)).Updater")
@@ -172,14 +172,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if Constants.isRunningTests {
             return
         }
-        if hideWhenNoUpdates {
-            statusItem?.isVisible = true
-            finishedLaunch = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
-                finishedLaunch = true
-                updateHiddenState()
-            }
-        }
+//        if hideWhenNoUpdates {
+//            statusItem?.isVisible = true
+//            finishedLaunch = false
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+//                finishedLaunch = true
+//                // updateHiddenState()
+//            }
+//        }
     }
 
     func applicationDidFinishLaunching(_: Notification) {
@@ -228,23 +228,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem?.isVisible = true
+        // statusItem?.isVisible = true
 
         if let menuButton = statusItem?.button {
-//            let view = NSHostingView(rootView: MenuBarView())
-//            view.translatesAutoresizingMaskIntoConstraints = false
-//            menuButton.addSubview(view)
-              menuButton.target = self
-              menuButton.isEnabled = true
-              menuButton.image = NSImage(named: "menubar")
-              menuButton.action = #selector(menuButtonToggle(sender:))
-              menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
-//            NSLayoutConstraint.activate([
-//                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
-//                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
-//                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
-//                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
-//            ])
+            let view = NSHostingView(rootView: MenuBarView())
+            view.translatesAutoresizingMaskIntoConstraints = false
+            menuButton.addSubview(view)
+            menuButton.target = self
+            menuButton.isEnabled = true
+            // menuButton.image = NSImage(named: "menubar")
+            menuButton.action = #selector(menuButtonToggle(sender:))
+            menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
+                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
+                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
+                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
+            ])
         }
 
         statusMenu = NSMenu(title: "ParetoUpdater")
@@ -261,14 +261,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         quitItem.target = NSApp.delegate
         statusMenu?.addItem(quitItem)
 
-        if hideWhenNoUpdates {
-            statusItem?.isVisible = true
-            finishedLaunch = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
-                finishedLaunch = true
-                updateHiddenState()
-            }
-        }
+//        if hideWhenNoUpdates {
+//            statusItem?.isVisible = true
+//            finishedLaunch = false
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+//                finishedLaunch = true
+//                updateHiddenState()
+//            }
+//        }
 
         if !Constants.isRunningTests {
             DispatchQueue.main.async { [self] in

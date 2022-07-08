@@ -9,13 +9,11 @@ import SwiftUI
 
 struct MenuBarView: View {
     var body: some View {
-        Group {
+        HStack {
             Image("menubar")
                 .resizable()
                 .opacity(0.9)
-                .frame(width: 16, height: 16, alignment: .center)
-
-        }.frame(width: 29, height: 20, alignment: .center)
+        }.frame(width: 21, height: 21, alignment: .center)
             .padding(.horizontal, 2)
             .padding(.vertical, 2)
     }

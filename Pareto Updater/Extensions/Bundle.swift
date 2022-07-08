@@ -11,11 +11,11 @@ import SwiftUI
 
 extension Bundle {
     var isCodeSigned: Bool {
-        return !runCMD(app: "/usr/bin/codesign", args: ["-dv", bundlePath]).contains("Error")
+        return !Process.run(app: "/usr/bin/codesign", args: ["-dv", bundlePath]).contains("Error")
     }
 
     var codeSigningIdentity: String? {
-        let lines = runCMD(app: "/usr/bin/codesign", args: ["-dvvv", bundlePath]).split(separator: "\n")
+        let lines = Process.run(app: "/usr/bin/codesign", args: ["-dvvv", bundlePath]).split(separator: "\n")
         for line in lines {
             if line.hasPrefix("Authority=") {
                 return String(line.dropFirst(10))
@@ -47,20 +47,4 @@ extension Bundle {
     func launch() {
         NSWorkspace.shared.openApplication(at: bundleURL, configuration: NSWorkspace.OpenConfiguration())
     }
-}
-
-func runCMD(app: String, args: [String]) -> String {
-    let task = Process()
-    let pipe = Pipe()
-
-    task.standardOutput = pipe
-    task.standardError = pipe
-    task.arguments = args
-    task.launchPath = app
-    task.launch()
-    task.waitUntilExit()
-
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: data, encoding: .utf8)!
-    return output
 }
