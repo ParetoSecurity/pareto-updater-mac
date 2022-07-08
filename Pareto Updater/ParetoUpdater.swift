@@ -231,19 +231,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusItem?.isVisible = true
 
         if let menuButton = statusItem?.button {
-            let view = NSHostingView(rootView: MenuBarView())
-            view.translatesAutoresizingMaskIntoConstraints = false
-            menuButton.addSubview(view)
-            menuButton.target = self
-            menuButton.isEnabled = true
-            menuButton.action = #selector(menuButtonToggle(sender:))
-            menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
-            NSLayoutConstraint.activate([
-                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
-                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
-                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
-                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
-            ])
+//            let view = NSHostingView(rootView: MenuBarView())
+//            view.translatesAutoresizingMaskIntoConstraints = false
+//            menuButton.addSubview(view)
+              menuButton.target = self
+              menuButton.isEnabled = true
+              menuButton.image = NSImage(named: "menubar")
+              menuButton.action = #selector(menuButtonToggle(sender:))
+              menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
+//            NSLayoutConstraint.activate([
+//                view.topAnchor.constraint(equalTo: menuButton.topAnchor),
+//                view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
+//                view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
+//                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
+//            ])
         }
 
         statusMenu = NSMenu(title: "ParetoUpdater")
