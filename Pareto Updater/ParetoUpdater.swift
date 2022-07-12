@@ -18,17 +18,19 @@ import SwiftUI
 #if !DEBUG
     import Sentry
 #endif
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var statusMenu: NSMenu?
     private var popOver = NSPopover()
     static let bundleModel = AppBundles()
+    private var shouldTerminate = false
 
     @Default(.hideWhenNoUpdates) private var hideWhenNoUpdates
 
     private var noUpdatesSink: AnyCancellable?
     private var fetchSink: AnyCancellable?
     private var finishedLaunch: Bool = false
+    var installWindow: NSWindow?
 
     func application(_: NSApplication, open urls: [URL]) {
         for url in urls {
@@ -68,6 +70,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             SentrySDK.addBreadcrumb(crumb: crumb)
         #endif
         switch url.host {
+        case "install":
+
+            if let bundles = url.queryParams()["bundles"]?.split(separator: ",").map(String.init) {
+                AppDelegate.bundleModel.apps = AppBundles.bundledApps.filter { bundledApp in
+                    bundles.contains(bundledApp.appBundle)
+                }
+                if AppDelegate.bundleModel.apps.count > 0 {
+                    installApps()
+                    statusItem?.isVisible = false
+                    NSApp.setActivationPolicy(.regular)
+                } else {
+                    NSApplication.shared.terminate(self)
+                }
+            }
+
         #if !SETAPP_ENABLED
             case "enrollSingle":
                 let jwt = url.queryParams()["token"] ?? ""
@@ -293,6 +310,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         AppDelegate.bundleModel.fetchData()
     }
 
+    func windowWillClose(_ notification: Notification) {
+        if let window = notification.object as? NSWindow, window.isEqual(to: installWindow) {
+            NSApplication.shared.terminate(self)
+        }
+    }
+
     @objc
     func menuButtonToggle(sender: NSStatusBarButton) {
         guard let event = NSApp.currentEvent else { return }
@@ -330,6 +353,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
         }
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    func installApps() {
+        shouldTerminate = true
+        if installWindow == nil {
+            // Create the preferences window and set content
+            installWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 350, height: 380),
+                styleMask: [.closable, .titled, .unifiedTitleAndToolbar],
+                backing: .buffered,
+                defer: false
+            )
+            installWindow?.title = "Pareto Updater"
+            installWindow?.titleVisibility = .visible
+            installWindow!.titlebarAppearsTransparent = true
+            installWindow!.center()
+            installWindow!.setFrameAutosaveName("installView")
+            installWindow!.isReleasedWhenClosed = true
+
+            let hosting = NSHostingView(rootView: AppInstall(viewModel: AppDelegate.bundleModel))
+            hosting.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
+            installWindow!.contentView = hosting
+        }
+        installWindow!.makeKeyAndOrderFront(nil)
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
+        shouldTerminate
     }
 }
 
