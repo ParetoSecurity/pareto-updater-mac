@@ -33,8 +33,4 @@ class AppBitwardenUpdater: AppUpdater {
             }
         })
     }
-
-    override var UUID: String {
-        "42e4fce2-b34f-5220-990a-33ba64e9ffa0"
-    }
 }

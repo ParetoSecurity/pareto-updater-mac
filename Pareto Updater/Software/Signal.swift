@@ -18,10 +18,6 @@ class AppSignal: AppUpdater {
     override var appMarketingName: String { "Signal" }
     override var appBundle: String { "org.whispersystems.signal-desktop" }
 
-    override var UUID: String {
-        "b621849f-c1ed-5483-ba71-a90968b1fa7b"
-    }
-
     override var latestURL: URL {
         URL(string: "https://updates.signal.org/desktop/signal-desktop-mac-universal-\(latestVersion).dmg")!
     }

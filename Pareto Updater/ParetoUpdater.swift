@@ -18,17 +18,21 @@ import SwiftUI
 #if !DEBUG
     import Sentry
 #endif
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var statusMenu: NSMenu?
     private var popOver = NSPopover()
-    static let bundleModel = AppBundles()
+    private var shouldTerminate = false
+
+    var appsStore = AppBundles()
 
     @Default(.hideWhenNoUpdates) private var hideWhenNoUpdates
 
-    private var noUpdatesSink: AnyCancellable?
-    private var fetchSink: AnyCancellable?
+    // private var noUpdatesSink: AnyCancellable?
+    // private var fetchSink: AnyCancellable?
     private var finishedLaunch: Bool = false
+    var installWindow: NSWindow?
+    private var appInstallView: AppInstall?
 
     func application(_: NSApplication, open urls: [URL]) {
         for url in urls {
@@ -54,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         activity.repeats = true
         activity.interval = 60 * 60
         activity.schedule { completion in
-            AppDelegate.bundleModel.fetchData()
+            self.appsStore.fetchData()
             completion(.finished)
         }
     }
@@ -68,6 +72,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             SentrySDK.addBreadcrumb(crumb: crumb)
         #endif
         switch url.host {
+        case "install":
+
+            if let bundles = url.queryParams()["bundles"]?.split(separator: ",").map(String.init) {
+                appsStore.apps = AppBundles.bundledApps.filter { bundledApp in
+                    bundles.contains(bundledApp.appBundle)
+                }
+                if appsStore.apps.count > 0 {
+                    showInstallAppsWindow()
+                } else {
+                    NSApplication.shared.terminate(self)
+                }
+            }
+
         #if !SETAPP_ENABLED
             case "enrollSingle":
                 let jwt = url.queryParams()["token"] ?? ""
@@ -225,10 +242,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popOver.behavior = .applicationDefined
         popOver.animates = true
         popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: AppList(viewModel: AppDelegate.bundleModel))
+        popOver.contentViewController?.view = NSHostingView(rootView: AppList().environmentObject(appsStore))
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        // statusItem?.isVisible = true
 
         if let menuButton = statusItem?.button {
             let view = NSHostingView(rootView: MenuBarView())
@@ -290,7 +306,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         //     popOver.contentViewController?.viewDidAppear()
         // popOver.contentSize = popOver.contentViewController?.view.intrinsicContentSize ?? NSMakeSize(10, 10)
         // }
-        AppDelegate.bundleModel.fetchData()
+
+        statusItem?.isVisible = !shouldTerminate
     }
 
     @objc
@@ -319,6 +336,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc
     func contact() {
+        // showInstallAppsWindow()
         NSWorkspace.shared.open(Constants.bugReportURL)
     }
 
@@ -331,6 +349,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         NSApp.activate(ignoringOtherApps: true)
     }
+
+    func showInstallAppsWindow() {
+        shouldTerminate = true
+        statusItem?.isVisible = false
+        NSApp.setActivationPolicy(.regular)
+        if installWindow == nil {
+            installWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 350, height: 380),
+                styleMask: [.closable, .titled, .unifiedTitleAndToolbar],
+                backing: .buffered,
+                defer: false
+            )
+            installWindow?.title = "Pareto Updater"
+            installWindow?.titleVisibility = .visible
+            installWindow?.titlebarAppearsTransparent = false
+            installWindow?.center()
+            installWindow?.setFrameAutosaveName("installView")
+            installWindow?.isReleasedWhenClosed = false
+
+            let hosting = NSHostingView(rootView: AppInstall().environmentObject(appsStore))
+            hosting.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
+            installWindow?.contentView = hosting
+            installWindow?.makeKeyAndOrderFront(nil)
+            appsStore.fetchData()
+        }
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
+        shouldTerminate
+    }
 }
 
 @main
@@ -339,7 +387,7 @@ struct ParetoUpdaterApp: App {
     @AppStorage("showMenuBar") var showMenuBar = true
     var body: some Scene {
         Settings {
-            PreferencesView(selected: PreferencesView.Tabs.general)
+            PreferencesView(selected: PreferencesView.Tabs.general).environmentObject(appDelegate.appsStore)
         }
     }
 }

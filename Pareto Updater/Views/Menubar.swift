@@ -14,7 +14,7 @@ struct MenuBarView: View {
                 .resizable()
                 .opacity(0.9)
         }.frame(width: 21, height: 21, alignment: .center)
-            .padding(.horizontal, 2)
+            .padding(.horizontal, 8)
             .padding(.vertical, 2)
     }
 }

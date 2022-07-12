@@ -10,7 +10,7 @@ import LaunchAtLogin
 import SwiftUI
 
 struct AppsView: View {
-    @StateObject var viewModel: AppBundles
+    @EnvironmentObject var viewModel: AppBundles
 
     func copy() {
         var logs = [String]()
@@ -37,11 +37,5 @@ struct AppsView: View {
         }.contextMenu(ContextMenu(menuItems: {
             Button("Copy app list", action: copy)
         }))
-    }
-}
-
-struct AppsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppsView(viewModel: AppBundles())
     }
 }

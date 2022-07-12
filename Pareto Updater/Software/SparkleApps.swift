@@ -14,22 +14,16 @@ class SparkleApp: AppUpdater {
     private var sparkName: String
     private var sparkBundle: String
     private var updateURL: String
-    private var uuid: String
 
     init(name: String, bundle: String, url: String) {
         sparkName = name
         sparkBundle = bundle
         updateURL = url
-        uuid = Foundation.UUID().uuidString
     }
 
     override var appName: String { sparkName }
     override var appMarketingName: String { sparkName }
     override var appBundle: String { sparkBundle }
-
-    override var UUID: String {
-        uuid
-    }
 
     override var latestURL: URL {
         let url = viaEdgeCache(updateURL)

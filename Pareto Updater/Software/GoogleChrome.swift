@@ -31,10 +31,6 @@ class AppGoogleChrome: AppUpdater {
     override var appMarketingName: String { "Google Chrome" }
     override var appBundle: String { "com.google.Chrome" }
 
-    override var UUID: String {
-        "d34ee340-67a7-5e3e-be8b-aef4e3133de0"
-    }
-
     override var latestURL: URL {
         return URL(string: "https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg")!
     }
@@ -54,8 +50,8 @@ class AppGoogleChrome: AppUpdater {
     }
 
     override var textVersion: String {
-        if let path = applicationPath {
-            if let version = Bundle.appVersion(path: path) {
+        if isInstalled {
+            if let version = Bundle.appVersion(path: applicationPath) {
                 let nibbles = version.lowercased().split(separator: ".")
                 return String(nibbles[0 ... nibbles.count - 2].joined(separator: "."))
             }

@@ -19,10 +19,6 @@ class AppSublimeText: AppUpdater {
     override var appMarketingName: String { "Sublime Text" }
     override var appBundle: String { "com.sublimetext.4" }
 
-    override var UUID: String {
-        "0ae675c9-1fbe-5fcc-8e4a-c0f53f4d8b4d"
-    }
-
     override var currentVersion: String? {
         if !isInstalled {
             return nil

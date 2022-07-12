@@ -16,10 +16,6 @@ class App1Password8AppUpdater: AppUpdater {
     override var appMarketingName: String { "1Password" }
     override var appBundle: String { "com.1password.1password" }
 
-    override var UUID: String {
-        "541f82b2-db88-588f-9389-a41b81973b45"
-    }
-
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://releases.1password.com/mac/")
         let versionRegex = Regex("Updated to ([\\.\\d]+) on")

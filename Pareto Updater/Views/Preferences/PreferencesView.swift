@@ -1,5 +1,5 @@
 //
-//  PrefrencesView.swift
+//  PreferencesView.swift
 //  Pareto Updater
 //
 //  Created by Janez Troha on 26/04/2022.
@@ -11,6 +11,7 @@ import Foundation
 import SwiftUI
 
 struct PreferencesView: View {
+    @EnvironmentObject var appStore: AppBundles
     @State var selected: Tabs
     @Default(.showBeta) var showBeta
 
@@ -26,7 +27,7 @@ struct PreferencesView: View {
                 }
                 .tag(Tabs.general)
 
-            AppsView(viewModel: AppDelegate.bundleModel)
+            AppsView().environmentObject(appStore)
                 .tabItem {
                     Label("Apps", systemImage: "app.badge")
                 }

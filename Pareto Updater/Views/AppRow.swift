@@ -15,6 +15,7 @@ import SwiftUI
 struct AppRow: View {
     @ObservedObject var app: AppUpdater
     var onUpdate: (() -> Void)?
+    @State var showActions: Bool = true
     @Default(.showBeta) var showBeta
 
     var body: some View {
@@ -72,7 +73,7 @@ struct AppRow: View {
                     .frame(height: 15)
             default:
                 if app.hasUpdate {
-                    if onUpdate != nil {
+                    if onUpdate != nil, showActions {
                         Button {
                             onUpdate?()
                         }
@@ -92,11 +93,18 @@ struct AppRow: View {
                     }
 
                 } else {
-                    Image(systemName: "checkmark.square")
-                        .resizable()
-                        .foregroundColor(.secondary)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 15)
+                    if app.isInstalled {
+                        Image(systemName: "checkmark.square")
+                            .resizable()
+                            .foregroundColor(.secondary)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 15)
+                    } else {
+                        Image(systemName: "arrow.down.app.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 15)
+                    }
                 }
             }
         }

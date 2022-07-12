@@ -21,10 +21,6 @@ class AppFirefox: AppUpdater {
     override var appMarketingName: String { "Firefox" }
     override var appBundle: String { "org.mozilla.firefox" }
 
-    override var UUID: String {
-        "768a574c-75a2-536d-8785-ef9512981184"
-    }
-
     override var latestURL: URL {
         let lock = DispatchSemaphore(value: 0)
         var dmg = URL(string: "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US")!

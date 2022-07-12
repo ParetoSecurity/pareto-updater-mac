@@ -9,13 +9,7 @@ import Foundation
 import os.log
 import Sentry
 
-protocol AppBundle {
-    var apps: [AppUpdater] { get }
-    var updating: Bool { get set }
-    var installing: Bool { get set }
-}
-
-class AppBundles: AppBundle, ObservableObject {
+class AppBundles: ObservableObject {
     static let bundledApps = [
         App1Password8AppUpdater.sharedInstance,
         AppBraveBrowserUpdater.sharedInstance,
@@ -40,7 +34,7 @@ class AppBundles: AppBundle, ObservableObject {
     @Published var apps: [AppUpdater]
 
     @Published var updating: Bool = false
-    @Published var installing: Bool = false
+    @Published var workInstall: Bool = false
 
     public var haveUpdatableApps: Bool {
         !updatableApps.isEmpty
@@ -66,12 +60,11 @@ class AppBundles: AppBundle, ObservableObject {
 
     func updateApp(withApp: AppUpdater) {
         DispatchQueue.main.async {
-            self.installing = true
+            self.workInstall = true
         }
-        let transaction = SentrySDK.startTransaction(name: "Update App", operation: "updater")
+
         DispatchQueue.global(qos: .userInteractive).async {
             let lock = DispatchSemaphore(value: 0)
-            let span = transaction.startChild(operation: "updater", description: withApp.appMarketingName)
             withApp.updateApp { _ in
                 DispatchQueue.main.async {
                     withApp.updatable = false
@@ -80,41 +73,52 @@ class AppBundles: AppBundle, ObservableObject {
             }
             lock.wait()
             DispatchQueue.main.async {
-                self.installing = false
-                transaction.finish()
-                span.finish()
+                self.workInstall = false
             }
         }
+    }
+
+    func install(fromQueue queue: [AppUpdater]) {
+        DispatchQueue.main.async {
+            self.workInstall = true
+        }
+        DispatchQueue.global(qos: .userInteractive).async {
+            let worker = DispatchQueue(label: "install.queue", attributes: .concurrent)
+
+            for app in queue {
+                worker.sync(flags: .barrier) {
+                    let lock = DispatchSemaphore(value: 0)
+                    app.updateApp { _ in
+                        DispatchQueue.main.async {
+                            app.updatable = false
+                        }
+                        lock.signal()
+                    }
+                    lock.wait()
+                }
+            }
+
+            DispatchQueue.main.async {
+                self.workInstall = false
+            }
+        }
+    }
+
+    func installAll() {
+        install(fromQueue: apps.filter { app in
+            app.hasUpdate || !app.isInstalled
+        })
     }
 
     func updateAll() {
-        let transaction = SentrySDK.startTransaction(name: "Update All Apps", operation: "updater")
-        let lock = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: .userInteractive).async { [self] in
-            for app in updatableApps {
-                let span = transaction.startChild(operation: "updater", description: app.appMarketingName)
-                DispatchQueue.main.async {
-                    self.installing = true
-                }
-                app.updateApp { _ in
-                    os_log("Update of %{public}s done.", app.appBundle)
-                    lock.signal()
-                    span.finish()
-                }
-                lock.wait()
-            }
-            DispatchQueue.main.async {
-                self.installing = self.installingApps
-            }
-            transaction.finish()
-        }
+        install(fromQueue: updatableApps)
     }
 
     func fetchData() {
-        if updating || installing {
+        if updating || workInstall {
             return
         }
-
+        let lock = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
                 self.updating = true
@@ -142,7 +146,9 @@ class AppBundles: AppBundle, ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.updating = false
             }
+            lock.signal()
         }
+        lock.wait()
     }
 
     static func readPlistFile(fileURL: URL) -> [String: Any]? {

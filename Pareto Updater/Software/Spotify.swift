@@ -17,10 +17,6 @@ class AppSpotify: AppUpdater {
     override var appMarketingName: String { "Spotify" }
     override var appBundle: String { "com.spotify.client" }
 
-    override var UUID: String {
-        "7a71c724-124a-4458-8e57-bf716c558742"
-    }
-
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://download.scdn.co/SpotifyARM64.dmg")!
@@ -30,7 +26,10 @@ class AppSpotify: AppUpdater {
     }
 
     override var textVersion: String {
-        (Bundle.appVersion(path: applicationPath!) ?? "0.0.0").lowercased().split(separator: ".")[0 ... 3].joined(separator: ".")
+        if isInstalled {
+            return (Bundle.appVersion(path: applicationPath) ?? "0.0.0").lowercased().split(separator: ".")[0 ... 3].joined(separator: ".")
+        }
+        return "0.0.0"
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

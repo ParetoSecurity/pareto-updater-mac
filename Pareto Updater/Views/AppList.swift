@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppList: View {
-    @StateObject var viewModel: AppBundles
+    @EnvironmentObject var viewModel: AppBundles
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,7 +27,7 @@ struct AppList: View {
                 }
                 .buttonStyle(ClipButton())
                 .help("Download and update all")
-                .disabled(!viewModel.haveUpdatableApps || viewModel.updating || viewModel.installing)
+                .disabled(!viewModel.haveUpdatableApps || viewModel.updating || viewModel.workInstall)
 
                 Button {
                     viewModel.fetchData()
@@ -39,7 +39,7 @@ struct AppList: View {
                         .frame(height: 13)
                 }
                 .buttonStyle(ClipButton())
-                .disabled(viewModel.updating || viewModel.installing)
+                .disabled(viewModel.updating || viewModel.workInstall)
                 .help("Refresh the status of the apps")
 
                 Button {
@@ -107,27 +107,3 @@ struct AppList: View {
         }
     }
 }
-
-#if DEBUG
-
-    class AppBundlesFake: AppBundles {
-        convenience init(updating: Bool) {
-            self.init()
-            self.updating = updating
-        }
-
-        convenience init(installing: Bool) {
-            self.init()
-            self.installing = installing
-        }
-    }
-
-    struct AppList_Previews: PreviewProvider {
-        static var previews: some View {
-            Group {
-                AppList(viewModel: AppBundlesFake(updating: true))
-                AppList(viewModel: AppBundlesFake(installing: true))
-            }
-        }
-    }
-#endif

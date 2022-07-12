@@ -18,10 +18,6 @@ class AppDocker: AppUpdater {
     override var appMarketingName: String { "Docker" }
     override var appBundle: String { "com.docker.docker" }
 
-    override var UUID: String {
-        "ee11fe36-a372-5cba-a1b4-151748fc2fa7"
-    }
-
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://desktop.docker.com/mac/main/arm64/Docker.dmg")!

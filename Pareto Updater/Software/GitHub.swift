@@ -30,10 +30,6 @@ class AppGitHub: AppUpdater {
     override var appMarketingName: String { "GitHub Desktop" }
     override var appBundle: String { "com.github.GitHubClient" }
 
-    override var UUID: String {
-        "e50f546c-a062-428a-b984-1e4fa2efc3ba"
-    }
-
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://central.github.com/deployments/desktop/desktop/latest/darwin")!

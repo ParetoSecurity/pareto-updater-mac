@@ -20,10 +20,6 @@ class AppLibreOffice: AppUpdater {
     override var appMarketingName: String { "LibreOffice" }
     override var appBundle: String { "org.libreoffice.script" }
 
-    override var UUID: String {
-        "5726931a-264a-5758-b7dd-d09285ac4b7f"
-    }
-
     override var latestURL: URL {
         #if arch(arm64)
             // https://download.documentfoundation.org/libreoffice/stable/7.2.7/mac/aarch64/LibreOffice_7.2.7_MacOS_aarch64.dmg
@@ -35,8 +31,8 @@ class AppLibreOffice: AppUpdater {
     }
 
     override var textVersion: String {
-        if let path = applicationPath {
-            if let version = Bundle.appVersion(path: path) {
+        if isInstalled {
+            if let version = Bundle.appVersion(path: applicationPath) {
                 return String(version.lowercased().split(separator: ".")[0 ... 2].joined(separator: "."))
             }
             return "0.0.0"

@@ -42,14 +42,14 @@ struct AppStoreResult: Codable {
 
 public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public static func == (lhs: AppUpdater, rhs: AppUpdater) -> Bool {
-        lhs.UUID == rhs.UUID
+        lhs.id == rhs.id
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(UUID)
+        hasher.combine(id)
     }
 
-    private(set) var UUID = "UUID"
+    public var id = UUID()
 
     var appName: String { "" } // Updater for Pareto
     var appMarketingName: String { "" } // Pareto Updater
@@ -66,7 +66,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var help: String {
-        "\(textVersion) Latest: \(latestVersion)"
+        if textVersion == "0.0.0" {
+            return "Installing: \(latestVersion)"
+        }
+        return "\(textVersion) Latest: \(latestVersion)"
     }
 
     var hasUpdate: Bool {
@@ -81,9 +84,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return true
         }
 
-        if let appPath = applicationPath {
+        if isInstalled {
             let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
-            let attributes = NSMetadataItem(url: URL(fileURLWithPath: appPath))
+            let attributes = NSMetadataItem(url: URL(fileURLWithPath: applicationPath))
             guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else { return false }
             return lastUse >= weekAgo
         }
@@ -141,20 +144,25 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
 
                     let downloadedAppBundle = Bundle(url: app!)!
-                    let installedAppBundle = Bundle(path: applicationPath!)!
+                    if let installedAppBundle = Bundle(path: applicationPath) {
+                        os_log("Delete installedAppBundle: \(installedAppBundle.description)")
+                        try installedAppBundle.path.delete()
 
-                    os_log("Delete installedAppBundle: \(installedAppBundle.description)")
-                    try installedAppBundle.path.delete()
-
-                    os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-
-                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-
+                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        if needsStart {
+                            installedAppBundle.launch()
+                        }
+                    } else {
+                        os_log("Install AppBundle \(downloadedAppBundle.description)")
+                        try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
+                    }
                     _ = DMGMounter.detach(mountPoint: mountPoint)
 
-                    if needsStart {
-                        installedAppBundle.launch()
+                    if let bundle = Bundle(path: applicationPath), needsStart {
+                        bundle.launch()
                     }
+
                     return AppUpdaterStatus.Updated
                 } catch {
                     _ = DMGMounter.detach(mountPoint: mountPoint)
@@ -167,20 +175,23 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             do {
                 let app = FileManager.default.unzip(appFile)
                 let downloadedAppBundle = Bundle(url: app)!
-                let installedAppBundle = Bundle(path: applicationPath!)!
-                os_log("Delete installedAppBundle: \(installedAppBundle)")
-                try installedAppBundle.path.delete()
-                os_log("Update installedAppBundle: \(installedAppBundle) with \(downloadedAppBundle)")
-                try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                if let installedAppBundle = Bundle(path: applicationPath) {
+                    os_log("Delete installedAppBundle: \(installedAppBundle.description)")
+                    try installedAppBundle.path.delete()
 
-                // Wait for bundle IO ops to finish
-                while FileManager.default.contentsEqual(atPath: installedAppBundle.path.string, andPath: downloadedAppBundle.path.string) {
-                    sleep(1)
+                    os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                    if needsStart {
+                        installedAppBundle.launch()
+                    }
+                } else {
+                    os_log("Install AppBundle \(downloadedAppBundle.description)")
+                    try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
                 }
 
                 try downloadedAppBundle.path.delete()
-                if needsStart {
-                    installedAppBundle.launch()
+                if let bundle = Bundle(path: applicationPath), needsStart {
+                    bundle.launch()
                 }
                 return AppUpdaterStatus.Updated
             } catch {
@@ -192,18 +203,14 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {
-        if !hasUpdate {
-            completion(.Idle)
-            status = .Idle
-            return
-        }
         DispatchQueue.main.async { [self] in
             status = .DownloadingUpdate
             fractionCompleted = 0.0
         }
-        workItem?.cancel()
-        workItem = DispatchWorkItem { [self] in
-            downloadLatest { sourceFile, appFile in
+        downloadLatest { [self] sourceFile, appFile in
+            workItem?.cancel()
+            workItem = DispatchWorkItem { [self] in
+
                 let state = self.install(sourceFile: sourceFile, appFile: appFile)
                 DispatchQueue.main.async { [self] in
                     status = state
@@ -211,19 +218,20 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     completion(state)
                 }
             }
+
+            workItem?.notify(queue: .main) { [self] in
+                status = .Idle
+                updatable = false
+                fractionCompleted = 0.0
+                completion(status)
+            }
+            DispatchQueue.global(qos: .userInteractive).async(execute: workItem!)
         }
-        workItem?.notify(queue: .main) { [self] in
-            status = .Idle
-            updatable = false
-            fractionCompleted = 0.0
-            completion(status)
-        }
-        DispatchQueue.global(qos: .userInteractive).async(execute: workItem!)
     }
 
     var textVersion: String {
-        if let path = applicationPath {
-            if let version = Bundle.appVersion(path: path) {
+        if isInstalled {
+            if let version = Bundle.appVersion(path: applicationPath) {
                 return version.lowercased()
             }
             return "0.0.0"
@@ -239,30 +247,19 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return textVersion.versionNormalize
     }
 
-    var applicationPath: String? {
-        let globalPath = "/Applications/\(appName).app"
-        if FileManager.default.fileExists(atPath: globalPath) {
-            return globalPath
-        }
-
-        let homeDirURL = FileManager.default.homeDirectoryForCurrentUser
-        let localPath = "\(homeDirURL.path)/Applications/\(appName).app"
-        if FileManager.default.fileExists(atPath: localPath) {
-            return localPath
-        }
-
-        return nil
+    var applicationPath: String {
+        return "/Applications/\(appName).app"
     }
 
     public var isInstalled: Bool {
-        applicationPath != nil
+        FileManager.default.fileExists(atPath: applicationPath)
     }
 
     public var icon: NSImage? {
         if !isInstalled {
             return nil
         }
-        return Bundle(path: applicationPath!)?.icon
+        return Bundle(path: applicationPath)?.icon
     }
 
     public var latestVersion: String {

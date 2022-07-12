@@ -20,10 +20,6 @@ class AppVLC: AppUpdater {
     override var appMarketingName: String { "VLC media player" }
     override var appBundle: String { "org.videolan.vlc" }
 
-    override var UUID: String {
-        "5726931a-264a-5758-b7dd-d09285ac4b7f"
-    }
-
     override var latestURL: URL {
         #if arch(arm64)
             // https://get.videolan.org/vlc/3.0.17.3/macosx/vlc-3.0.17.3-arm64.dmg

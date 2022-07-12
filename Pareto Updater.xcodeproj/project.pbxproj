@@ -23,6 +23,7 @@
 		4F2C835E2819357C00B40361 /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C835D2819357C00B40361 /* Slack.swift */; };
 		4F2C8361281935D000B40361 /* AppBundles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C8360281935D000B40361 /* AppBundles.swift */; };
 		4F2C836828193E9D00B40361 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C836728193E9D00B40361 /* Defaults.swift */; };
+		4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CB8D1287D7FE900C0DA60 /* AppInstall.swift */; };
 		4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F303AF42874547200C983BF /* UpdaterTests.swift */; };
 		4F303AF72874A25400C983BF /* TopNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F303AF62874A25400C983BF /* TopNotch.swift */; };
 		4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE34280808C000585E5A /* ParetoUpdater.swift */; };
@@ -34,8 +35,8 @@
 		4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */; };
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
+		4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
 		4F75DDD9287D512900FD4503 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4F75DDD8287D512900FD4503 /* Version */; };
-		4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
 		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
 		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
 		4F868ED5286B224800383328 /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F868ED4286B224800383328 /* Menubar.swift */; };
@@ -101,6 +102,7 @@
 		4F2C835D2819357C00B40361 /* Slack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slack.swift; sourceTree = "<group>"; };
 		4F2C8360281935D000B40361 /* AppBundles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBundles.swift; sourceTree = "<group>"; };
 		4F2C836728193E9D00B40361 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		4F2CB8D1287D7FE900C0DA60 /* AppInstall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInstall.swift; sourceTree = "<group>"; };
 		4F303AF42874547200C983BF /* UpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterTests.swift; sourceTree = "<group>"; };
 		4F303AF62874A25400C983BF /* TopNotch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopNotch.swift; sourceTree = "<group>"; };
 		4F33FE31280808C000585E5A /* Pareto Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pareto Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +185,7 @@
 			children = (
 				4F2C836928193EEC00B40361 /* Preferences */,
 				4F33FE36280808C000585E5A /* AppList.swift */,
+				4F2CB8D1287D7FE900C0DA60 /* AppInstall.swift */,
 				4F0E43F6280E9E820093B51A /* AppRow.swift */,
 				4F7D6FFB28324179007D6E8A /* ClipButton.swift */,
 				4F868ED4286B224800383328 /* Menubar.swift */,
@@ -526,7 +529,6 @@
 			files = (
 				4F2C835C2819331A00B40361 /* Firefox.swift in Sources */,
 				4FBCDF4C28731A370093FB5B /* Brave Browser.swift in Sources */,
-				4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */,
 				4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */,
 				4F2C83512817FEA400B40361 /* Signal.swift in Sources */,
 				4F303AF72874A25400C983BF /* TopNotch.swift in Sources */,
@@ -542,6 +544,7 @@
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
 				4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */,
+				4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */,
 				4FA756022877286A0064D0ED /* iTerm.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
 				4FBCDF4B28731A370093FB5B /* Bitwarden.swift in Sources */,
@@ -559,6 +562,7 @@
 				4F2C8361281935D000B40361 /* AppBundles.swift in Sources */,
 				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
 				4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */,
+				4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */,
 				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
 				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,

@@ -18,8 +18,8 @@ class AppBraveBrowserUpdater: SparkleApp {
     }
 
     override var textVersion: String {
-        if let path = applicationPath {
-            if let version = Bundle.appVersion(path: path) {
+        if isInstalled {
+            if let version = Bundle.appVersion(path: applicationPath) {
                 let nibbles = version.lowercased().split(separator: ".")
                 return String(nibbles[1 ... nibbles.count - 1].joined(separator: "."))
             }

@@ -20,10 +20,6 @@ class AppVSCodeApp: AppUpdater {
     override var appMarketingName: String { "Visual Studio Code" }
     override var appBundle: String { "com.microsoft.VSCode" }
 
-    override var UUID: String {
-        "febd20fb-3dec-5834-a0ba-58f3342df58c"
-    }
-
     override var latestURL: URL {
         URL(string: "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal")!
     }
