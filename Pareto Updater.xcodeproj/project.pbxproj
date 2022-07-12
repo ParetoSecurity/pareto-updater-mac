@@ -34,6 +34,7 @@
 		4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */; };
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
+		4F75DDD9287D512900FD4503 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4F75DDD8287D512900FD4503 /* Version */; };
 		4F7D6FFC28324179007D6E8A /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
 		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
 		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
@@ -146,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F75DDD9287D512900FD4503 /* Version in Frameworks */,
 				4FE610EA282A88660060C002 /* Regex in Frameworks */,
 				4FA75600287709960064D0ED /* AppUpdater in Frameworks */,
 				4FE610F0282A888C0060C002 /* Cache in Frameworks */,
@@ -353,6 +355,7 @@
 				4F0DEA79286D923A00344B92 /* JWTDecode */,
 				4F3BE0A0286EF61B00DDC1AC /* XMLCoder */,
 				4FA755FF287709960064D0ED /* AppUpdater */,
+				4F75DDD8287D512900FD4503 /* Version */,
 			);
 			productName = "Pareto Updater";
 			productReference = 4F33FE31280808C000585E5A /* Pareto Updater.app */;
@@ -436,6 +439,7 @@
 				4F0DEA78286D923A00344B92 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				4F3BE09F286EF61B00DDC1AC /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				4FA755FE287709960064D0ED /* XCRemoteSwiftPackageReference "AppUpdater" */,
+				4F75DDD7287D512900FD4503 /* XCRemoteSwiftPackageReference "Version" */,
 			);
 			productRefGroup = 4F33FE32280808C000585E5A /* Products */;
 			projectDirPath = "";
@@ -911,16 +915,24 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		4F3BE09F286EF61B00DDC1AC /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CoreOffice/XMLCoder";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				branch = main;
+				kind = branch;
+			};
+		};
+		4F75DDD7287D512900FD4503 /* XCRemoteSwiftPackageReference "Version" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ParetoSecurity/Version";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 		4FA755FE287709960064D0ED /* XCRemoteSwiftPackageReference "AppUpdater" */ = {
@@ -988,6 +1000,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4F3BE09F286EF61B00DDC1AC /* XCRemoteSwiftPackageReference "XMLCoder" */;
 			productName = XMLCoder;
+		};
+		4F75DDD8287D512900FD4503 /* Version */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F75DDD7287D512900FD4503 /* XCRemoteSwiftPackageReference "Version" */;
+			productName = Version;
 		};
 		4FA755FF287709960064D0ED /* AppUpdater */ = {
 			isa = XCSwiftPackageProductDependency;

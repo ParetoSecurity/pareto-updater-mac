@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/auth0/JWTDecode.swift.git",
       "state" : {
-        "revision" : "3cd207fb9e943b6168a117baa3936c823204c2dc",
-        "version" : "2.6.3"
+        "branch" : "master",
+        "revision" : "558d439e85903f4eaed0c87e2fb1572615f81022"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ParetoSecurity/Version",
       "state" : {
-        "revision" : "200046c93f6d5d78a6d72bfd9c0b27a95e9c0a2b",
-        "version" : "1.2.0"
+        "branch" : "master",
+        "revision" : "9efa0d232cd886e78a6c59fd6eff337ebcbdafce"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CoreOffice/XMLCoder",
       "state" : {
-        "revision" : "f30119af03996939cc4f54e0bf0dda9f88a84da5",
-        "version" : "0.13.1"
+        "branch" : "main",
+        "revision" : "c37370172220e1793f5d4c0d871d9597eccc153c"
       }
     }
   ],
