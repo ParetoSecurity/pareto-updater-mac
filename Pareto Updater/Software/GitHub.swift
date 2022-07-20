@@ -38,6 +38,10 @@ class AppGitHub: AppUpdater {
         #endif
     }
 
+    override var latestURLExtension: String {
+        "zip"
+    }
+
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = "https://central.github.com/deployments/desktop/desktop/changelog.json"
         os_log("Requesting %{public}s", url)

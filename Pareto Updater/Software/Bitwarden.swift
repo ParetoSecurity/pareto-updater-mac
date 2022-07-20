@@ -19,6 +19,10 @@ class AppBitwardenUpdater: AppUpdater {
         return URL(string: "https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg")!
     }
 
+    override var latestURLExtension: String {
+        "dmg"
+    }
+
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://itunes.apple.com/lookup?bundleId=\(appBundle)&country=us&entity=macSoftware&limit=1")
         os_log("Requesting %{public}s", url)

@@ -72,6 +72,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return "\(textVersion) Latest: \(latestVersion)"
     }
 
+    var latestURLExtension: String {
+        latestURL.pathExtension
+    }
+
     var hasUpdate: Bool {
         if let version = currentVersion {
             return latestVersion.versionCompare(version) == .orderedDescending
@@ -94,7 +98,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
-        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURL.pathExtension)")
+        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURLExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
             os_log("Update from cache at %{public}", cachedPath.debugDescription)
             completion(latestURL, cachedPath)

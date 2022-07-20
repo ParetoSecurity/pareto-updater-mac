@@ -24,6 +24,10 @@ class AppVSCodeApp: AppUpdater {
         URL(string: "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal")!
     }
 
+    override var latestURLExtension: String {
+        "zip"
+    }
+
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://code.visualstudio.com/updates/")
         let versionRegex = Regex("<strong>Update ([\\.\\d]+)</strong>")

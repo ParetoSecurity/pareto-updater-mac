@@ -239,7 +239,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
 
         #endif
 
-        popOver.behavior = .applicationDefined
+        popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
         popOver.contentViewController?.view = NSHostingView(rootView: AppList().environmentObject(appsStore))
