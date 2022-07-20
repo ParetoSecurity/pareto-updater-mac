@@ -140,7 +140,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             needsStart = true
         }
 
-        if sourceFile.pathExtension == "dmg" {
+        if appFile.pathExtension == "dmg" {
             let mountPoint = URL(string: "/Volumes/" + appBundle)!
             os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
             if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
@@ -175,7 +175,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 }
             }
         }
-        if sourceFile.pathExtension == "zip" || sourceFile.pathExtension.contains("tar") {
+
+        if appFile.pathExtension == "zip" || sourceFile.pathExtension.contains("tar") {
             do {
                 let app = FileManager.default.unzip(appFile)
                 let downloadedAppBundle = Bundle(url: app)!
@@ -271,9 +272,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return try! Constants.versionStorage.object(forKey: appBundle)
         } else {
             let lock = DispatchSemaphore(value: 0)
-            getLatestVersion { [self] version in
-                try! Constants.versionStorage.setObject(version, forKey: self.appBundle)
-                lock.signal()
+            DispatchQueue.global(qos: .userInteractive).async { [self] in
+                getLatestVersion { [self] version in
+                    try! Constants.versionStorage.setObject(version, forKey: self.appBundle)
+                    lock.signal()
+                }
             }
             lock.wait()
             return try! Constants.versionStorage.object(forKey: appBundle)

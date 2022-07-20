@@ -58,9 +58,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         activity.repeats = true
         activity.interval = 60 * 60
         activity.schedule { completion in
-            self.appsStore.fetchData()
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.appsStore.fetchData()
+            }
+            try? Constants.versionStorage.removeExpiredObjects()
             completion(.finished)
         }
+        try? Constants.versionStorage.removeExpiredObjects()
     }
 
     public func processAction(_ url: URL) {
@@ -372,7 +376,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             hosting.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
             installWindow?.contentView = hosting
             installWindow?.makeKeyAndOrderFront(nil)
-            appsStore.fetchData()
+            DispatchQueue.global(qos: .userInteractive).async { [self] in
+                appsStore.fetchData()
+            }
         }
     }
 

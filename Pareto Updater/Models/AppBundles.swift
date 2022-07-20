@@ -35,15 +35,19 @@ class AppBundles: ObservableObject {
 
     @Published var updating: Bool = false
     @Published var workInstall: Bool = false
+    @Published var fetchedOnce: Bool = false
 
     public var haveUpdatableApps: Bool {
         !updatableApps.isEmpty
     }
 
     public var updatableApps: [AppUpdater] {
-        apps.filter { app in
-            app.isInstalled && app.usedRecently && app.hasUpdate
+        if fetchedOnce {
+            return apps.filter { app in
+                app.isInstalled && app.usedRecently && app.hasUpdate
+            }
         }
+        return []
     }
 
     public var installingApps: Bool {
@@ -118,6 +122,7 @@ class AppBundles: ObservableObject {
         if updating || workInstall {
             return
         }
+
         let lock = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
@@ -149,6 +154,9 @@ class AppBundles: ObservableObject {
             lock.signal()
         }
         lock.wait()
+        DispatchQueue.main.async { [self] in
+            fetchedOnce = true
+        }
     }
 
     static func readPlistFile(fileURL: URL) -> [String: Any]? {

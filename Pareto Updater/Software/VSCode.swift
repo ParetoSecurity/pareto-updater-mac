@@ -37,9 +37,8 @@ class AppVSCodeApp: AppUpdater {
             if response.error == nil {
                 let html = response.value ?? "<strong>Update 1.12.1</strong>"
                 let versions = versionRegex.allMatches(in: html).map { $0.groups.first!.value }
-                let version = versions.sorted(by: { $0.lowercased() < $1.lowercased() }).last ?? "1.12.1"
-                os_log("%{public}s version=%{public}s", self.appBundle, version)
-                completion(version)
+                let version = versions.sorted(by: { $0.lowercased().versionCompare($1.lowercased()) == .orderedAscending })
+                completion(version.last ?? "1.12.1")
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")

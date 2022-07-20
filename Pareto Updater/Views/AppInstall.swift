@@ -24,7 +24,7 @@ struct AppInstall: View {
                 }
             } else {
                 List(viewModel.apps) { app in
-                    AppRow(app: app, showActions: false)
+                    AppRow(app: app, viewModel: viewModel, showActions: false)
                 }.frame(minWidth: 240, minHeight: 120, maxHeight: 200)
             }
             if showBeta {

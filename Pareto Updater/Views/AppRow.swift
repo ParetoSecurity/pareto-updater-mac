@@ -14,6 +14,7 @@ import SwiftUI
 
 struct AppRow: View {
     @ObservedObject var app: AppUpdater
+    @ObservedObject var viewModel: AppBundles
     var onUpdate: (() -> Void)?
     @State var showActions: Bool = true
     @Default(.showBeta) var showBeta
@@ -73,7 +74,7 @@ struct AppRow: View {
                     .frame(height: 15)
             default:
                 if app.hasUpdate {
-                    if onUpdate != nil, showActions {
+                    if onUpdate != nil, showActions, !viewModel.workInstall {
                         Button {
                             onUpdate?()
                         }
@@ -110,30 +111,3 @@ struct AppRow: View {
         }
     }
 }
-
-#if DEBUG
-    struct StatefulPreviewWrapper<Fetching, Updatable, Content: View>: View {
-        @State var fetching: Fetching
-        @State var updatable: Updatable
-
-        var content: (Binding<Fetching>, Binding<Updatable>) -> Content
-
-        var body: some View {
-            content($fetching, $updatable)
-        }
-
-        init(_ fetching: Fetching, _ updatable: Updatable, content: @escaping (Binding<Fetching>, Binding<Updatable>) -> Content) {
-            _fetching = State(wrappedValue: fetching)
-            _updatable = State(wrappedValue: updatable)
-            self.content = content
-        }
-    }
-
-    struct AppRow_Previews: PreviewProvider {
-        static var previews: some View {
-            Group {
-                AppRow(app: AppFirefox.sharedInstance, onUpdate: {})
-            }
-        }
-    }
-#endif

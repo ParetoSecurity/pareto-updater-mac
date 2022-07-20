@@ -30,7 +30,9 @@ struct AppList: View {
                 .disabled(!viewModel.haveUpdatableApps || viewModel.updating || viewModel.workInstall)
 
                 Button {
-                    viewModel.fetchData()
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        viewModel.fetchData()
+                    }
 
                 } label: {
                     Image(systemName: "arrow.clockwise")
@@ -72,7 +74,7 @@ struct AppList: View {
 //                } else {
                 VStack(alignment: .leading) {
                     ForEach(viewModel.updatableApps) { app in
-                        AppRow(app: app, onUpdate: {
+                        AppRow(app: app, viewModel: viewModel, onUpdate: {
                             viewModel.updateApp(withApp: app)
                         })
                     }
@@ -102,8 +104,5 @@ struct AppList: View {
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
         .frame(minWidth: 240)
-        .onAppear {
-            viewModel.fetchData()
-        }
     }
 }

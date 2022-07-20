@@ -19,15 +19,15 @@ class AppSublimeText: AppUpdater {
     override var appMarketingName: String { "Sublime Text" }
     override var appBundle: String { "com.sublimetext.4" }
 
-    override var currentVersion: String? {
-        if !isInstalled {
-            return nil
+    override var textVersion: String {
+        if isInstalled {
+            if let version = Bundle.appVersion(path: applicationPath) {
+                if let v = version.split(separator: " ").last {
+                    return String(v).lowercased()
+                }
+            }
         }
-        let v = textVersion.versionNormalize
-        if let version = v.split(separator: " ").last {
-            return String(version)
-        }
-        return v
+        return "0.0.0"
     }
 
     override var latestURL: URL {

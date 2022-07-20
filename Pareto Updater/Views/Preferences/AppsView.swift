@@ -26,14 +26,16 @@ struct AppsView: View {
         VStack(alignment: .leading) {
             List {
                 ForEach(viewModel.installedApps) { app in
-                    AppRow(app: app, onUpdate: nil)
+                    AppRow(app: app, viewModel: viewModel, onUpdate: nil, showActions: false)
                 }
             }.frame(minHeight: 280)
         }
         .frame(width: 350)
         .padding(25)
         .onAppear {
-            viewModel.fetchData()
+            DispatchQueue.global(qos: .userInteractive).async {
+                viewModel.fetchData()
+            }
         }.contextMenu(ContextMenu(menuItems: {
             Button("Copy app list", action: copy)
         }))
