@@ -22,6 +22,15 @@ struct AppsView: View {
         NSPasteboard.general.setString(logs.joined(separator: "\n"), forType: .string)
     }
 
+    func share() {
+        let bundles = viewModel.installedApps.map { app in
+            app.appBundle
+        }.joined(separator: ",")
+
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString("paretoupdater://install?bundles=\(bundles)", forType: .string)
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.updating {
@@ -49,6 +58,7 @@ struct AppsView: View {
             }
         }.contextMenu(ContextMenu(menuItems: {
             Button("Copy app list", action: copy)
+            Button("Share apps", action: share)
         }))
     }
 }

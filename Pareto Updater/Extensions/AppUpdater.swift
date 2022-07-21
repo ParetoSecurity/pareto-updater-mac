@@ -19,7 +19,7 @@ enum AppUpdaterStatus {
     case GatheringInfo
     case DownloadingUpdate
     case InstallingUpdate
-    case Updated
+    case Installed
     case Failed
     case Unsupported
 }
@@ -116,7 +116,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
         // os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(latestURL.debugDescription)")
         print("Starting download of \(latestURL.description)")
-        AF.download(latestURL).responseData { [self] response in
+        AF.download(latestURL).responseData(queue: Constants.httpQueue) { [self] response in
+            print("Downloaded \(latestURL.description)")
             do {
                 if FileManager.default.fileExists(atPath: cachedPath.path) {
                     try FileManager.default.removeItem(at: cachedPath)
@@ -131,7 +132,6 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             }
         }.downloadProgress { [self] progress in
             self.fractionCompleted = progress.fractionCompleted
-            print("\(self.fractionCompleted.description)")
         }
     }
 
@@ -183,7 +183,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         bundle.launch()
                     }
 
-                    return AppUpdaterStatus.Updated
+                    return AppUpdaterStatus.Installed
                 } catch {
                     _ = DMGMounter.detach(mountPoint: mountPoint)
                     os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
@@ -212,7 +212,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 if let bundle = Bundle(path: applicationPath), needsStart {
                     bundle.launch()
                 }
-                return AppUpdaterStatus.Updated
+                return AppUpdaterStatus.Installed
             } catch {
                 os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
                 return AppUpdaterStatus.Failed

@@ -66,7 +66,7 @@ struct AppRow: View {
                     .foregroundColor(.red)
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 15)
-            case .Updated:
+            case .Installed:
                 Image(systemName: "checkmark.square")
                     .resizable()
                     .foregroundColor(.green)

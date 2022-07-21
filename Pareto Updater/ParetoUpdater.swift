@@ -203,7 +203,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
 //        }
     }
 
-    func applicationWillFinishLaunching(_: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         if CommandLine.arguments.contains("-export") {
             if let json = AppBundles.asJSON() {
                 print(json as String)
@@ -219,16 +219,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
                 app.downloadLatest { sourceFile, appFile in
                     print("Installing \(app.appBundle)")
                     let state = app.install(sourceFile: sourceFile, appFile: appFile)
-                    print("\(state)")
+                    print("\(state) \(app.appBundle) ")
                     lock.signal()
                 }
                 lock.wait()
             }
             exit(0)
         }
-    }
 
-    func applicationDidFinishLaunching(_: Notification) {
         if Constants.isRunningTests {
             return
         }

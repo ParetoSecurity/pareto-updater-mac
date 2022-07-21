@@ -38,6 +38,8 @@
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
 		4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
+		4F6FA8AF2889EEF500028E3F /* PkgApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA8AE2889EEF500028E3F /* PkgApps.swift */; };
+		4F6FA8B12889F12B00028E3F /* MicrosoftTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA8B02889F12B00028E3F /* MicrosoftTeams.swift */; };
 		4F75DDD9287D512900FD4503 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4F75DDD8287D512900FD4503 /* Version */; };
 		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
 		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
@@ -124,6 +126,8 @@
 		4F33FE52280808C200585E5A /* TestPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreferences.swift; sourceTree = "<group>"; };
 		4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleApps.swift; sourceTree = "<group>"; };
 		4F3BE0A2286EF68600DDC1AC /* AppCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCast.swift; sourceTree = "<group>"; };
+		4F6FA8AE2889EEF500028E3F /* PkgApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PkgApps.swift; sourceTree = "<group>"; };
+		4F6FA8B02889F12B00028E3F /* MicrosoftTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftTeams.swift; sourceTree = "<group>"; };
 		4F7D6FFB28324179007D6E8A /* ClipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipButton.swift; sourceTree = "<group>"; };
 		4F7D6FFD28327BC4007D6E8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F7D6FFF28327FE4007D6E8A /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -226,7 +230,9 @@
 				4F9209DD282BBDEF007897A6 /* SublimeText.swift */,
 				4F9209E1282BBED2007897A6 /* GoogleChrome.swift */,
 				4F151F1E28893B98004FD339 /* Zoom.swift */,
+				4F6FA8B02889F12B00028E3F /* MicrosoftTeams.swift */,
 				4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */,
+				4F6FA8AE2889EEF500028E3F /* PkgApps.swift */,
 			);
 			path = Software;
 			sourceTree = "<group>";
@@ -552,6 +558,7 @@
 				4FBCDF5028736C990093FB5B /* Spotify.swift in Sources */,
 				4F2C83552818158600B40361 /* GeneralView.swift in Sources */,
 				4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */,
+				4F6FA8B12889F12B00028E3F /* MicrosoftTeams.swift in Sources */,
 				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
@@ -580,6 +587,7 @@
 				4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */,
 				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
 				4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */,
+				4F6FA8AF2889EEF500028E3F /* PkgApps.swift in Sources */,
 				4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */,
 				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
 				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,

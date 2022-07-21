@@ -13,8 +13,8 @@ import OSLog
 import Path
 import Regex
 
-class AppZoom: AppUpdater {
-    static let sharedInstance = AppZoom()
+class AppZoom: PkgApp {
+    static let sharedInstance = AppZoom(pkgName: "zoomus.pkg", appPkgName: "zoom.us.app")
 
     override var appName: String { "Zoom.us" }
     override var appMarketingName: String { "Zoom" }
@@ -54,58 +54,6 @@ class AppZoom: AppUpdater {
             }
 
         })
-    }
-
-    override func extract(sourceFile _: URL, appFile: URL, needsStart: Bool) -> AppUpdaterStatus {
-        let tempPath = URL(fileURLWithPath: NSTemporaryDirectory(),
-                           isDirectory: true).appendingPathComponent("zoomus")
-        try? Path(tempPath.path)?.delete()
-
-        do {
-            Process.run(app: "/usr/sbin/pkgutil", args: [
-                "--expand",
-                appFile.path,
-                tempPath.path,
-
-            ])
-            Process.run(app: "/usr/bin/tar", args: [
-                "xf",
-                tempPath
-                    .appendingPathComponent("zoomus.pkg", isDirectory: true)
-                    .appendingPathComponent("Payload")
-                    .path,
-
-                "-C",
-                tempPath.path,
-            ])
-
-            let app = tempPath.appendingPathComponent("zoom.us.app")
-
-            let downloadedAppBundle = Bundle(url: app)!
-            if let installedAppBundle = Bundle(path: applicationPath) {
-                os_log("Delete installedAppBundle: \(installedAppBundle.description)")
-                try installedAppBundle.path.delete()
-
-                os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                if needsStart {
-                    installedAppBundle.launch()
-                }
-            } else {
-                os_log("Install AppBundle \(downloadedAppBundle.description)")
-                try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
-            }
-
-            if let bundle = Bundle(path: applicationPath), needsStart {
-                bundle.launch()
-            }
-            try? Path(tempPath.path)?.delete()
-            return AppUpdaterStatus.Updated
-        } catch {
-            try? Path(tempPath.path)?.delete()
-            os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
-            return AppUpdaterStatus.Failed
-        }
     }
 
     override var textVersion: String {

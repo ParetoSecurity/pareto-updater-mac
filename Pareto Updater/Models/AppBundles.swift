@@ -38,6 +38,7 @@ class AppBundles: ObservableObject {
         AppITerm.sharedInstance,
         AppZoom.sharedInstance,
         AppIINA.sharedInstance,
+        AppMTeams.sharedInstance,
     ]
 
     @Published var apps: [AppUpdater]
