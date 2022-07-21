@@ -50,6 +50,8 @@
 		4FA75600287709960064D0ED /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA755FF287709960064D0ED /* AppUpdater */; };
 		4FA756022877286A0064D0ED /* iTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA756012877286A0064D0ED /* iTerm.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
+		4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */; };
+		4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A4A2889BA6400CDA381 /* IINA.swift */; };
 		4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */; };
 		4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF3D28731A360093FB5B /* VSCode.swift */; };
 		4FBCDF4B28731A370093FB5B /* Bitwarden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCDF4228731A370093FB5B /* Bitwarden.swift */; };
@@ -132,6 +134,8 @@
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		4FA756012877286A0064D0ED /* iTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTerm.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
+		4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleInlinedVersionsTests.swift; sourceTree = "<group>"; };
+		4FB99A4A2889BA6400CDA381 /* IINA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IINA.swift; sourceTree = "<group>"; };
 		4FBCDF3B2872E91B0093FB5B /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		4FBCDF3D28731A360093FB5B /* VSCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCode.swift; sourceTree = "<group>"; };
 		4FBCDF4228731A370093FB5B /* Bitwarden.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitwarden.swift; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
+				4FB99A4A2889BA6400CDA381 /* IINA.swift */,
 				4F303AF62874A25400C983BF /* TopNotch.swift */,
 				4F2C835B2819331900B40361 /* Firefox.swift */,
 				4F2C835D2819357C00B40361 /* Slack.swift */,
@@ -297,6 +302,7 @@
 			children = (
 				4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */,
 				4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */,
+				4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */,
 				4F0DEA76286D8F7700344B92 /* LicenseTests.swift */,
 				4F303AF42874547200C983BF /* UpdaterTests.swift */,
 			);
@@ -567,6 +573,7 @@
 				4F33FE37280808C000585E5A /* AppList.swift in Sources */,
 				4FEBF0492875AE80002AE0F8 /* String.swift in Sources */,
 				4F2C8361281935D000B40361 /* AppBundles.swift in Sources */,
+				4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */,
 				4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */,
 				4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */,
 				4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */,
@@ -584,6 +591,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F0FF1622889833B008DCE13 /* SparkleRandomVersionsTests.swift in Sources */,
+				4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */,
 				4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */,
 				4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */,
 				4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */,

@@ -30,7 +30,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0.14</title>
             <pubDate>mer, 23 feb 2022 8:50:00 +0100</pubDate>
@@ -54,7 +54,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0.13</title>
             <pubDate>ven, 11 feb 2022 17:46:00 +0100</pubDate>
@@ -84,7 +84,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0.12</title>
             <pubDate>ven, 11 feb 2022 15:27:00 +0100</pubDate>
@@ -101,7 +101,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0.11</title>
             <pubDate>gio, 27 gen 2022 23:54:00 +0100</pubDate>
@@ -126,7 +126,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0.10</title>
             <pubDate>lun, 29 dic 2021 16:37:00 +0100</pubDate>
@@ -150,7 +150,7 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
         <item>
             <title>1.0</title>
             <pubDate>sab, 26 dic 2020 11:12:25 +0100</pubDate>
@@ -455,17 +455,15 @@ private let sourceXMLwrongversions = """
             ]]>
             </description>
         </item>
-        
+
     </channel>
 </rss>
 
 """
 
 class SparkeRandomVersionsTests: XCTestCase {
-   
     func testGetCorrectVersion() throws {
         let app = AppCast(data: Data(sourceXMLwrongversions.utf8))
         assert(app.version == "1.0.15")
     }
-
 }

@@ -35,6 +35,7 @@ struct Enclosure: Codable, DynamicNodeEncoding {
 struct Item: Codable {
     let title: String?
     let pubDate: String?
+    let sparkleVersion: String?
     let shortVersionString: String?
     let enclosure: Enclosure
 
@@ -43,6 +44,7 @@ struct Item: Codable {
         case pubDate
         case enclosure
         case shortVersionString
+        case sparkleVersion = "version"
     }
 
     var version: String {
@@ -54,6 +56,11 @@ struct Item: Codable {
             return ver.versionNormalize.removingWhitespaces()
         }
         if let ver = enclosure.version, !ver.isEmpty, ver.contains(".") {
+            return ver.versionNormalize.removingWhitespaces()
+        }
+
+        // inlined out of spec version
+        if let ver = sparkleVersion, !ver.isEmpty, ver.contains(".") {
             return ver.versionNormalize.removingWhitespaces()
         }
         return "0.0.0"

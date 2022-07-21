@@ -29,7 +29,8 @@ class AppBundles: ObservableObject {
         AppGitHub.sharedInstance,
         AppCyberduck.sharedInstance,
         AppITerm.sharedInstance,
-        AppZoom.sharedInstance
+        AppZoom.sharedInstance,
+        AppIINA.sharedInstance,
     ]
 
     @Published var apps: [AppUpdater]
@@ -60,7 +61,7 @@ class AppBundles: ObservableObject {
     public var installedApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
-                app.isInstalled
+                app.isInstalled && app.latestVersion != "0.0.0"
             }
         }
         return []
