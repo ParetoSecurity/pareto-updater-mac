@@ -24,11 +24,22 @@ struct AppsView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            List {
-                ForEach(viewModel.installedApps) { app in
-                    AppRow(app: app, viewModel: viewModel, onUpdate: nil, showActions: false)
+            if viewModel.updating {
+                HStack(alignment: .center) {
+                    Spacer()
+                    Text("Fetching Versions").font(.body)
+                    ProgressView()
+                        .frame(width: 18.0, height: 18.0)
+                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                    Spacer()
                 }
-            }.frame(minHeight: 280)
+            } else {
+                List {
+                    ForEach(viewModel.installedApps) { app in
+                        AppRow(app: app, viewModel: viewModel, onUpdate: nil, showActions: false)
+                    }
+                }.frame(minHeight: 280)
+            }
         }
         .frame(width: 350)
         .padding(25)

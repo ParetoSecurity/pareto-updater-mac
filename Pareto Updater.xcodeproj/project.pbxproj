@@ -14,6 +14,7 @@
 		4F0DEA7C286D93F500344B92 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA7B286D93F500344B92 /* URL.swift */; };
 		4F0E43F7280E9E820093B51A /* AppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E43F6280E9E820093B51A /* AppRow.swift */; };
 		4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E441B280EA49A0093B51A /* AppUpdater.swift */; };
+		4F151F1F28893B98004FD339 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F151F1E28893B98004FD339 /* Zoom.swift */; };
 		4F2C834C2817E33500B40361 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C834B2817E33500B40361 /* Bundle.swift */; };
 		4F2C83512817FEA400B40361 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83502817FEA400B40361 /* Signal.swift */; };
 		4F2C83532818155300B40361 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83522818155300B40361 /* PreferencesView.swift */; };
@@ -92,6 +93,7 @@
 		4F0DEA7B286D93F500344B92 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4F0E43F6280E9E820093B51A /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
 		4F0E441B280EA49A0093B51A /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		4F151F1E28893B98004FD339 /* Zoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		4F2C834A2817E25800B40361 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		4F2C834B2817E33500B40361 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4F2C83502817FEA400B40361 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				4FEBF04A2875CDE4002AE0F8 /* VLC.swift */,
 				4F9209DD282BBDEF007897A6 /* SublimeText.swift */,
 				4F9209E1282BBED2007897A6 /* GoogleChrome.swift */,
+				4F151F1E28893B98004FD339 /* Zoom.swift */,
 				4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */,
 			);
 			path = Software;
@@ -540,6 +543,7 @@
 				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
+				4F151F1F28893B98004FD339 /* Zoom.swift in Sources */,
 				4FCC280728782B2C004B9ED1 /* Process.swift in Sources */,
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,

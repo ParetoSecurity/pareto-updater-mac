@@ -28,7 +28,8 @@ class AppBundles: ObservableObject {
         AppVLC.sharedInstance,
         AppGitHub.sharedInstance,
         AppCyberduck.sharedInstance,
-        AppITerm.sharedInstance
+        AppITerm.sharedInstance,
+        AppZoom.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
@@ -57,9 +58,12 @@ class AppBundles: ObservableObject {
     }
 
     public var installedApps: [AppUpdater] {
-        apps.filter { app in
-            app.isInstalled
+        if fetchedOnce {
+            return apps.filter { app in
+                app.isInstalled
+            }
         }
+        return []
     }
 
     func updateApp(withApp: AppUpdater) {

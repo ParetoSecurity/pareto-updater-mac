@@ -21,6 +21,7 @@ enum AppUpdaterStatus {
     case InstallingUpdate
     case Updated
     case Failed
+    case Unsupported
 }
 
 struct AppStoreResponse: Codable {
@@ -140,7 +141,12 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             needsStart = true
         }
 
-        if appFile.pathExtension == "dmg" {
+        return extract(sourceFile: sourceFile, appFile: appFile, needsStart: needsStart)
+    }
+
+    func extract(sourceFile _: URL, appFile: URL, needsStart: Bool) -> AppUpdaterStatus {
+        switch appFile.pathExtension {
+        case "dmg":
             let mountPoint = URL(string: "/Volumes/" + appBundle)!
             os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
             if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
@@ -174,9 +180,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     return AppUpdaterStatus.Failed
                 }
             }
-        }
-
-        if appFile.pathExtension == "zip" || sourceFile.pathExtension.contains("tar") {
+        case "zip", "tar":
             do {
                 let app = FileManager.default.unzip(appFile)
                 let downloadedAppBundle = Bundle(url: app)!
@@ -203,7 +207,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
                 return AppUpdaterStatus.Failed
             }
+        default:
+            return AppUpdaterStatus.Unsupported
         }
+
         return AppUpdaterStatus.Failed
     }
 
