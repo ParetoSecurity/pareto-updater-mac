@@ -98,6 +98,15 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return true
     }
 
+    public var fromAppStore: Bool {
+        if isInstalled {
+            let attributes = NSMetadataItem(url: URL(fileURLWithPath: applicationPath))
+            guard let hasReceipt = attributes?.value(forAttribute: "kMDItemAppStoreHasReceipt") as? Bool else { return false }
+            return hasReceipt
+        }
+        return false
+    }
+
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURLExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
@@ -106,7 +115,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return
         }
         // os_log("Update downloadLatest: \(cachedPath.debugDescription) from \(latestURL.debugDescription)")
-
+        print("Starting download of \(latestURL.description)")
         AF.download(latestURL).responseData { [self] response in
             do {
                 if FileManager.default.fileExists(atPath: cachedPath.path) {
@@ -122,6 +131,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             }
         }.downloadProgress { [self] progress in
             self.fractionCompleted = progress.fractionCompleted
+            print("\(self.fractionCompleted.description)")
         }
     }
 

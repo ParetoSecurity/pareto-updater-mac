@@ -17,3 +17,4 @@ SourcePackages
 xcuserdata/
 *.zip
 .vscode
+data.json

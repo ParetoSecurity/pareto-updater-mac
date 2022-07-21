@@ -9,6 +9,13 @@ import Foundation
 import os.log
 import Sentry
 
+struct PublicApp: Codable {
+    let bundle: String
+    let name: String
+    let description: String
+    let icon: String
+}
+
 class AppBundles: ObservableObject {
     static let bundledApps = [
         App1Password8AppUpdater.sharedInstance,
@@ -46,7 +53,7 @@ class AppBundles: ObservableObject {
     public var updatableApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
-                app.isInstalled && app.usedRecently && app.hasUpdate
+                app.isInstalled && app.usedRecently && app.hasUpdate && !app.fromAppStore
             }
         }
         return []
@@ -172,6 +179,27 @@ class AppBundles: ObservableObject {
             return nil
         }
         return result
+    }
+
+    static func asJSON() -> String? {
+        var export: [PublicApp] = []
+
+        for app in AppBundles.bundledApps {
+            if let icon = app.icon?.base64 {
+                export.append(PublicApp(
+                    bundle: app.appBundle.lowercased(),
+                    name: app.appMarketingName,
+                    description: "",
+                    icon: icon
+                ))
+            }
+        }
+
+        let jsonEncoder = JSONEncoder()
+        let jsonData = try! jsonEncoder.encode(export)
+        guard let json = String(data: jsonData, encoding: String.Encoding.utf8) else { return nil }
+
+        return json
     }
 
     init() {

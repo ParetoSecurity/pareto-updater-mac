@@ -78,9 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         switch url.host {
         case "install":
 
-            if let bundles = url.queryParams()["bundles"]?.split(separator: ",").map(String.init) {
+            if let bundles = url.queryParams()["bundles"]?.lowercased().split(separator: ",").map(String.init) {
                 appsStore.apps = AppBundles.bundledApps.filter { bundledApp in
-                    bundles.contains(bundledApp.appBundle)
+                    bundles.contains(bundledApp.appBundle.lowercased())
                 }
                 if appsStore.apps.count > 0 {
                     showInstallAppsWindow()
@@ -201,6 +201,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
 //                // updateHiddenState()
 //            }
 //        }
+    }
+
+    func applicationWillFinishLaunching(_: Notification) {
+        if CommandLine.arguments.contains("-export") {
+            if let json = AppBundles.asJSON() {
+                print(json as String)
+            }
+            exit(0)
+        }
+        if CommandLine.arguments.contains("-installAll") {
+            let lock = DispatchSemaphore(value: 0)
+            for app in AppBundles.bundledApps.filter({ app in
+                !app.isInstalled
+            }) {
+                print("Downloading \(app.appBundle)")
+                app.downloadLatest { sourceFile, appFile in
+                    print("Installing \(app.appBundle)")
+                    let state = app.install(sourceFile: sourceFile, appFile: appFile)
+                    print("\(state)")
+                    lock.signal()
+                }
+                lock.wait()
+            }
+            exit(0)
+        }
     }
 
     func applicationDidFinishLaunching(_: Notification) {
