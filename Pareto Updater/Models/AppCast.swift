@@ -46,14 +46,14 @@ struct Item: Codable {
     }
 
     var version: String {
-        if let ver = shortVersionString, !ver.isEmpty {
+        if let ver = shortVersionString, !ver.isEmpty, ver.contains(".") {
             return ver.versionNormalize.removingWhitespaces()
         }
 
-        if let ver = enclosure.shortVersionString, !ver.isEmpty {
+        if let ver = enclosure.shortVersionString, !ver.isEmpty, ver.contains(".") {
             return ver.versionNormalize.removingWhitespaces()
         }
-        if let ver = enclosure.version, !ver.isEmpty {
+        if let ver = enclosure.version, !ver.isEmpty, ver.contains(".") {
             return ver.versionNormalize.removingWhitespaces()
         }
         return "0.0.0"

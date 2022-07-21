@@ -130,6 +130,7 @@ let sourceXML4 = """
 </rss>
 
 """
+
 class ParetoUpdaterTests: XCTestCase {
     func testCurrentVersion() throws {
         let bundles = AppBundles()

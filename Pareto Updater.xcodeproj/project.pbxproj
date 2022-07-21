@@ -14,6 +14,7 @@
 		4F0DEA7C286D93F500344B92 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA7B286D93F500344B92 /* URL.swift */; };
 		4F0E43F7280E9E820093B51A /* AppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E43F6280E9E820093B51A /* AppRow.swift */; };
 		4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E441B280EA49A0093B51A /* AppUpdater.swift */; };
+		4F0FF1622889833B008DCE13 /* SparkleRandomVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */; };
 		4F151F1F28893B98004FD339 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F151F1E28893B98004FD339 /* Zoom.swift */; };
 		4F2C834C2817E33500B40361 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C834B2817E33500B40361 /* Bundle.swift */; };
 		4F2C83512817FEA400B40361 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83502817FEA400B40361 /* Signal.swift */; };
@@ -93,6 +94,7 @@
 		4F0DEA7B286D93F500344B92 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4F0E43F6280E9E820093B51A /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
 		4F0E441B280EA49A0093B51A /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleRandomVersionsTests.swift; sourceTree = "<group>"; };
 		4F151F1E28893B98004FD339 /* Zoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		4F2C834A2817E25800B40361 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		4F2C834B2817E33500B40361 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */,
+				4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */,
 				4F0DEA76286D8F7700344B92 /* LicenseTests.swift */,
 				4F303AF42874547200C983BF /* UpdaterTests.swift */,
 			);
@@ -580,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F0FF1622889833B008DCE13 /* SparkleRandomVersionsTests.swift in Sources */,
 				4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */,
 				4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */,
 				4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */,
