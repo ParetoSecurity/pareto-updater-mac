@@ -36,8 +36,8 @@ public enum Constants {
         )
     #else
         static let versionStorage = try! Storage<String, String>(
-            diskConfig: DiskConfig(name: "Version+Bundles", expiry: .seconds(3600 * 24), directory: cacheFolder),
-            memoryConfig: MemoryConfig(expiry: .seconds(3600 * 24 * 2)),
+            diskConfig: DiskConfig(name: "Version+Bundles+v2", expiry: .seconds(3600 * 24), directory: cacheFolder),
+            memoryConfig: MemoryConfig(expiry: .seconds(3600)),
             transformer: TransformerFactory.forCodable(ofType: String.self) // Storage<String, String>
         )
     #endif
