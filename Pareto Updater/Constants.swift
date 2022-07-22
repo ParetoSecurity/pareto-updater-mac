@@ -17,7 +17,7 @@ import SwiftUI
 public enum Constants {
     static let unsupportedBundles: Set<String> = [
         "com.hegenberg.BetterTouchTool",
-        "com.culturedcode.ThingsMac"
+        "com.culturedcode.ThingsMac",
     ]
 
     static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!

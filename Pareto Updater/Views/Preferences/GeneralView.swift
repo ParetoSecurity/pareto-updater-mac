@@ -19,7 +19,8 @@ struct GeneralView: View {
     var body: some View {
         Form {
             Section(
-                footer: Text("To enable continuous monitoring and updating.").font(.footnote)) {
+                footer: Text("To enable continuous monitoring and updating.").font(.footnote))
+            {
                 VStack(alignment: .leading) {
                     Toggle("Automatically launch on system startup", isOn: $atLogin.isEnabled)
                 }
@@ -32,14 +33,16 @@ struct GeneralView: View {
 //                }
             if showBeta {
                 Section(
-                    footer: Text("Latest features but potentially bugs to report.").font(.footnote)) {
+                    footer: Text("Latest features but potentially bugs to report.").font(.footnote))
+                {
                     VStack(alignment: .leading) {
                         Toggle("Update app to pre-release builds", isOn: $betaChannel)
                     }
                 }
             }
             Section(
-                footer: Text("Only scan for updates for recently used apps.").font(.footnote)) {
+                footer: Text("Only scan for updates for recently used apps.").font(.footnote))
+            {
                 VStack(alignment: .leading) {
                     Toggle("Update check only for apps used in the last week", isOn: $checkForUpdatesRecentOnly)
                 }

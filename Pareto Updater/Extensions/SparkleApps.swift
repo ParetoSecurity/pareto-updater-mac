@@ -80,12 +80,14 @@ class SparkleApp: AppUpdater {
             let plist = AppBundles.readPlistFile(fileURL: app.appendingPathComponent("Contents/Info.plist"))
             if let url = plist?["SUFeedURL"] as? String,
                let appName = plist?["CFBundleName"] as? String,
-               let appBundle = plist?["CFBundleIdentifier"] as? String {
+               let appBundle = plist?["CFBundleIdentifier"] as? String
+            {
                 if !Constants.unsupportedBundles.contains(appBundle),
                    !AppBundles.bundledApps.map({ b in
                        b.appBundle.lowercased()
                    }).contains(appBundle.lowercased()),
-                   url.contains("https://") {
+                   url.contains("https://")
+                {
                     let bundleApp = SparkleApp(
                         name: appName,
                         bundle: appBundle,
