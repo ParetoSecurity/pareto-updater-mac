@@ -56,6 +56,10 @@
 		4FB86BA7288A970800B3B7F6 /* SwiftBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA6288A970800B3B7F6 /* SwiftBar.swift */; };
 		4FB86BA9288A97ED00B3B7F6 /* GitHubApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA8288A97ED00B3B7F6 /* GitHubApps.swift */; };
 		4FB86BAB288AA1FA00B3B7F6 /* HiddenBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BAA288AA1FA00B3B7F6 /* HiddenBar.swift */; };
+		4FB86BAD288AB2C100B3B7F6 /* GitUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BAC288AB2C100B3B7F6 /* GitUp.swift */; };
+		4FB86BAF288AB8AE00B3B7F6 /* WorkHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BAE288AB8AE00B3B7F6 /* WorkHours.swift */; };
+		4FB86BB1288AB96400B3B7F6 /* HandBrake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BB0288AB96400B3B7F6 /* HandBrake.swift */; };
+		4FB86BB3288ABB2D00B3B7F6 /* PrusaSlicer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BB2288ABB2D00B3B7F6 /* PrusaSlicer.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
 		4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */; };
 		4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A4A2889BA6400CDA381 /* IINA.swift */; };
@@ -148,6 +152,10 @@
 		4FB86BA6288A970800B3B7F6 /* SwiftBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBar.swift; sourceTree = "<group>"; };
 		4FB86BA8288A97ED00B3B7F6 /* GitHubApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubApps.swift; sourceTree = "<group>"; };
 		4FB86BAA288AA1FA00B3B7F6 /* HiddenBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HiddenBar.swift; sourceTree = "<group>"; };
+		4FB86BAC288AB2C100B3B7F6 /* GitUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitUp.swift; sourceTree = "<group>"; };
+		4FB86BAE288AB8AE00B3B7F6 /* WorkHours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkHours.swift; sourceTree = "<group>"; };
+		4FB86BB0288AB96400B3B7F6 /* HandBrake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandBrake.swift; sourceTree = "<group>"; };
+		4FB86BB2288ABB2D00B3B7F6 /* PrusaSlicer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrusaSlicer.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
 		4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleInlinedVersionsTests.swift; sourceTree = "<group>"; };
 		4FB99A4A2889BA6400CDA381 /* IINA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IINA.swift; sourceTree = "<group>"; };
@@ -228,11 +236,15 @@
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
 				4FB99A4A2889BA6400CDA381 /* IINA.swift */,
+				4FB86BB0288AB96400B3B7F6 /* HandBrake.swift */,
 				4FB86BA2288A950600B3B7F6 /* Macy.swift */,
+				4FB86BAC288AB2C100B3B7F6 /* GitUp.swift */,
 				4FB86BA6288A970800B3B7F6 /* SwiftBar.swift */,
 				4FB86BA4288A965B00B3B7F6 /* Rectangle.swift */,
 				4F303AF62874A25400C983BF /* TopNotch.swift */,
 				4FB86BAA288AA1FA00B3B7F6 /* HiddenBar.swift */,
+				4FB86BAE288AB8AE00B3B7F6 /* WorkHours.swift */,
+				4FB86BB2288ABB2D00B3B7F6 /* PrusaSlicer.swift */,
 				4F2C835B2819331900B40361 /* Firefox.swift */,
 				4F2C835D2819357C00B40361 /* Slack.swift */,
 				4FBCDF4F28736C990093FB5B /* Spotify.swift */,
@@ -564,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2C835C2819331A00B40361 /* Firefox.swift in Sources */,
+				4FB86BB3288ABB2D00B3B7F6 /* PrusaSlicer.swift in Sources */,
 				4FBCDF4C28731A370093FB5B /* Brave Browser.swift in Sources */,
 				4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */,
 				4F2C83512817FEA400B40361 /* Signal.swift in Sources */,
@@ -578,6 +591,7 @@
 				4FB86BA9288A97ED00B3B7F6 /* GitHubApps.swift in Sources */,
 				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
+				4FB86BAD288AB2C100B3B7F6 /* GitUp.swift in Sources */,
 				4FB86BA5288A965B00B3B7F6 /* Rectangle.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
 				4F151F1F28893B98004FD339 /* Zoom.swift in Sources */,
@@ -586,10 +600,12 @@
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
 				4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */,
+				4FB86BB1288AB96400B3B7F6 /* HandBrake.swift in Sources */,
 				4FB86BAB288AA1FA00B3B7F6 /* HiddenBar.swift in Sources */,
 				4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */,
 				4FB99A4D2889BD3A00CDA381 /* Image.swift in Sources */,
 				4FA756022877286A0064D0ED /* iTerm.swift in Sources */,
+				4FB86BAF288AB8AE00B3B7F6 /* WorkHours.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
 				4FBCDF4B28731A370093FB5B /* Bitwarden.swift in Sources */,
 				4F0DEA7C286D93F500344B92 /* URL.swift in Sources */,

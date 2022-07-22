@@ -12,7 +12,7 @@ import OSLog
 import Regex
 
 class AppRectangle: SparkleApp {
-    static let sharedInstance = AppMacy(
+    static let sharedInstance = AppRectangle(
         name: "Rectangle",
         bundle: "com.knollsoft.Rectangle",
         url: "https://rectangleapp.com/downloads/updates.xml"

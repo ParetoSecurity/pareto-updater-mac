@@ -11,10 +11,12 @@ import os.log
 import OSLog
 import Regex
 
-class AppMacy: SparkleApp {
+class AppMacy: GitHubApp {
+    override var appName: String { "Maccy" }
+    override var appMarketingName: String { "Maccy" }
+    override var appBundle: String { "org.p0deje.Maccy" }
+
     static let sharedInstance = AppMacy(
-        name: "Macy",
-        bundle: "org.p0deje.Maccy",
-        url: "https://raw.githubusercontent.com/p0deje/Maccy/master/appcast.xml"
+        org: "p0deje", repo: "Maccy"
     )
 }

@@ -6,12 +6,52 @@
 //
 
 import Alamofire
-import AppUpdater
 import Foundation
 import os.log
 import Path
 
-typealias APIReleases = [Release]
+private struct GHRelease: Decodable {
+    public let tagName: String
+    public let prerelease: Bool
+    public let assets: [Asset]
+    public let body: String
+
+    enum CodingKeys: String, CodingKey {
+        case tagName = "tag_name"
+        case prerelease, assets, body
+    }
+
+    public var version: String {
+        return tagName
+            .lowercased()
+            .removingWhitespaces()
+            .replacingOccurrences(of: "v", with: "")
+    }
+
+    public struct Asset: Decodable {
+        public let name: String
+        public let size: Int
+        public let browserDownloadURL: URL
+
+        enum CodingKeys: String, CodingKey {
+            case name
+            case size
+            case browserDownloadURL = "browser_download_url"
+        }
+    }
+}
+
+private typealias APIReleases = [GHRelease]
+
+private extension APIReleases {
+    var latest: GHRelease? {
+        filter { r in
+            r.version.contains(".")
+        }.sorted { lr, rr in
+            lr.version.versionCompare(rr.version) == .orderedDescending
+        }.first
+    }
+}
 
 class GitHubApp: AppUpdater {
     private var gitHubOrg: String
@@ -33,9 +73,11 @@ class GitHubApp: AppUpdater {
         let lock = DispatchSemaphore(value: 0)
 
         AF.request(url).responseDecodable(of: APIReleases.self, queue: Constants.httpQueue, completionHandler: { response in
-            if let version = try? response.value?.findViableUpdate(prerelease: false), response.error == nil {
+            if let version = response.value?.latest, response.error == nil {
                 if let file = version.assets.filter({ asset in
-                    asset.name.contains(".dmg") || asset.name.contains(".zip")
+                    asset.name.contains(".dmg") || asset.name.contains(".zip") && !(
+                        asset.name.contains("win32") || asset.name.contains("win64") || asset.name.contains("linux")
+                    )
                 }).first?.browserDownloadURL {
                     update = file
                 }
@@ -53,8 +95,8 @@ class GitHubApp: AppUpdater {
         let url = updateURL
         os_log("Requesting %{public}s", url)
         AF.request(url).responseDecodable(of: APIReleases.self, queue: Constants.httpQueue, completionHandler: { response in
-            if let version = try? response.value?.findViableUpdate(prerelease: false), response.error == nil {
-                completion(version.version.description)
+            if let version = response.value?.latest, response.error == nil {
+                completion(version.version)
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")
