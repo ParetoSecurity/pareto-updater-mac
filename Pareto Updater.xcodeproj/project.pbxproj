@@ -51,6 +51,7 @@
 		4FA75600287709960064D0ED /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA755FF287709960064D0ED /* AppUpdater */; };
 		4FA756022877286A0064D0ED /* iTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA756012877286A0064D0ED /* iTerm.swift */; };
 		4FB86BA1288A906200B3B7F6 /* SparkleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */; };
+		4FB86BA3288A950600B3B7F6 /* Macy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA2288A950600B3B7F6 /* Macy.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
 		4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */; };
 		4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A4A2889BA6400CDA381 /* IINA.swift */; };
@@ -138,6 +139,7 @@
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		4FA756012877286A0064D0ED /* iTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTerm.swift; sourceTree = "<group>"; };
 		4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleTests.swift; sourceTree = "<group>"; };
+		4FB86BA2288A950600B3B7F6 /* Macy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macy.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
 		4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleInlinedVersionsTests.swift; sourceTree = "<group>"; };
 		4FB99A4A2889BA6400CDA381 /* IINA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IINA.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
 				4FB99A4A2889BA6400CDA381 /* IINA.swift */,
+				4FB86BA2288A950600B3B7F6 /* Macy.swift */,
 				4F303AF62874A25400C983BF /* TopNotch.swift */,
 				4F2C835B2819331900B40361 /* Firefox.swift */,
 				4F2C835D2819357C00B40361 /* Slack.swift */,
@@ -563,6 +566,7 @@
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
 				4F151F1F28893B98004FD339 /* Zoom.swift in Sources */,
+				4FB86BA3288A950600B3B7F6 /* Macy.swift in Sources */,
 				4FCC280728782B2C004B9ED1 /* Process.swift in Sources */,
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
