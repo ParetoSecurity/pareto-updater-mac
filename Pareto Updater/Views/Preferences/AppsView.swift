@@ -14,8 +14,9 @@ struct AppsView: View {
 
     func copy() {
         var logs = [String]()
+        logs.append("Name, Bundle, Version")
         for app in viewModel.installedApps {
-            logs.append("\(app.appMarketingName), \(app.appBundle), \(app.help), \(app.latestURL.absoluteString)")
+            logs.append("\(app.appMarketingName), \(app.appBundle), \(app.help)")
         }
 
         NSPasteboard.general.clearContents()
@@ -29,6 +30,11 @@ struct AppsView: View {
 
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString("paretoupdater://install?bundles=\(bundles)", forType: .string)
+    }
+
+    func clearCache() {
+        try? Constants.versionStorage.removeAll()
+        viewModel.fetchData()
     }
 
     var body: some View {
@@ -58,7 +64,8 @@ struct AppsView: View {
             }
         }.contextMenu(ContextMenu(menuItems: {
             Button("Copy app list", action: copy)
-            Button("Share apps", action: share)
+            Button("Share installed apps", action: share)
+            Button("Clear cache", action: clearCache)
         }))
     }
 }

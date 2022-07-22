@@ -165,6 +165,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
                     let downloadedAppBundle = Bundle(url: app!)!
                     if let installedAppBundle = Bundle(path: applicationPath) {
+                        if !validate(downloadedAppBundle, installedAppBundle) {
+                            os_log("Failed to validate app bundle %{public}s", appBundle)
+                            return AppUpdaterStatus.Failed
+                        }
+
                         os_log("Delete installedAppBundle: \(installedAppBundle.description)")
                         try installedAppBundle.path.delete()
 
@@ -195,6 +200,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 let app = FileManager.default.unzip(appFile)
                 let downloadedAppBundle = Bundle(url: app)!
                 if let installedAppBundle = Bundle(path: applicationPath) {
+                    if !validate(downloadedAppBundle, installedAppBundle) {
+                        os_log("Failed to validate app bundle %{public}s", appBundle)
+                        return AppUpdaterStatus.Failed
+                    }
+
                     os_log("Delete installedAppBundle: \(installedAppBundle.description)")
                     try installedAppBundle.path.delete()
 
@@ -222,6 +232,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
 
         return AppUpdaterStatus.Failed
+    }
+
+    func validate(_ b1: Bundle, _ b2: Bundle) -> Bool {
+        b1.codeSigningIdentity == b2.codeSigningIdentity
     }
 
     func updateApp(completion: @escaping (AppUpdaterStatus) -> Void) {

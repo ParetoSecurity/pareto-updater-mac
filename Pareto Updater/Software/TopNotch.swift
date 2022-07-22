@@ -13,7 +13,7 @@ import Regex
 
 class AppTopNotch: SparkleApp {
     static let sharedInstance = AppTopNotch(
-        name: "Top Notch",
+        name: "TopNotch",
         bundle: "pl.maketheweb.TopNotch",
         url: "https://updates.topnotch.app/appcast.xml"
     )

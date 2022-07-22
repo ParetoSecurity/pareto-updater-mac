@@ -40,7 +40,10 @@ class AppBundles: ObservableObject {
         AppZoom.sharedInstance,
         AppIINA.sharedInstance,
         AppMTeams.sharedInstance,
-        AppMacy.sharedInstance
+        AppMacy.sharedInstance,
+        AppSwiftBar.sharedInstance,
+        AppRectangle.sharedInstance,
+        AppHiddenBar.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
@@ -56,7 +59,7 @@ class AppBundles: ObservableObject {
     public var updatableApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
-                app.isInstalled && app.usedRecently && app.hasUpdate && !app.fromAppStore
+                app.isInstalled && app.usedRecently && app.hasUpdate
             }
         }
         return []

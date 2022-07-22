@@ -49,6 +49,11 @@ class PkgApp: AppUpdater {
 
             let downloadedAppBundle = Bundle(url: app)!
             if let installedAppBundle = Bundle(path: applicationPath) {
+                if !validate(downloadedAppBundle, installedAppBundle) {
+                    os_log("Failed to validate app bundle %{public}s", appBundle)
+                    return AppUpdaterStatus.Failed
+                }
+
                 os_log("Delete installedAppBundle: \(installedAppBundle.description)")
                 try installedAppBundle.path.delete()
 
