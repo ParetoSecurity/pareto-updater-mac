@@ -33,7 +33,6 @@
 		4F33FE39280808C200585E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE38280808C200585E5A /* Assets.xcassets */; };
 		4F33FE3C280808C200585E5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE3B280808C200585E5A /* Preview Assets.xcassets */; };
 		4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */; };
-		4F33FE53280808C200585E5A /* TestPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE52280808C200585E5A /* TestPreferences.swift */; };
 		4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */; };
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
@@ -51,6 +50,7 @@
 		4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E3282BDEFE007897A6 /* AppsView.swift */; };
 		4FA75600287709960064D0ED /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA755FF287709960064D0ED /* AppUpdater */; };
 		4FA756022877286A0064D0ED /* iTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA756012877286A0064D0ED /* iTerm.swift */; };
+		4FB86BA1288A906200B3B7F6 /* SparkleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */; };
 		4FB98F932810313100B9B627 /* DMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB98F922810313100B9B627 /* DMG.swift */; };
 		4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */; };
 		4FB99A4B2889BA6400CDA381 /* IINA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB99A4A2889BA6400CDA381 /* IINA.swift */; };
@@ -123,7 +123,6 @@
 		4F33FE42280808C200585E5A /* Pareto UpdaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pareto UpdaterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParetoUpdaterTests.swift; sourceTree = "<group>"; };
 		4F33FE4C280808C200585E5A /* Pareto UpdaterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pareto UpdaterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F33FE52280808C200585E5A /* TestPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreferences.swift; sourceTree = "<group>"; };
 		4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleApps.swift; sourceTree = "<group>"; };
 		4F3BE0A2286EF68600DDC1AC /* AppCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCast.swift; sourceTree = "<group>"; };
 		4F6FA8AE2889EEF500028E3F /* PkgApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PkgApps.swift; sourceTree = "<group>"; };
@@ -138,6 +137,7 @@
 		4F9209E1282BBED2007897A6 /* GoogleChrome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleChrome.swift; sourceTree = "<group>"; };
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		4FA756012877286A0064D0ED /* iTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTerm.swift; sourceTree = "<group>"; };
+		4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleTests.swift; sourceTree = "<group>"; };
 		4FB98F922810313100B9B627 /* DMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMG.swift; sourceTree = "<group>"; };
 		4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleInlinedVersionsTests.swift; sourceTree = "<group>"; };
 		4FB99A4A2889BA6400CDA381 /* IINA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IINA.swift; sourceTree = "<group>"; };
@@ -309,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				4F33FE46280808C200585E5A /* ParetoUpdaterTests.swift */,
+				4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */,
 				4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */,
 				4FB99A482889B7F800CDA381 /* SparkleInlinedVersionsTests.swift */,
 				4F0DEA76286D8F7700344B92 /* LicenseTests.swift */,
@@ -320,7 +321,6 @@
 		4F33FE4F280808C200585E5A /* Pareto UpdaterUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4F33FE52280808C200585E5A /* TestPreferences.swift */,
 				4FCF0989282D3A9200597F70 /* TestPopUp.swift */,
 			);
 			path = "Pareto UpdaterUITests";
@@ -604,6 +604,7 @@
 			files = (
 				4F0FF1622889833B008DCE13 /* SparkleRandomVersionsTests.swift in Sources */,
 				4FB99A492889B7F800CDA381 /* SparkleInlinedVersionsTests.swift in Sources */,
+				4FB86BA1288A906200B3B7F6 /* SparkleTests.swift in Sources */,
 				4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */,
 				4F33FE47280808C200585E5A /* ParetoUpdaterTests.swift in Sources */,
 				4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */,
@@ -615,7 +616,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FCF098A282D3A9200597F70 /* TestPopUp.swift in Sources */,
-				4F33FE53280808C200585E5A /* TestPreferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

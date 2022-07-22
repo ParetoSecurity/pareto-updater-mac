@@ -18,6 +18,7 @@ import SwiftUI
 #if !DEBUG
     import Sentry
 #endif
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var statusMenu: NSMenu?
@@ -106,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
                     }
                     let parameters: [String: String] = [
                         "uuid": license.uuid,
-                        "machineUUID": Defaults[.machineUUID],
+                        "machineUUID": Defaults[.machineUUID]
                     ]
                     let verifyURL = "https://dash.paretosecurity.com/api/v1/enroll/verify"
                     AF.request(verifyURL, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default).responseString(queue: Constants.httpQueue, completionHandler: { response in
@@ -286,7 +287,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
                 view.topAnchor.constraint(equalTo: menuButton.topAnchor),
                 view.leadingAnchor.constraint(equalTo: menuButton.leadingAnchor),
                 view.widthAnchor.constraint(equalTo: menuButton.widthAnchor),
-                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor),
+                view.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor)
             ])
         }
 

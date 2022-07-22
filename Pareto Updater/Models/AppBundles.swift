@@ -7,8 +7,9 @@
 
 import Foundation
 import os.log
-import Sentry
-
+#if !DEBUG
+    import Sentry
+#endif
 struct PublicApp: Codable {
     let bundle: String
     let name: String
@@ -38,7 +39,7 @@ class AppBundles: ObservableObject {
         AppITerm.sharedInstance,
         AppZoom.sharedInstance,
         AppIINA.sharedInstance,
-        AppMTeams.sharedInstance,
+        AppMTeams.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
