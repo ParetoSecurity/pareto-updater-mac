@@ -83,6 +83,7 @@
 		4FEBF0492875AE80002AE0F8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF0482875AE80002AE0F8 /* String.swift */; };
 		4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04A2875CDE4002AE0F8 /* VLC.swift */; };
 		4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04C2876199F002AE0F8 /* GitHub.swift */; };
+		4FED3201288C0B38001D6193 /* KeKa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FED3200288C0B38001D6193 /* KeKa.swift */; };
 		4FFB7AFC288AD79C00640C31 /* LuLu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFB7AFB288AD79C00640C31 /* LuLu.swift */; };
 		4FFB7AFE288AD7CD00640C31 /* BlockBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFB7AFD288AD7CD00640C31 /* BlockBlock.swift */; };
 /* End PBXBuildFile section */
@@ -176,6 +177,7 @@
 		4FEBF0482875AE80002AE0F8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4FEBF04A2875CDE4002AE0F8 /* VLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLC.swift; sourceTree = "<group>"; };
 		4FEBF04C2876199F002AE0F8 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		4FED3200288C0B38001D6193 /* KeKa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeKa.swift; sourceTree = "<group>"; };
 		4FFB7AFB288AD79C00640C31 /* LuLu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuLu.swift; sourceTree = "<group>"; };
 		4FFB7AFD288AD7CD00640C31 /* BlockBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockBlock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +248,7 @@
 				4FFB7AFD288AD7CD00640C31 /* BlockBlock.swift */,
 				4FB86BAC288AB2C100B3B7F6 /* GitUp.swift */,
 				4FB86BA6288A970800B3B7F6 /* SwiftBar.swift */,
+				4FED3200288C0B38001D6193 /* KeKa.swift */,
 				4FB86BA4288A965B00B3B7F6 /* Rectangle.swift */,
 				4F303AF62874A25400C983BF /* TopNotch.swift */,
 				4FB86BAA288AA1FA00B3B7F6 /* HiddenBar.swift */,
@@ -638,6 +641,7 @@
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,
 				4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */,
+				4FED3201288C0B38001D6193 /* KeKa.swift in Sources */,
 				4F868ED5286B224800383328 /* Menubar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

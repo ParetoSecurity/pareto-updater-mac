@@ -31,7 +31,7 @@ class PkgApp: AppUpdater {
             Process.run(app: "/usr/sbin/pkgutil", args: [
                 "--expand",
                 appFile.path,
-                tempPath.path,
+                tempPath.path
 
             ])
             Process.run(app: "/usr/bin/tar", args: [
@@ -42,7 +42,7 @@ class PkgApp: AppUpdater {
                     .path,
 
                 "-C",
-                tempPath.path,
+                tempPath.path
             ])
 
             let app = tempPath.appendingPathComponent(pkgAppName)

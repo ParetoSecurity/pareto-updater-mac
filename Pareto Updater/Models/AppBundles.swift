@@ -49,6 +49,7 @@ class AppBundles: ObservableObject {
         AppHandBrake.sharedInstance,
         AppBlockBlock.sharedInstance,
         AppLulu.sharedInstance,
+        AppKeKa.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
