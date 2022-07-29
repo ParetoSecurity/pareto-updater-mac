@@ -11,6 +11,7 @@ import Combine
 import Defaults
 import Foundation
 import os.log
+import OSLog
 import Regex
 import SwiftUI
 
@@ -36,8 +37,8 @@ public enum Constants {
         )
     #else
         static let versionStorage = try! Storage<String, String>(
-            diskConfig: DiskConfig(name: "Version+Bundles+v2", expiry: .seconds(3600 * 24), directory: cacheFolder),
-            memoryConfig: MemoryConfig(expiry: .seconds(3600)),
+            diskConfig: DiskConfig(name: "Version+Bundles+v3", expiry: .seconds(3600), directory: cacheFolder),
+            memoryConfig: MemoryConfig(expiry: .seconds(60)),
             transformer: TransformerFactory.forCodable(ofType: String.self) // Storage<String, String>
         )
     #endif
@@ -52,9 +53,8 @@ public enum Constants {
 
     static let bugReportURL = { () -> URL in
         let baseURL = "https://paretosecurity.com/report-bug?"
-        let logs = logEntries().joined(separator: "\n").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         let versions = getVersions().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        if let url = URL(string: baseURL + "&logs=" + logs! + "&version=" + versions!) {
+        if let url = URL(string: baseURL + "&version=" + versions!) {
             return url
         }
 
@@ -62,7 +62,7 @@ public enum Constants {
     }()
 
     static let getVersions = { () -> String in
-        "HW: \(hwModelName)\nmacOS: \(macOSVersionString)\nApp: Pareto Updater\nApp Version: \(appVersion)\nBuild: \(buildVersion)"
+        "HW: \(hwModelName) macOS: \(macOSVersionString) App: Pareto Updater App Version: \(appVersion)\nBuild: \(buildVersion)"
     }
 
     static var hwModel: String {
@@ -99,10 +99,31 @@ public enum Constants {
         var logs = [String]()
 
         logs.append("Location: \(Bundle.main.path)")
-        logs.append("Build:")
+        logs.append("Build: \(Constants.utmSource)")
 
         logs.append("\nLogs:")
-        logs.append("Please copy the logs from the Console app by searching for the Pareto Updater.")
+
+        if #available(macOS 12.0, *) {
+            let logStore = try OSLogStore(scope: .currentProcessIdentifier)
+            // Get all the logs from the last hour.
+            let oneHourAgo = logStore.position(date: Date().addingTimeInterval(-3600))
+
+            // Fetch log objects.
+            let allEntries = try logStore.getEntries(at: oneHourAgo)
+
+            // Filter the log to be relevant for our specific subsystem
+            // and remove other elements (signposts, etc).
+            for log in allEntries
+                .compactMap({ $0 as? OSLogEntryLog })
+                .filter({ entry in
+                    entry.subsystem == Bundle.main.bundleIdentifier
+                }) {
+                logs.append("\(log.subsystem): \(log.composedMessage)")
+            }
+        } else {
+            logs.append("Please copy the logs from the Console app by searching for the \(Bundle.main.bundleIdentifier).")
+        }
+
         return logs
     }
 

@@ -151,6 +151,7 @@ class AppBundles: ObservableObject {
         DispatchQueue.global(qos: .userInteractive).async { [self] in
             DispatchQueue.main.async {
                 self.updating = true
+                try? Constants.versionStorage.removeExpiredObjects()
             }
             for app in self.apps {
                 DispatchQueue.main.async {

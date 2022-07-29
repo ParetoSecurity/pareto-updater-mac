@@ -77,6 +77,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             SentrySDK.addBreadcrumb(crumb: crumb)
         #endif
         switch url.host {
+        case "logs":
+            copyLogs()
         case "install":
 
             if let bundles = url.queryParams()["bundles"]?.lowercased().split(separator: ",").map(String.init) {
@@ -202,6 +204,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
 //                // updateHiddenState()
 //            }
 //        }
+    }
+
+    func copyLogs() {
+        NSPasteboard.general.clearContents()
+        if let data = try? Constants.logEntries().joined(separator: "\n") {
+            NSPasteboard.general.setString(data, forType: .string)
+        }
+        let alert = NSAlert()
+        alert.messageText = "Logs have been copied to the clipboard."
+        alert.alertStyle = NSAlert.Style.informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
     }
 
     func applicationDidFinishLaunching(_: Notification) {
