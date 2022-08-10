@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     var versionNormalize: String {
-        var version = self
+        var version = self.lowercased().removingWhitespaces()
         if version.contains("alpha") {
             version = version.replacingOccurrences(of: "alpha", with: "-alpha")
         }
@@ -17,6 +17,7 @@ extension String {
             version = version.replacingOccurrences(of: "beta", with: "-beta")
         }
         version = version.replacingOccurrences(of: ".-", with: "-")
+        version = version.replacingOccurrences(of: "release", with: "")
         return version
     }
 

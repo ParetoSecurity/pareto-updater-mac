@@ -268,7 +268,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     var textVersion: String {
         if isInstalled {
             if let version = Bundle.appVersion(path: applicationPath) {
-                return version.lowercased()
+                return version.versionNormalize
             }
             return "0.0.0"
         }
