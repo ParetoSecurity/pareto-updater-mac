@@ -12,8 +12,8 @@ struct AppInstall: View {
     @EnvironmentObject var viewModel: AppBundles
     @Default(.showBeta) var showBeta
     var body: some View {
-        VStack {
-            if viewModel.updating {
+        Group {
+            if viewModel.updating || !viewModel.fetchedOnce {
                 HStack(alignment: .center) {
                     Spacer()
                     Text("Fetching Versions").font(.body)
@@ -25,23 +25,29 @@ struct AppInstall: View {
             } else {
                 List(viewModel.apps) { app in
                     AppRow(app: app, viewModel: viewModel, showActions: false)
-                }.frame(minWidth: 240, minHeight: 120, maxHeight: 200)
+                }.frame(minWidth: 240, minHeight: 120, maxHeight: 240)
+                if viewModel.haveUpdatableApps {
+                    Button {
+                        viewModel.installAll()
+
+                    } label: {
+                        Text("Download and install apps").font(.subheadline)
+                    }
+                    .help("Download and update all")
+                    .disabled(viewModel.updating || viewModel.workInstall)
+                } else {
+                    Text("All apps are updated and installed.").font(.subheadline)
+                }
             }
             if showBeta {
                 Text("viewModel.updating \(viewModel.updating.description)")
                 Text("viewModel.installing \(viewModel.workInstall.description)")
             }
-            Button {
-                viewModel.installAll()
-
-            } label: {
-                Text("Download and install apps").font(.subheadline)
-            }
-            .help("Download and update all")
-            .disabled(viewModel.updating || viewModel.workInstall)
         }
         .padding(.vertical, 15)
         .padding(.horizontal, 15)
-        .frame(minWidth: 240)
+        .frame(minWidth: 240).onAppear {
+            viewModel.fetchData()
+        }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Janez Troha on 27/04/2022.
 //
 
+import Cocoa
 import Foundation
 import os.log
 #if !DEBUG
@@ -83,7 +84,25 @@ class AppBundles: ObservableObject {
         return []
     }
 
+    func FreeVersionAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Updating is disabled in the free version."
+        alert.alertStyle = NSAlert.Style.informational
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Buy License")
+        let response = alert.runModal()
+
+        if response == .alertSecondButtonReturn {
+            NSWorkspace.shared.open(Constants.buyURL)
+        }
+    }
+
     func updateApp(withApp: AppUpdater) {
+        if !Constants.Licensed {
+            FreeVersionAlert()
+            return
+        }
+
         DispatchQueue.main.async {
             self.workInstall = true
         }
@@ -136,6 +155,11 @@ class AppBundles: ObservableObject {
     }
 
     func updateAll() {
+        if !Constants.Licensed {
+            FreeVersionAlert()
+            return
+        }
+
         install(fromQueue: updatableApps)
     }
 

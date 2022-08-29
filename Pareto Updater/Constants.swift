@@ -20,7 +20,7 @@ public enum Constants {
         "com.culturedcode.ThingsMac"
     ]
 
-    static let helpURL = URL(string: "https://github.com/maxgoedjen/secretive/blob/main/FAQ.md")!
+    static let buyURL = URL(string: "https://paretosecurity.com/personal")!
     static let httpQueue = DispatchQueue(label: "co.niteo.paretoupdater.fetcher", qos: .userInitiated, attributes: .concurrent)
     static let useEdgeCache = true
     static var Licensed = false
