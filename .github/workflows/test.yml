@@ -110,7 +110,7 @@ jobs:
     name: Build and Archive Native
     needs: lint
     runs-on: macos-12
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       issues: write
       pull-requests: write
