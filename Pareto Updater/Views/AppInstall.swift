@@ -26,7 +26,7 @@ struct AppInstall: View {
                 List(viewModel.apps) { app in
                     AppRow(app: app, viewModel: viewModel, showActions: false)
                 }.frame(minWidth: 240, minHeight: 120, maxHeight: 240)
-                if viewModel.haveUpdatableApps {
+                if viewModel.haveInstallableApps || viewModel.haveUpdatableApps {
                     Button {
                         viewModel.installAll()
 

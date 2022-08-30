@@ -60,6 +60,12 @@ class AppBundles: ObservableObject {
         !updatableApps.isEmpty
     }
 
+    public var haveInstallableApps: Bool {
+        return apps.filter { app in
+            !app.isInstalled
+        }.count > 0
+    }
+
     public var updatableApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
@@ -217,7 +223,9 @@ class AppBundles: ObservableObject {
     static func asJSON() -> String? {
         var export: [PublicApp] = []
 
-        for app in AppBundles.bundledApps {
+        for app in AppBundles.bundledApps.sorted(by: { lha, rha in
+            lha.appMarketingName.lowercased() < rha.appMarketingName.lowercased()
+        }) {
             if let icon = app.icon?.base64 {
                 export.append(PublicApp(
                     bundle: app.appBundle.lowercased(),

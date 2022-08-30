@@ -80,6 +80,7 @@
 		4FE610EA282A88660060C002 /* Regex in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610E9282A88660060C002 /* Regex */; };
 		4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EC282A887A0060C002 /* LaunchAtLogin */; };
 		4FE610F0282A888C0060C002 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE610EF282A888C0060C002 /* Cache */; };
+		4FE6B2B328BE45C6001AF636 /* AdGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6B2B228BE45C6001AF636 /* AdGuard.swift */; };
 		4FEBF0492875AE80002AE0F8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF0482875AE80002AE0F8 /* String.swift */; };
 		4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04A2875CDE4002AE0F8 /* VLC.swift */; };
 		4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04C2876199F002AE0F8 /* GitHub.swift */; };
@@ -171,6 +172,7 @@
 		4FE06A4D2876FD2D00471FA4 /* Cyberduck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cyberduck.swift; sourceTree = "<group>"; };
 		4FE610C5282A56A30060C002 /* SpyBuster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpyBuster.swift; sourceTree = "<group>"; };
 		4FE610D8282A87870060C002 /* Version */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Version; path = "/Users/dz0ny/Library/Developer/Xcode/DerivedData/Pareto_Updater-bhcgnniayqiwsbetsqyqyfbxelpj/SourcePackages/checkouts/Version"; sourceTree = "<absolute>"; };
+		4FE6B2B228BE45C6001AF636 /* AdGuard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdGuard.swift; sourceTree = "<group>"; };
 		4FEBF0482875AE80002AE0F8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4FEBF04A2875CDE4002AE0F8 /* VLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLC.swift; sourceTree = "<group>"; };
 		4FEBF04C2876199F002AE0F8 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				4FBCDF4428731A370093FB5B /* 1Password.swift */,
 				4FBCDF4228731A370093FB5B /* Bitwarden.swift */,
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
+				4FE6B2B228BE45C6001AF636 /* AdGuard.swift */,
 				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
@@ -575,6 +578,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FE6B2B328BE45C6001AF636 /* AdGuard.swift in Sources */,
 				4F2C835C2819331A00B40361 /* Firefox.swift in Sources */,
 				4FB86BB3288ABB2D00B3B7F6 /* PrusaSlicer.swift in Sources */,
 				4FBCDF4C28731A370093FB5B /* Brave Browser.swift in Sources */,
