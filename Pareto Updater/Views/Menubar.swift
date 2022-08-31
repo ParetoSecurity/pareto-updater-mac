@@ -8,21 +8,29 @@ import Defaults
 import SwiftUI
 
 struct MenuBarView: View {
+    @EnvironmentObject var viewModel: AppBundles
+
     var body: some View {
-        HStack {
-            Image("menubar")
+        if viewModel.haveUpdatableApps {
+            Image("menubar-updates")
                 .resizable()
-                .opacity(0.9)
-        }.frame(width: 21, height: 21, alignment: .center)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 2)
+                .opacity(0.9).frame(width: 17, height: 18, alignment: .center)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+        } else {
+            Image("menubar-idle")
+                .resizable()
+                .opacity(0.9).frame(width: 17, height: 18, alignment: .center)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+        }
     }
 }
 
 struct MenuBarView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            MenuBarView().preferredColorScheme($0)
+            MenuBarView().preferredColorScheme($0).environmentObject(AppBundles())
         }
     }
 }

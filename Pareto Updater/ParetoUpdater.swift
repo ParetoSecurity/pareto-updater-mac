@@ -275,7 +275,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let menuButton = statusItem?.button {
-            let view = NSHostingView(rootView: MenuBarView())
+            let view = NSHostingView(rootView: MenuBarView().environmentObject(appsStore))
             view.translatesAutoresizingMaskIntoConstraints = false
             menuButton.addSubview(view)
             menuButton.target = self
