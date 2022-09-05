@@ -226,7 +226,7 @@ class AppBundles: ObservableObject {
         for app in AppBundles.bundledApps.sorted(by: { lha, rha in
             lha.appMarketingName.lowercased() < rha.appMarketingName.lowercased()
         }) {
-            if let icon = app.icon?.base64 {
+            if let icon = app.icon?.base64(size: CGSize(width: 64, height: 64)) {
                 export.append(PublicApp(
                     bundle: app.appBundle.lowercased(),
                     name: app.appMarketingName,
@@ -237,6 +237,7 @@ class AppBundles: ObservableObject {
         }
 
         let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .prettyPrinted
         let jsonData = try! jsonEncoder.encode(export)
         guard let json = String(data: jsonData, encoding: String.Encoding.utf8) else { return nil }
 
