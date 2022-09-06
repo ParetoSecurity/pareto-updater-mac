@@ -24,23 +24,6 @@ enum AppUpdaterStatus {
     case Unsupported
 }
 
-struct AppStoreResponse: Codable {
-    let resultCount: Int
-    let results: [AppStoreResult]
-}
-
-struct AppStoreResult: Codable {
-    let version, wrapperType: String
-    let artistID: Int
-    let artistName: String
-
-    enum CodingKeys: String, CodingKey {
-        case version, wrapperType
-        case artistID = "artistId"
-        case artistName
-    }
-}
-
 public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public static func == (lhs: AppUpdater, rhs: AppUpdater) -> Bool {
         lhs.id == rhs.id

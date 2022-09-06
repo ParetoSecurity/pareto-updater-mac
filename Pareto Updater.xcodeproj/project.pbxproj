@@ -36,6 +36,8 @@
 		4F3BE09B286EF36500DDC1AC /* SparkleApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */; };
 		4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4F3BE0A0286EF61B00DDC1AC /* XMLCoder */; };
 		4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BE0A2286EF68600DDC1AC /* AppCast.swift */; };
+		4F4074CF28C7788800559344 /* AppStoreApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4074CE28C7788800559344 /* AppStoreApps.swift */; };
+		4F4074D128C7795F00559344 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4074D028C7795F00559344 /* AppStore.swift */; };
 		4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFB28324179007D6E8A /* ClipButton.swift */; };
 		4F6FA8AF2889EEF500028E3F /* PkgApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA8AE2889EEF500028E3F /* PkgApps.swift */; };
 		4F6FA8B12889F12B00028E3F /* MicrosoftTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA8B02889F12B00028E3F /* MicrosoftTeams.swift */; };
@@ -135,6 +137,8 @@
 		4F33FE4C280808C200585E5A /* Pareto UpdaterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pareto UpdaterUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleApps.swift; sourceTree = "<group>"; };
 		4F3BE0A2286EF68600DDC1AC /* AppCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCast.swift; sourceTree = "<group>"; };
+		4F4074CE28C7788800559344 /* AppStoreApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreApps.swift; sourceTree = "<group>"; };
+		4F4074D028C7795F00559344 /* AppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		4F6FA8AE2889EEF500028E3F /* PkgApps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PkgApps.swift; sourceTree = "<group>"; };
 		4F6FA8B02889F12B00028E3F /* MicrosoftTeams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicrosoftTeams.swift; sourceTree = "<group>"; };
 		4F7D6FFB28324179007D6E8A /* ClipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipButton.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 			children = (
 				4F2C8360281935D000B40361 /* AppBundles.swift */,
 				4F3BE0A2286EF68600DDC1AC /* AppCast.swift */,
+				4F4074D028C7795F00559344 /* AppStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				4F3BE09A286EF36500DDC1AC /* SparkleApps.swift */,
+				4F4074CE28C7788800559344 /* AppStoreApps.swift */,
 				4F6FA8AE2889EEF500028E3F /* PkgApps.swift */,
 				4FB86BA8288A97ED00B3B7F6 /* GitHubApps.swift */,
 				4F2C836728193E9D00B40361 /* Defaults.swift */,
@@ -597,6 +603,8 @@
 				4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */,
 				4FB86BAD288AB2C100B3B7F6 /* GitUp.swift in Sources */,
 				4FB86BA5288A965B00B3B7F6 /* Rectangle.swift in Sources */,
+				4F4074CF28C7788800559344 /* AppStoreApps.swift in Sources */,
+				4F4074D128C7795F00559344 /* AppStore.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
 				4F151F1F28893B98004FD339 /* Zoom.swift in Sources */,
 				4FB86BA3288A950600B3B7F6 /* Macy.swift in Sources */,

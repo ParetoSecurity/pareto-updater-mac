@@ -69,7 +69,7 @@ class AppBundles: ObservableObject {
     public var updatableApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
-                app.isInstalled && app.usedRecently && app.hasUpdate && !app.fromAppStore
+                app.isInstalled && app.usedRecently && app.hasUpdate
             }
         }
         return []
@@ -166,7 +166,9 @@ class AppBundles: ObservableObject {
             return
         }
 
-        install(fromQueue: updatableApps)
+        install(fromQueue: updatableApps.filter { app in
+            !(app is AppStoreApp)
+        })
     }
 
     func fetchData() {
@@ -245,7 +247,9 @@ class AppBundles: ObservableObject {
     }
 
     init() {
-        apps = (AppBundles.bundledApps + SparkleApp.all).sorted(by: { lha, rha in
+        apps = (AppBundles.bundledApps.filter { app in
+            app.isInstalled && !app.fromAppStore
+        } + SparkleApp.all + AppStoreApp.all).sorted(by: { lha, rha in
             lha.appMarketingName.lowercased() < rha.appMarketingName.lowercased()
         })
     }
