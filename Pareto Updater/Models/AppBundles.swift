@@ -47,7 +47,11 @@ class AppBundles: ObservableObject {
         AppHiddenBar.sharedInstance,
         AppGitUp.sharedInstance,
         AppWorkHours.sharedInstance,
-        AppHandBrake.sharedInstance
+        AppHandBrake.sharedInstance,
+        AppLocal.sharedInstance,
+        AppRaycast.sharedInstance,
+        AppAppCleaner.sharedInstance,
+        AppSkype.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]

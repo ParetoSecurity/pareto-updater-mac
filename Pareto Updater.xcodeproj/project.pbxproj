@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0A05D328C89BBE00BE961C /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D228C89BBE00BE961C /* Local.swift */; };
+		4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D428C89F5D00BE961C /* Raycast.swift */; };
+		4F0A05D728C8A0CD00BE961C /* AppCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */; };
+		4F0A05DB28C8BE4200BE961C /* Skype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05DA28C8BE4200BE961C /* Skype.swift */; };
 		4F0DEA73286D7F8200344B92 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 4F0DEA72286D7F8200344B92 /* Sentry */; };
 		4F0DEA75286D8F3E00344B92 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA74286D8F3E00344B92 /* License.swift */; };
 		4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA76286D8F7700344B92 /* LicenseTests.swift */; };
@@ -106,6 +110,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F0A05D228C89BBE00BE961C /* Local.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
+		4F0A05D428C89F5D00BE961C /* Raycast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Raycast.swift; sourceTree = "<group>"; };
+		4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCleaner.swift; sourceTree = "<group>"; };
+		4F0A05DA28C8BE4200BE961C /* Skype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skype.swift; sourceTree = "<group>"; };
 		4F0DEA74286D8F3E00344B92 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
 		4F0DEA76286D8F7700344B92 /* LicenseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseTests.swift; sourceTree = "<group>"; };
 		4F0DEA7B286D93F500344B92 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -241,6 +249,10 @@
 				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
+				4F0A05D228C89BBE00BE961C /* Local.swift */,
+				4F0A05DA28C8BE4200BE961C /* Skype.swift */,
+				4F0A05D428C89F5D00BE961C /* Raycast.swift */,
+				4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */,
 				4FE610C5282A56A30060C002 /* SpyBuster.swift */,
 				4FB99A4A2889BA6400CDA381 /* IINA.swift */,
 				4FB86BB0288AB96400B3B7F6 /* HandBrake.swift */,
@@ -605,6 +617,7 @@
 				4FB86BA5288A965B00B3B7F6 /* Rectangle.swift in Sources */,
 				4F4074CF28C7788800559344 /* AppStoreApps.swift in Sources */,
 				4F4074D128C7795F00559344 /* AppStore.swift in Sources */,
+				4F0A05D328C89BBE00BE961C /* Local.swift in Sources */,
 				4F2C834C2817E33500B40361 /* Bundle.swift in Sources */,
 				4F151F1F28893B98004FD339 /* Zoom.swift in Sources */,
 				4FB86BA3288A950600B3B7F6 /* Macy.swift in Sources */,
@@ -620,9 +633,11 @@
 				4FB86BAF288AB8AE00B3B7F6 /* WorkHours.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
 				4FBCDF4B28731A370093FB5B /* Bitwarden.swift in Sources */,
+				4F0A05DB28C8BE4200BE961C /* Skype.swift in Sources */,
 				4F0DEA7C286D93F500344B92 /* URL.swift in Sources */,
 				4F2C835E2819357C00B40361 /* Slack.swift in Sources */,
 				4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */,
+				4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */,
 				4FE06A4E2876FD2D00471FA4 /* Cyberduck.swift in Sources */,
 				4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */,
 				4F2C836828193E9D00B40361 /* Defaults.swift in Sources */,
@@ -638,6 +653,7 @@
 				4F6FA8AF2889EEF500028E3F /* PkgApps.swift in Sources */,
 				4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */,
 				4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */,
+				4F0A05D728C8A0CD00BE961C /* AppCleaner.swift in Sources */,
 				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,

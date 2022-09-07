@@ -32,6 +32,14 @@ extension Bundle {
         return dictionary.value(forKey: key) as? String
     }
 
+    static func bundleVersion(path: String, key: String = "CFBundleVersion") -> String? {
+        let plist = "\(path)/Contents/Info.plist"
+        guard let dictionary = NSDictionary(contentsOfFile: plist) else {
+            return nil
+        }
+        return dictionary.value(forKey: key) as? String
+    }
+
     var icon: NSImage? {
         if let appPath = URL(string: path.string)?.path {
             return NSWorkspace.shared.icon(forFile: appPath)
