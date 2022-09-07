@@ -18,6 +18,7 @@ extension String {
         }
         version = version.replacingOccurrences(of: ".-", with: "-")
         version = version.replacingOccurrences(of: "release", with: "")
+
         return version
     }
 
