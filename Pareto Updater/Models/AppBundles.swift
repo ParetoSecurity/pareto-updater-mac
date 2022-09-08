@@ -51,7 +51,8 @@ class AppBundles: ObservableObject {
         AppLocal.sharedInstance,
         AppRaycast.sharedInstance,
         AppAppCleaner.sharedInstance,
-        AppSkype.sharedInstance
+        AppSkype.sharedInstance,
+        AppCryptomator.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
