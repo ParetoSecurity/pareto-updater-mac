@@ -46,7 +46,7 @@ class AppSkype: AppUpdater {
 
     override var textVersion: String {
         if isInstalled {
-            if let version = Bundle.bundleVersion(path: applicationPath) {
+            if let version = Bundle.appVersion(path: applicationPath, key: "CFBundleVersion") {
                 return version
             }
             return "0.0.0"

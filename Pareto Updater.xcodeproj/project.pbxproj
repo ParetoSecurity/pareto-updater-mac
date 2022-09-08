@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F01EE5428C9ECE700A7B138 /* Cryptomator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F01EE5328C9ECE700A7B138 /* Cryptomator.swift */; };
+		4F01EE5628C9F20C00A7B138 /* TeamViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */; };
 		4F0A05D328C89BBE00BE961C /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D228C89BBE00BE961C /* Local.swift */; };
 		4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D428C89F5D00BE961C /* Raycast.swift */; };
 		4F0A05D728C8A0CD00BE961C /* AppCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */; };
@@ -112,6 +113,7 @@
 
 /* Begin PBXFileReference section */
 		4F01EE5328C9ECE700A7B138 /* Cryptomator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cryptomator.swift; sourceTree = "<group>"; };
+		4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamViewer.swift; sourceTree = "<group>"; };
 		4F0A05D228C89BBE00BE961C /* Local.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		4F0A05D428C89F5D00BE961C /* Raycast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Raycast.swift; sourceTree = "<group>"; };
 		4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCleaner.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4F0A05D228C89BBE00BE961C /* Local.swift */,
+				4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */,
 				4F0A05DA28C8BE4200BE961C /* Skype.swift */,
 				4F0A05D428C89F5D00BE961C /* Raycast.swift */,
 				4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */,
@@ -633,6 +636,7 @@
 				4FB86BAB288AA1FA00B3B7F6 /* HiddenBar.swift in Sources */,
 				4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */,
 				4FB99A4D2889BD3A00CDA381 /* Image.swift in Sources */,
+				4F01EE5628C9F20C00A7B138 /* TeamViewer.swift in Sources */,
 				4FA756022877286A0064D0ED /* iTerm.swift in Sources */,
 				4FB86BAF288AB8AE00B3B7F6 /* WorkHours.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
