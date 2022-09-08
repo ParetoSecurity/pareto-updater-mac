@@ -1,5 +1,5 @@
 //
-//  Signal.swift
+//  Notion.swift
 //  Pareto Updater
 //
 //  Created by Janez Troha on 26/04/2022.
@@ -11,15 +11,19 @@ import os.log
 import OSLog
 import Regex
 
-class AppSkype: AppUpdater {
-    static let sharedInstance = AppSkype()
+class AppNotion: AppUpdater {
+    static let sharedInstance = AppNotion()
 
-    override var appName: String { "Skype" }
-    override var appMarketingName: String { "Skype" }
-    override var appBundle: String { "com.skype.skype" }
+    override var appName: String { "Notion" }
+    override var appMarketingName: String { "Notion" }
+    override var appBundle: String { "notion.id" }
 
     override var latestURL: URL {
-        URL(string: "https://get.skype.com/go/getskype-skypeformac")!
+        #if arch(arm64)
+            return URL(string: "https://www.notion.so/desktop/apple-silicon/download")!
+        #else
+            return URL(string: "https://www.notion.so/desktop/mac/download")!
+        #endif
     }
 
     override var latestURLExtension: String {
@@ -27,8 +31,8 @@ class AppSkype: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = "https://get.skype.com/go/getskype-skypeformac"
-        let versionRegex = Regex("Skype-?([\\.\\d]+)\\.dmg") // Skype-8.88.0.401.dmg
+        let url = "https://www.notion.so/desktop/apple-silicon/download"
+        let versionRegex = Regex("Notion-?([\\.\\d]+)-arm64") // https://desktop-release.notion-static.com/Notion-2.1.1-arm64.dmg
         os_log("Requesting %{public}s", url)
 
         AF.request(url, method: .head).responseString(queue: Constants.httpQueue, completionHandler: { response in
@@ -42,15 +46,5 @@ class AppSkype: AppUpdater {
             }
 
         })
-    }
-
-    override var textVersion: String {
-        if isInstalled {
-            if let version = Bundle.appVersion(path: applicationPath, key: "CFBundleVersion") {
-                return version
-            }
-            return "0.0.0"
-        }
-        return "0.0.0"
     }
 }

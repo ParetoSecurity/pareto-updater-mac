@@ -52,7 +52,14 @@ class AppBundles: ObservableObject {
         AppRaycast.sharedInstance,
         AppAppCleaner.sharedInstance,
         AppSkype.sharedInstance,
-        AppCryptomator.sharedInstance
+        AppCryptomator.sharedInstance,
+        AppTeamViewer.sharedInstance,
+        AppDiscord.sharedInstance,
+        AppGimp.sharedInstance,
+        AppInkscape.sharedInstance,
+        AppNotion.sharedInstance,
+        AppViber.sharedInstance,
+        AppAudacity.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]

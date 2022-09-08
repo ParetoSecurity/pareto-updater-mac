@@ -205,13 +205,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
     }
 
     func applicationDidFinishLaunching(_: Notification) {
-        if CommandLine.arguments.contains("-export") {
+        if CommandLine.arguments.contains("export") {
             if let json = AppBundles.asJSON() {
                 print(json as String)
             }
             exit(0)
         }
-        if CommandLine.arguments.contains("-installAll") {
+        if CommandLine.arguments.contains("installAll") {
             let lock = DispatchSemaphore(value: 0)
             for app in AppBundles.bundledApps.filter({ app in
                 !app.isInstalled
@@ -227,7 +227,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             }
             exit(0)
         }
-
+        if CommandLine.arguments.contains("install") {
+            let lock = DispatchSemaphore(value: 0)
+            for app in AppBundles.bundledApps.filter({ app in
+                !app.isInstalled && app.appBundle == CommandLine.arguments.last
+            }) {
+                print("Downloading \(app.appBundle)")
+                app.downloadLatest { sourceFile, appFile in
+                    print("Installing \(app.appBundle)")
+                    let state = app.install(sourceFile: sourceFile, appFile: appFile)
+                    print("\(state) \(app.appBundle) ")
+                    lock.signal()
+                }
+                lock.wait()
+            }
+            exit(0)
+        }
         if Constants.isRunningTests {
             return
         }

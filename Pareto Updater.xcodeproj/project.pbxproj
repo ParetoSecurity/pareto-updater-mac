@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4F01EE5428C9ECE700A7B138 /* Cryptomator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F01EE5328C9ECE700A7B138 /* Cryptomator.swift */; };
+		4F01EE5628C9F20C00A7B138 /* TeamViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */; };
+		4F094A4728CA24EE0078D328 /* Discord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A4628CA24EE0078D328 /* Discord.swift */; };
+		4F094A4928CA28490078D328 /* Gimp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A4828CA28490078D328 /* Gimp.swift */; };
+		4F094A4B28CA2B130078D328 /* Inkscape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A4A28CA2B130078D328 /* Inkscape.swift */; };
+		4F094A4D28CA2D9E0078D328 /* Notion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A4C28CA2D9E0078D328 /* Notion.swift */; };
+		4F094A4F28CA2E840078D328 /* Seashore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A4E28CA2E840078D328 /* Seashore.swift */; };
+		4F094A5128CA32640078D328 /* Viber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A5028CA32640078D328 /* Viber.swift */; };
+		4F094A5328CA33DD0078D328 /* Audacity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F094A5228CA33DD0078D328 /* Audacity.swift */; };
 		4F0A05D328C89BBE00BE961C /* Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D228C89BBE00BE961C /* Local.swift */; };
 		4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D428C89F5D00BE961C /* Raycast.swift */; };
 		4F0A05D728C8A0CD00BE961C /* AppCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */; };
@@ -112,6 +120,14 @@
 
 /* Begin PBXFileReference section */
 		4F01EE5328C9ECE700A7B138 /* Cryptomator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cryptomator.swift; sourceTree = "<group>"; };
+		4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamViewer.swift; sourceTree = "<group>"; };
+		4F094A4628CA24EE0078D328 /* Discord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Discord.swift; sourceTree = "<group>"; };
+		4F094A4828CA28490078D328 /* Gimp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gimp.swift; sourceTree = "<group>"; };
+		4F094A4A28CA2B130078D328 /* Inkscape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inkscape.swift; sourceTree = "<group>"; };
+		4F094A4C28CA2D9E0078D328 /* Notion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notion.swift; sourceTree = "<group>"; };
+		4F094A4E28CA2E840078D328 /* Seashore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seashore.swift; sourceTree = "<group>"; };
+		4F094A5028CA32640078D328 /* Viber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Viber.swift; sourceTree = "<group>"; };
+		4F094A5228CA33DD0078D328 /* Audacity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audacity.swift; sourceTree = "<group>"; };
 		4F0A05D228C89BBE00BE961C /* Local.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Local.swift; sourceTree = "<group>"; };
 		4F0A05D428C89F5D00BE961C /* Raycast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Raycast.swift; sourceTree = "<group>"; };
 		4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCleaner.swift; sourceTree = "<group>"; };
@@ -252,6 +268,11 @@
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4F0A05D228C89BBE00BE961C /* Local.swift */,
+				4F094A4628CA24EE0078D328 /* Discord.swift */,
+				4F094A4C28CA2D9E0078D328 /* Notion.swift */,
+				4F094A4A28CA2B130078D328 /* Inkscape.swift */,
+				4F094A4828CA28490078D328 /* Gimp.swift */,
+				4F01EE5528C9F20C00A7B138 /* TeamViewer.swift */,
 				4F0A05DA28C8BE4200BE961C /* Skype.swift */,
 				4F0A05D428C89F5D00BE961C /* Raycast.swift */,
 				4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */,
@@ -259,17 +280,20 @@
 				4FB99A4A2889BA6400CDA381 /* IINA.swift */,
 				4FB86BB0288AB96400B3B7F6 /* HandBrake.swift */,
 				4FB86BA2288A950600B3B7F6 /* Macy.swift */,
+				4F094A4E28CA2E840078D328 /* Seashore.swift */,
 				4FB86BAC288AB2C100B3B7F6 /* GitUp.swift */,
 				4FB86BA6288A970800B3B7F6 /* SwiftBar.swift */,
 				4FB86BA4288A965B00B3B7F6 /* Rectangle.swift */,
 				4F303AF62874A25400C983BF /* TopNotch.swift */,
 				4FB86BAA288AA1FA00B3B7F6 /* HiddenBar.swift */,
+				4F094A5228CA33DD0078D328 /* Audacity.swift */,
 				4F01EE5328C9ECE700A7B138 /* Cryptomator.swift */,
 				4FB86BAE288AB8AE00B3B7F6 /* WorkHours.swift */,
 				4FB86BB2288ABB2D00B3B7F6 /* PrusaSlicer.swift */,
 				4F2C835B2819331900B40361 /* Firefox.swift */,
 				4F2C835D2819357C00B40361 /* Slack.swift */,
 				4FBCDF4F28736C990093FB5B /* Spotify.swift */,
+				4F094A5028CA32640078D328 /* Viber.swift */,
 				4FE06A4D2876FD2D00471FA4 /* Cyberduck.swift */,
 				4F9209DB282BBD7D007897A6 /* Docker.swift */,
 				4F9209DF282BBE05007897A6 /* LibreOffice.swift */,
@@ -606,6 +630,7 @@
 				4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */,
 				4F2C83512817FEA400B40361 /* Signal.swift in Sources */,
 				4F303AF72874A25400C983BF /* TopNotch.swift in Sources */,
+				4F094A4F28CA2E840078D328 /* Seashore.swift in Sources */,
 				4FB86BA7288A970800B3B7F6 /* SwiftBar.swift in Sources */,
 				4F0DEA75286D8F3E00344B92 /* License.swift in Sources */,
 				4F2C83532818155300B40361 /* PreferencesView.swift in Sources */,
@@ -627,12 +652,15 @@
 				4FB86BA3288A950600B3B7F6 /* Macy.swift in Sources */,
 				4FCC280728782B2C004B9ED1 /* Process.swift in Sources */,
 				4FBCDF4D28731A370093FB5B /* 1Password.swift in Sources */,
+				4F094A5328CA33DD0078D328 /* Audacity.swift in Sources */,
 				4FB98F932810313100B9B627 /* DMG.swift in Sources */,
 				4FBCDF4628731A370093FB5B /* VSCode.swift in Sources */,
 				4FB86BB1288AB96400B3B7F6 /* HandBrake.swift in Sources */,
 				4FB86BAB288AA1FA00B3B7F6 /* HiddenBar.swift in Sources */,
 				4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */,
 				4FB99A4D2889BD3A00CDA381 /* Image.swift in Sources */,
+				4F01EE5628C9F20C00A7B138 /* TeamViewer.swift in Sources */,
+				4F094A4B28CA2B130078D328 /* Inkscape.swift in Sources */,
 				4FA756022877286A0064D0ED /* iTerm.swift in Sources */,
 				4FB86BAF288AB8AE00B3B7F6 /* WorkHours.swift in Sources */,
 				4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */,
@@ -643,7 +671,9 @@
 				4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */,
 				4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */,
 				4FE06A4E2876FD2D00471FA4 /* Cyberduck.swift in Sources */,
+				4F094A4928CA28490078D328 /* Gimp.swift in Sources */,
 				4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */,
+				4F094A4728CA24EE0078D328 /* Discord.swift in Sources */,
 				4F2C836828193E9D00B40361 /* Defaults.swift in Sources */,
 				4F0E43F7280E9E820093B51A /* AppRow.swift in Sources */,
 				4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */,
@@ -661,8 +691,10 @@
 				4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */,
 				4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */,
 				4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */,
+				4F094A4D28CA2D9E0078D328 /* Notion.swift in Sources */,
 				4FBCDF3C2872E91B0093FB5B /* LicenseView.swift in Sources */,
 				4F868ED5286B224800383328 /* Menubar.swift in Sources */,
+				4F094A5128CA32640078D328 /* Viber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

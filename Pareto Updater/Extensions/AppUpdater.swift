@@ -74,7 +74,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
         if isInstalled {
             let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
-            let attributes = NSMetadataItem(url: URL(fileURLWithPath: applicationPath))
+            let attributes = NSMetadataItem(url: applicationPath)
             guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else { return false }
             return lastUse >= weekAgo
         }
@@ -83,7 +83,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
     public var fromAppStore: Bool {
         if isInstalled {
-            let attributes = NSMetadataItem(url: URL(fileURLWithPath: applicationPath))
+            let attributes = NSMetadataItem(url: applicationPath)
             guard let hasReceipt = attributes?.value(forAttribute: "kMDItemAppStoreHasReceipt") as? Bool else { return false }
             return hasReceipt
         }
@@ -147,7 +147,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
 
                     let downloadedAppBundle = Bundle(url: app!)!
-                    if let installedAppBundle = Bundle(path: applicationPath) {
+                    if let installedAppBundle = Bundle(url: applicationPath) {
                         if !validate(downloadedAppBundle, installedAppBundle) {
                             os_log("Failed to validate app bundle %{public}s", appBundle)
                             return AppUpdaterStatus.Failed
@@ -163,11 +163,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         }
                     } else {
                         os_log("Install AppBundle \(downloadedAppBundle.description)")
-                        try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
+                        try downloadedAppBundle.path.copy(to: Path(url: applicationPath)!, overwrite: true)
                     }
                     _ = DMGMounter.detach(mountPoint: mountPoint)
 
-                    if let bundle = Bundle(path: applicationPath), needsStart {
+                    if let bundle = Bundle(url: applicationPath), needsStart {
                         bundle.launch()
                     }
 
@@ -182,7 +182,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             do {
                 let app = FileManager.default.unzip(appFile)
                 let downloadedAppBundle = Bundle(url: app)!
-                if let installedAppBundle = Bundle(path: applicationPath) {
+                if let installedAppBundle = Bundle(url: applicationPath) {
                     if !validate(downloadedAppBundle, installedAppBundle) {
                         os_log("Failed to validate app bundle %{public}s", appBundle)
                         return AppUpdaterStatus.Failed
@@ -198,11 +198,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     }
                 } else {
                     os_log("Install AppBundle \(downloadedAppBundle.description)")
-                    try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
+                    try downloadedAppBundle.path.copy(to: Path(applicationPath.path)!, overwrite: true)
                 }
 
                 try downloadedAppBundle.path.delete()
-                if let bundle = Bundle(path: applicationPath), needsStart {
+                if let bundle = Bundle(url: applicationPath), needsStart {
                     bundle.launch()
                 }
                 return AppUpdaterStatus.Installed
@@ -266,19 +266,19 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return textVersion.versionNormalize
     }
 
-    var applicationPath: String {
-        return "/Applications/\(appName).app"
+    var applicationPath: URL {
+        URL(fileURLWithPath: "/Applications/\(appName).app")
     }
 
     public var isInstalled: Bool {
-        FileManager.default.fileExists(atPath: applicationPath)
+        (try? applicationPath.checkResourceIsReachable()) ?? false
     }
 
     public var icon: NSImage? {
         if !isInstalled {
             return nil
         }
-        return Bundle(path: applicationPath)?.icon
+        return Bundle(url: applicationPath)?.icon
     }
 
     public var latestVersion: String {

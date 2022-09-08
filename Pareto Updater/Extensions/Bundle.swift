@@ -24,17 +24,9 @@ extension Bundle {
         return nil
     }
 
-    static func appVersion(path: String, key: String = "CFBundleShortVersionString") -> String? {
-        let plist = "\(path)/Contents/Info.plist"
-        guard let dictionary = NSDictionary(contentsOfFile: plist) else {
-            return nil
-        }
-        return dictionary.value(forKey: key) as? String
-    }
-
-    static func bundleVersion(path: String, key: String = "CFBundleVersion") -> String? {
-        let plist = "\(path)/Contents/Info.plist"
-        guard let dictionary = NSDictionary(contentsOfFile: plist) else {
+    static func appVersion(path: URL, key: String = "CFBundleShortVersionString") -> String? {
+        let plist = path.appendingPathComponent("/Contents/Info.plist")
+        guard let dictionary = NSDictionary(contentsOf: plist) else {
             return nil
         }
         return dictionary.value(forKey: key) as? String

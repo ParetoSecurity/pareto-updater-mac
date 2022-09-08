@@ -48,7 +48,7 @@ class PkgApp: AppUpdater {
             let app = tempPath.appendingPathComponent(pkgAppName)
 
             let downloadedAppBundle = Bundle(url: app)!
-            if let installedAppBundle = Bundle(path: applicationPath) {
+            if let installedAppBundle = Bundle(url: applicationPath) {
                 if !validate(downloadedAppBundle, installedAppBundle) {
                     os_log("Failed to validate app bundle %{public}s", appBundle)
                     return AppUpdaterStatus.Failed
@@ -64,10 +64,10 @@ class PkgApp: AppUpdater {
                 }
             } else {
                 os_log("Install AppBundle \(downloadedAppBundle.description)")
-                try downloadedAppBundle.path.copy(to: Path(applicationPath)!, overwrite: true)
+                try downloadedAppBundle.path.copy(to: Path(applicationPath.path)!, overwrite: true)
             }
 
-            if let bundle = Bundle(path: applicationPath), needsStart {
+            if let bundle = Bundle(url: applicationPath), needsStart {
                 bundle.launch()
             }
             try? Path(tempPath.path)?.delete()

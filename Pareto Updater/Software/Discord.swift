@@ -1,5 +1,5 @@
 //
-//  Signal.swift
+//  AppDiscord.swift
 //  Pareto Updater
 //
 //  Created by Janez Troha on 26/04/2022.
@@ -11,15 +11,15 @@ import os.log
 import OSLog
 import Regex
 
-class AppSkype: AppUpdater {
-    static let sharedInstance = AppSkype()
+class AppDiscord: AppUpdater {
+    static let sharedInstance = AppDiscord()
 
-    override var appName: String { "Skype" }
-    override var appMarketingName: String { "Skype" }
-    override var appBundle: String { "com.skype.skype" }
+    override var appName: String { "Discord" }
+    override var appMarketingName: String { "Discord" }
+    override var appBundle: String { "com.hnc.Discord" }
 
     override var latestURL: URL {
-        URL(string: "https://get.skype.com/go/getskype-skypeformac")!
+        URL(string: "https://discord.com/api/download?platform=osx")!
     }
 
     override var latestURLExtension: String {
@@ -27,8 +27,8 @@ class AppSkype: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = "https://get.skype.com/go/getskype-skypeformac"
-        let versionRegex = Regex("Skype-?([\\.\\d]+)\\.dmg") // Skype-8.88.0.401.dmg
+        let url = "https://discord.com/api/download?platform=osx"
+        let versionRegex = Regex("osx/?([\\.\\d]+)/Discord") // https://dl.discordapp.net/apps/osx/0.0.268/Discord.dmg
         os_log("Requesting %{public}s", url)
 
         AF.request(url, method: .head).responseString(queue: Constants.httpQueue, completionHandler: { response in
@@ -42,15 +42,5 @@ class AppSkype: AppUpdater {
             }
 
         })
-    }
-
-    override var textVersion: String {
-        if isInstalled {
-            if let version = Bundle.appVersion(path: applicationPath, key: "CFBundleVersion") {
-                return version
-            }
-            return "0.0.0"
-        }
-        return "0.0.0"
     }
 }
