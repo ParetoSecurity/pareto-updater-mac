@@ -38,14 +38,15 @@ class AppZoom: PkgApp {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = "https://zoom.us/download#client_4meeting"
-        let versionRegex = Regex("Version ([\\d.]+)")
+        let url = "https://zoom.us/client/latest/ZoomInstallerIT.pkg"
+        let versionRegex = Regex("prod\\/(\\d+\\.\\d+\\.\\d+).\\d+\\/")
         os_log("Requesting %{public}s", url)
 
-        AppZoom.HTTPClient.request(url).responseString(queue: Constants.httpQueue, completionHandler: { response in
+        AF.request(url, method: .head).redirect(using: Redirector(behavior: .doNotFollow)).response(queue: Constants.httpQueue, completionHandler: { response in
+
             if response.error == nil {
-                let html = response.value ?? "Version 1.11.3 (1065)"
-                let version = versionRegex.firstMatch(in: html)?.groups.first?.value ?? "1.11.3"
+                let location = response.response?.allHeaderFields["Location"] as? String ?? "https://cdn.zoom.us/prod/1.8.6.2879/ZoomInstallerIT.pkg"
+                let version = versionRegex.firstMatch(in: location)?.groups.first?.value ?? "1.8.6.2879"
                 os_log("%{public}s version=%{public}s", self.appBundle, version)
                 completion(version)
             } else {
