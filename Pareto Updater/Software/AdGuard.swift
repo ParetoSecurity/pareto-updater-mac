@@ -15,7 +15,7 @@ class AppAdGuard: GitHubApp {
     override var appName: String { "AdGuard" }
     override var appMarketingName: String { "AdGuard" }
     override var appBundle: String { "com.adguard.mac.adguard" }
-
+    override var description: String { "AdGuard for Mac is the world's first standalone adblock app designed specifically for macOS." }
     static let sharedInstance = AppAdGuard(
         org: "objective-see", repo: "AdguardForMac"
     )

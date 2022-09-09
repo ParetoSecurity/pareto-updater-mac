@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppTopNotch: SparkleApp {
+    override var description: String { "TopNotch is a little macOS app that makes your menu bar black and hides the notch." }
     static let sharedInstance = AppTopNotch(
         name: "Top Notch",
         bundle: "pl.maketheweb.TopNotch",

@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppSwiftBar: SparkleApp {
+    override var description: String { "Add custom menu bar programs on macOS." }
     static let sharedInstance = AppSwiftBar(
         name: "SwiftBar",
         bundle: "com.ameba.SwiftBar",

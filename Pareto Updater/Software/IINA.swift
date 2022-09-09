@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppIINA: SparkleApp {
+    override var description: String { "IINA is the modern video player for macOS." }
     static let sharedInstance = AppIINA(
         name: "IINA",
         bundle: "com.colliderli.iina",

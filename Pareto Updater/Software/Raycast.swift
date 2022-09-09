@@ -17,7 +17,7 @@ class AppRaycast: AppUpdater {
     override var appName: String { "Raycast" }
     override var appMarketingName: String { "Raycast" }
     override var appBundle: String { "com.raycast.macos" }
-
+    override var description: String { "Raycast is a blazingly fast, totally extendable launcher." }
     override var latestURL: URL {
         URL(string: "https://www.raycast.com/download")!
     }

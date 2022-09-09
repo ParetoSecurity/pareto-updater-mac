@@ -19,7 +19,7 @@ class AppZoom: PkgApp {
     override var appName: String { "Zoom.us" }
     override var appMarketingName: String { "Zoom" }
     override var appBundle: String { "us.zoom.xos" }
-
+    override var description: String { "Zoom's secure, reliable video platform powers all of your communication needs, including meetings, chat, phone, webinars, and online events." }
     private static var HTTPClient = Session(configuration: HTTPConfig)
 
     private static var HTTPConfig: URLSessionConfiguration {

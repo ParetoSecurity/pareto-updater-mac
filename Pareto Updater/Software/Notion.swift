@@ -17,7 +17,7 @@ class AppNotion: AppUpdater {
     override var appName: String { "Notion" }
     override var appMarketingName: String { "Notion" }
     override var appBundle: String { "notion.id" }
-
+    override var description: String { "Write, plan & get organized in one place." }
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://www.notion.so/desktop/apple-silicon/download")!

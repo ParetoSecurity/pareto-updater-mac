@@ -6,6 +6,7 @@
 import Foundation
 
 class AppITerm: SparkleApp {
+    override var description: String { "iTerm2 is a replacement for Terminal and the successor to iTerm." }
     static let sharedInstance = AppITerm(
         name: "iTerm",
         bundle: "com.googlecode.iterm2",

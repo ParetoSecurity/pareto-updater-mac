@@ -16,7 +16,7 @@ class AppSpotify: AppUpdater {
     override var appName: String { "Spotify" }
     override var appMarketingName: String { "Spotify" }
     override var appBundle: String { "com.spotify.client" }
-
+    override var description: String { "Spotify is a digital music player that gives you access to millions of songs." }
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://download.scdn.co/SpotifyARM64.dmg")!

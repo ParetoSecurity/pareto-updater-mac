@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppSpyBuster: SparkleApp {
+    override var description: String { "SpyBuster is an anti-spyware tool that will help you spot potentially shady software and monitor the data flow of your applications for undesirable connections." }
     static let sharedInstance = AppSpyBuster(
         name: "SpyBuster",
         bundle: "com.macpaw-labs.snitch",

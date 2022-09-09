@@ -17,7 +17,7 @@ class AppDiscord: AppUpdater {
     override var appName: String { "Discord" }
     override var appMarketingName: String { "Discord" }
     override var appBundle: String { "com.hnc.Discord" }
-
+    override var description: String { "Discord is the easiest way to talk over voice, video, and text. Talk, chat, hang out, and stay close with your friends and communities." }
     override var latestURL: URL {
         URL(string: "https://discord.com/api/download?platform=osx")!
     }

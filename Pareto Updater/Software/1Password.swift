@@ -15,6 +15,7 @@ class App1Password8AppUpdater: AppUpdater {
     override var appName: String { "1Password" }
     override var appMarketingName: String { "1Password" }
     override var appBundle: String { "com.1password.1password" }
+    override var description: String { "A password manager, digital vault, form filler and secure digital wallet." }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = viaEdgeCache("https://releases.1password.com/mac/")

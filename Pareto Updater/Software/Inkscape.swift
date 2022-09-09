@@ -17,7 +17,7 @@ class AppInkscape: AppUpdater {
     override var appName: String { "Inkscape" }
     override var appMarketingName: String { "Inkscape" }
     override var appBundle: String { "org.inkscape.Inkscape" }
-
+    override var description: String { "Inkscape is professional quality vector graphics software." }
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://inkscape.org/gallery/item/34664/Inkscape-1.2.1_arm64.dmg")!

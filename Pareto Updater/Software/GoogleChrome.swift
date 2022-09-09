@@ -30,7 +30,7 @@ class AppGoogleChrome: AppUpdater {
     override var appName: String { "Google Chrome" }
     override var appMarketingName: String { "Google Chrome" }
     override var appBundle: String { "com.google.Chrome" }
-
+    override var description: String { "Google Chrome is a web browser developed by Google." }
     override var latestURL: URL {
         return URL(string: "https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg")!
     }

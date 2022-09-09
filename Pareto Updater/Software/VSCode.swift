@@ -19,7 +19,7 @@ class AppVSCodeApp: AppUpdater {
     override var appName: String { "Visual Studio Code" }
     override var appMarketingName: String { "Visual Studio Code" }
     override var appBundle: String { "com.microsoft.VSCode" }
-
+    override var description: String { "Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications." }
     override var latestURL: URL {
         URL(string: "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal")!
     }

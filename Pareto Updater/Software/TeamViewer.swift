@@ -17,7 +17,7 @@ class AppTeamViewer: AppUpdater {
     override var appName: String { "TeamViewerQS" }
     override var appMarketingName: String { "TeamViewer" }
     override var appBundle: String { "com.teamviewer.teamviewer" }
-
+    override var description: String { "The world's most trusted remote access, control and support software." }
     override var latestURL: URL {
         URL(string: "https://download.teamviewer.com/download/TeamViewerQS.dmg")!
     }

@@ -17,7 +17,7 @@ class AppLocal: AppUpdater {
     override var appName: String { "Local" }
     override var appMarketingName: String { "Local" }
     override var appBundle: String { "com.getflywheel.lightning.local" }
-
+    override var description: String { "An effortless way to develop WordPress sites locally." }
     override var latestURL: URL {
         URL(string: "https://cdn.localwp.com/stable/latest/mac")!
     }

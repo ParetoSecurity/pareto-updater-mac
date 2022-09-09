@@ -19,7 +19,7 @@ class AppMTeams: PkgApp {
     override var appName: String { "Microsoft Teams" }
     override var appMarketingName: String { "Microsoft Teams" }
     override var appBundle: String { "com.microsoft.teams" }
-
+    override var description: String { "Work with teammates via secure meetings, document collaboration, and built-in cloud storage." }
     override var latestURL: URL {
         return URL(string: "https://teams.microsoft.com/downloads/desktopurl?env=production&plat=osx&download=true")!
     }

@@ -38,6 +38,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     var appName: String { "" } // Updater for Pareto
     var appMarketingName: String { "" } // Pareto Updater
     var appBundle: String { "" } // like co.niteo.paretoupdater
+    var description: String { "" } // like "this is a great app"
 
     @Published var status: AppUpdaterStatus = .Idle
     @Published var updatable: Bool = false

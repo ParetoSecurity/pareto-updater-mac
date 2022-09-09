@@ -11,6 +11,7 @@ import os.log
 import Regex
 
 class AppCyberduck: SparkleApp {
+    override var description: String { "Cyberduck is a cloud storage browser." }
     static let sharedInstance = AppCyberduck(
         name: "Cyberduck",
         bundle: "ch.sudo.cyberduck",

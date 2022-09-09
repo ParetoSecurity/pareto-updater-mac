@@ -19,7 +19,7 @@ class AppLibreOffice: AppUpdater {
     override var appName: String { "LibreOffice" }
     override var appMarketingName: String { "LibreOffice" }
     override var appBundle: String { "org.libreoffice.script" }
-
+    override var description: String { "LibreOffice is a free and open-source office productivity software suite." }
     override var latestURL: URL {
         #if arch(arm64)
             // https://download.documentfoundation.org/libreoffice/stable/7.2.7/mac/aarch64/LibreOffice_7.2.7_MacOS_aarch64.dmg

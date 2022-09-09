@@ -24,12 +24,12 @@ struct AppsView: View {
     }
 
     func share() {
-        let bundles = viewModel.installedApps.map { app in
+        let bundles = viewModel.installedApps.filter { app in
+            !app.fromAppStore
+        }.map { app in
             app.appBundle
         }.joined(separator: ",")
-
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString("paretoupdater://install?bundles=\(bundles)", forType: .string)
+        NSWorkspace.shared.open(URL(string: "https://paretosecurity.com/bulk-install#\(bundles)")!)
     }
 
     func clearCache() {

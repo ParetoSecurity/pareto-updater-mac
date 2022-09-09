@@ -18,7 +18,7 @@ class AppSublimeText: AppUpdater {
     override var appName: String { "Sublime Text" }
     override var appMarketingName: String { "Sublime Text" }
     override var appBundle: String { "com.sublimetext.4" }
-
+    override var description: String { "Sublime Text is a sophisticated text editor for code, markup and prose." }
     override var textVersion: String {
         if isInstalled {
             if let version = Bundle.appVersion(path: applicationPath) {

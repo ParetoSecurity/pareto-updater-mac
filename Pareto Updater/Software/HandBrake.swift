@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppHandBrake: SparkleApp {
+    override var description: String { "HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs." }
     static let sharedInstance = AppHandBrake(
         name: "HandBrake",
         bundle: "fr.handbrake.HandBrake",

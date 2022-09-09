@@ -17,7 +17,7 @@ class AppSignal: AppUpdater {
     override var appName: String { "Signal" }
     override var appMarketingName: String { "Signal" }
     override var appBundle: String { "org.whispersystems.signal-desktop" }
-
+    override var description: String { "Signal is a free, privacy-focused messaging and voice talk app." }
     override var latestURL: URL {
         URL(string: "https://updates.signal.org/desktop/signal-desktop-mac-universal-\(latestVersion).dmg")!
     }

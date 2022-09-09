@@ -12,6 +12,7 @@ import OSLog
 import Regex
 
 class AppRectangle: SparkleApp {
+    override var description: String { "Move and resize windows in macOS using keyboard shortcuts or snap areas. " }
     static let sharedInstance = AppRectangle(
         name: "Rectangle",
         bundle: "com.knollsoft.Rectangle",

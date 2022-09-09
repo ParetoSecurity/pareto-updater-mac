@@ -29,7 +29,7 @@ class AppGitHub: AppUpdater {
     override var appName: String { "GitHub Desktop" }
     override var appMarketingName: String { "GitHub Desktop" }
     override var appBundle: String { "com.github.GitHubClient" }
-
+    override var description: String { "Whether you're new to Git or a seasoned user, GitHub Desktop simplifies your development workflow." }
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://central.github.com/deployments/desktop/desktop/latest/darwin")!

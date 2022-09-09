@@ -15,7 +15,7 @@ class AppSeashore: GitHubApp {
     override var appName: String { "Seashore" }
     override var appMarketingName: String { "Seashore" }
     override var appBundle: String { "app.seashore" }
-
+    override var description: String { "" }
     static let sharedInstance = AppSeashore(
         org: "robaho", repo: "Seashore"
     )

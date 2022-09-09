@@ -15,7 +15,7 @@ class AppCryptomator: GitHubApp {
     override var appName: String { "Cryptomator" }
     override var appMarketingName: String { "Cryptomator" }
     override var appBundle: String { "org.cryptomator" }
-
+    override var description: String { "Cryptomator is a simple tool for digital self-defense. It allows you to protect your cloud data by yourself and independently." }
     static let sharedInstance = AppCryptomator(
         org: "cryptomator", repo: "cryptomator"
     )

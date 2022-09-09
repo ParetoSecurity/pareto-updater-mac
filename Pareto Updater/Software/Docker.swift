@@ -17,7 +17,7 @@ class AppDocker: AppUpdater {
     override var appName: String { "Docker" }
     override var appMarketingName: String { "Docker" }
     override var appBundle: String { "com.docker.docker" }
-
+    override var description: String { "Docker is a software platform that allows you to build, test, and deploy applications quickly." }
     override var latestURL: URL {
         #if arch(arm64)
             return URL(string: "https://desktop.docker.com/mac/main/arm64/Docker.dmg")!

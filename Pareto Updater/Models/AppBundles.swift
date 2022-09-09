@@ -245,7 +245,7 @@ class AppBundles: ObservableObject {
                 export.append(PublicApp(
                     bundle: app.appBundle.lowercased(),
                     name: app.appMarketingName,
-                    description: "",
+                    description: app.description,
                     icon: icon
                 ))
             }

@@ -17,7 +17,7 @@ class AppGimp: AppUpdater {
     override var appName: String { "GIMP-2.10" }
     override var appMarketingName: String { "GIMP" }
     override var appBundle: String { "org.gimp.gimp-2.10:" }
-
+    override var description: String { "GIMP is a cross-platform image editor." }
     override var latestURL: URL {
         let nibles = latestVersion.split(separator: ".")
         return URL(string: "https://download.gimp.org/gimp/v\(nibles[0]).\(nibles[1])/osx/gimp-\(latestVersion)-x86_64.dmg")!

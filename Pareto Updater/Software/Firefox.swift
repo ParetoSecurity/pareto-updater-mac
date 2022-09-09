@@ -20,7 +20,7 @@ class AppFirefox: AppUpdater {
     override var appName: String { "Firefox" }
     override var appMarketingName: String { "Firefox" }
     override var appBundle: String { "org.mozilla.firefox" }
-
+    override var description: String { "Firefox is free web browser." }
     override var latestURLExtension: String {
         "dmg"
     }

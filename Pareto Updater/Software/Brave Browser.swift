@@ -7,6 +7,7 @@
 import Foundation
 
 class AppBraveBrowserUpdater: SparkleApp {
+    override var description: String { "The Brave browser is a fast, private and secure web browser for PC, Mac and mobile." }
     static let sharedInstance = AppBraveBrowserUpdater(
         name: "Brave Browser",
         bundle: "com.brave.Browser",
