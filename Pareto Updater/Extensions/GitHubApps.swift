@@ -15,9 +15,12 @@ private struct GHRelease: Decodable {
     public let prerelease: Bool
     public let assets: [Asset]
     public let body: String
+    public let createdAt, publishedAt: String
 
     enum CodingKeys: String, CodingKey {
         case tagName = "tag_name"
+        case createdAt = "created_at"
+        case publishedAt = "published_at"
         case prerelease, assets, body
     }
 
@@ -48,7 +51,7 @@ private extension APIReleases {
         filter { r in
             r.version.contains(".")
         }.sorted { lr, rr in
-            lr.version.versionCompare(rr.version) == .orderedDescending
+            lr.createdAt > rr.createdAt
         }.first
     }
 }

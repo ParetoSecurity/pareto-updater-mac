@@ -251,7 +251,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     var textVersion: String {
         if isInstalled {
             if let version = Bundle.appVersion(path: applicationPath) {
-                return version.versionNormalize
+                return currentVersionHook(version.versionNormalize)
             }
             return "0.0.0"
         }
@@ -263,7 +263,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             return nil
         }
 
-        return textVersion.versionNormalize
+        return textVersion
     }
 
     var applicationPath: URL {
@@ -283,7 +283,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
 
     public var latestVersion: String {
         if let found = try? Constants.versionStorage.existsObject(forKey: appBundle), found {
-            return try! Constants.versionStorage.object(forKey: appBundle)
+            return latestVersionHook(try! Constants.versionStorage.object(forKey: appBundle))
         } else {
             let lock = DispatchSemaphore(value: 0)
             DispatchQueue.global(qos: .userInteractive).async { [self] in
@@ -293,7 +293,15 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                 }
             }
             lock.wait()
-            return try! Constants.versionStorage.object(forKey: appBundle)
+            return latestVersionHook(try! Constants.versionStorage.object(forKey: appBundle))
         }
+    }
+
+    public func latestVersionHook(_ version: String) -> String {
+        return version
+    }
+
+    public func currentVersionHook(_ version: String) -> String {
+        return version
     }
 }

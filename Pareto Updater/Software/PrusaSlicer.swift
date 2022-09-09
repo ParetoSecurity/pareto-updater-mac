@@ -19,4 +19,24 @@ class AppPrusaSlicer: GitHubApp {
     static let sharedInstance = AppPrusaSlicer(
         org: "prusa3d", repo: "PrusaSlicer"
     )
+
+    override var hasUpdate: Bool {
+        // it's a mess
+        if latestVersion.contains(textVersion) {
+            return false
+        }
+        return true
+    }
+
+    override public func latestVersionHook(_ version: String) -> String {
+        return version.replacingOccurrences(of: "ersion_", with: "")
+    }
+
+    override public func currentVersionHook(_ version: String) -> String {
+        let versionRegex = Regex("slicer-(.+)\\+")
+        if let parsed = versionRegex.firstMatch(in: version)?.groups.first?.value {
+            return parsed
+        }
+        return version
+    }
 }
