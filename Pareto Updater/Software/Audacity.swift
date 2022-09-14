@@ -19,4 +19,16 @@ class AppAudacity: GitHubApp {
     static let sharedInstance = AppAudacity(
         org: "audacity", repo: "audacity"
     )
+
+    override public func latestVersionHook(_ version: String) -> String {
+        return version.replacingOccurrences(of: "audacity-", with: "")
+    }
+
+    override public func currentVersionHook(_ version: String) -> String {
+        let versionRegex = Regex("audacity-(.+)\\+")
+        if let parsed = versionRegex.firstMatch(in: version)?.groups.first?.value {
+            return parsed
+        }
+        return version
+    }
 }

@@ -17,8 +17,8 @@ extension FileManager {
         }
 
         if url.pathExtension == "zip" {
-            proc.launchPath = "/usr/bin/unzip"
-            proc.arguments = [url.path]
+            proc.launchPath = "/usr/bin/ditto"
+            proc.arguments = ["-x", "-k", url.path, "."]
         } else {
             proc.launchPath = "/usr/bin/tar"
             proc.arguments = ["xf", url.path]

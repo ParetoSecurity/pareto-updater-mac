@@ -32,9 +32,9 @@ class AppGitHub: AppUpdater {
     override var description: String { "Whether you're new to Git or a seasoned user, GitHub Desktop simplifies your development workflow." }
     override var latestURL: URL {
         #if arch(arm64)
-            return URL(string: "https://central.github.com/deployments/desktop/desktop/latest/darwin")!
-        #else
             return URL(string: "https://central.github.com/deployments/desktop/desktop/latest/darwin-arm64")!
+        #else
+            return URL(string: "https://central.github.com/deployments/desktop/desktop/latest/darwin")!
         #endif
     }
 

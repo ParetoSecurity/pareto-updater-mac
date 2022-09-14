@@ -49,7 +49,7 @@ private typealias APIReleases = [GHRelease]
 private extension APIReleases {
     var latest: GHRelease? {
         filter { r in
-            r.version.contains(".")
+            r.version.contains(".") && !r.version.contains("alpha") && !r.version.contains("beta") && !r.version.contains("test")
         }.sorted { lr, rr in
             lr.createdAt > rr.createdAt
         }.first
