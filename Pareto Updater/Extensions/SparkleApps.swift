@@ -50,10 +50,6 @@ class SparkleApp: AppUpdater {
     }
 
     override var hasUpdate: Bool {
-        // cover embedded versions and builds
-        if latestVersion.contains(textVersion) {
-            return false
-        }
         return latestVersion.versionCompare(textVersion) == .orderedDescending
     }
 

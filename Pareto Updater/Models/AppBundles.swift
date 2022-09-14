@@ -19,6 +19,10 @@ struct PublicApp: Codable {
 }
 
 class AppBundles: ObservableObject {
+    static let unsupportedBundles = [
+        "com.bombich.ccc"
+    ]
+
     static let bundledApps = [
         App1Password8AppUpdater.sharedInstance,
         AppBraveBrowserUpdater.sharedInstance,
@@ -262,7 +266,9 @@ class AppBundles: ObservableObject {
     init() {
         apps = (AppBundles.bundledApps.filter { app in
             app.isInstalled && !app.fromAppStore
-        } + SparkleApp.all + AppStoreApp.all).sorted(by: { lha, rha in
+        } + SparkleApp.all + AppStoreApp.all).filter { app in
+            !AppBundles.unsupportedBundles.contains(app.appBundle)
+        }.sorted(by: { lha, rha in
             lha.appMarketingName.lowercased() < rha.appMarketingName.lowercased()
         })
     }

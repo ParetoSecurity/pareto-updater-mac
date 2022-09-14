@@ -33,6 +33,6 @@ class AppSpotify: AppUpdater {
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        completion("1.1.88.612")
+        completion("1.1.93.896")
     }
 }
