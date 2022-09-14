@@ -6,7 +6,7 @@
       "location" : "https://github.com/Alamofire/Alamofire",
       "state" : {
         "branch" : "master",
-        "revision" : "51d67100121d586c9d15ec0227de96442af4dd6d"
+        "revision" : "8dd85aee02e39dd280c75eef88ffdb86eed4b07b"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/hyperoslo/Cache",
       "state" : {
         "branch" : "master",
-        "revision" : "b6214827d5d212b20dae03833ae18d5d147439dd"
+        "revision" : "eeaf771d8d2e8247fbd6da2e27c986d99803fb1f"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/auth0/JWTDecode.swift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "558d439e85903f4eaed0c87e2fb1572615f81022"
+        "revision" : "79e7a7278619b324c8db45b9b37f17ecc02fd3b4"
       }
     },
     {
@@ -51,7 +51,7 @@
       "location" : "https://github.com/sindresorhus/LaunchAtLogin",
       "state" : {
         "branch" : "main",
-        "revision" : "e8171b3e38a2816f579f58f3dac1522aa39efe41"
+        "revision" : "05168c04c91fdf6c432852c2fe0737af6437195c"
       }
     },
     {
@@ -78,7 +78,7 @@
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
         "branch" : "master",
-        "revision" : "fe16a1bd675590318a6f3fa67f50850be976c175"
+        "revision" : "eefdeedf0d7edd17ac03e89ab7a4da75f24bc1ff"
       }
     },
     {
@@ -96,7 +96,7 @@
       "location" : "https://github.com/CoreOffice/XMLCoder",
       "state" : {
         "branch" : "main",
-        "revision" : "c37370172220e1793f5d4c0d871d9597eccc153c"
+        "revision" : "1b15e5a7840c7ed913d960f52f05bbfb3018a51f"
       }
     }
   ],

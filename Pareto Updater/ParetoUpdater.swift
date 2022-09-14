@@ -48,11 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         interval: 60 * 60
     )
 
-//    func updateHiddenState() {
-//        if hideWhenNoUpdates, finishedLaunch {
-//            statusItem?.isVisible = AppDelegate.bundleModel.haveUpdatableApps
-//        }
-//    }
+    //    func updateHiddenState() {
+    //        if hideWhenNoUpdates, finishedLaunch {
+    //            statusItem?.isVisible = AppDelegate.bundleModel.haveUpdatableApps
+    //        }
+    //    }
 
     func scheduleHourlyCheck() {
         let activity = NSBackgroundActivityScheduler(identifier: "\(String(describing: Bundle.main.bundleIdentifier)).Updater")
@@ -163,7 +163,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
                     Constants.Licensed = true
                     Defaults[.reportingRole] = .team
                     Defaults[.isTeamOwner] = ticket.isTeamOwner
-
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.messageText = "Pareto Updater is now licensed."
+                        alert.alertStyle = NSAlert.Style.informational
+                        alert.addButton(withTitle: "OK")
+                        #if !DEBUG
+                            alert.runModal()
+                        #endif
+                    }
                 } catch {
                     License.toFree()
                     DispatchQueue.main.async {
@@ -194,14 +202,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         if Constants.isRunningTests {
             return
         }
-//        if hideWhenNoUpdates {
-//            statusItem?.isVisible = true
-//            finishedLaunch = false
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
-//                finishedLaunch = true
-//                // updateHiddenState()
-//            }
-//        }
+        //        if hideWhenNoUpdates {
+        //            statusItem?.isVisible = true
+        //            finishedLaunch = false
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+        //                finishedLaunch = true
+        //                // updateHiddenState()
+        //            }
+        //        }
     }
 
     func applicationDidFinishLaunching(_: Notification) {
@@ -320,14 +328,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         quitItem.target = NSApp.delegate
         statusMenu?.addItem(quitItem)
 
-//        if hideWhenNoUpdates {
-//            statusItem?.isVisible = true
-//            finishedLaunch = false
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
-//                finishedLaunch = true
-//                updateHiddenState()
-//            }
-//        }
+        //        if hideWhenNoUpdates {
+        //            statusItem?.isVisible = true
+        //            finishedLaunch = false
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [self] in
+        //                finishedLaunch = true
+        //                updateHiddenState()
+        //            }
+        //        }
 
         if !Constants.isRunningTests {
             DispatchQueue.main.async { [self] in
