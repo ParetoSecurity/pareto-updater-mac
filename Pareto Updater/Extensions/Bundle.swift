@@ -17,8 +17,8 @@ extension Bundle {
     var codeSigningIdentity: String? {
         let lines = Process.run(app: "/usr/bin/codesign", args: ["-dvvv", bundlePath]).split(separator: "\n")
         for line in lines {
-            if line.hasPrefix("Authority=") {
-                return String(line.dropFirst(10))
+            if line.hasPrefix("TeamIdentifier=") {
+                return String(line.dropFirst(15))
             }
         }
         return nil
