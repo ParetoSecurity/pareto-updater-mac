@@ -84,6 +84,7 @@ jobs:
           sed -E -i '' 's/MARKETING_VERSION = .*;/MARKETING_VERSION = ${{ steps.release.outputs.tag }};/g' Pareto\ Updater.xcodeproj/project.pbxproj
       - name: "Archive for dist"
         run: set -o pipefail && make archive-release | mint run xcbeautify
+        timeout-minutes: 8
       
       - name: Compress app for storage
         run: ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoUpdater.app.zip
