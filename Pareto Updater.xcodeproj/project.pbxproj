@@ -1079,8 +1079,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Defaults";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 6.3.0;
 			};
 		};
 		4FE610E2282A88400060C002 /* XCRemoteSwiftPackageReference "Alamofire" */ = {

@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/Defaults",
       "state" : {
-        "branch" : "main",
-        "revision" : "981ccb0a01c54abbe3c12ccb8226108527bbf115"
+        "revision" : "981ccb0a01c54abbe3c12ccb8226108527bbf115",
+        "version" : "6.3.0"
       }
     },
     {
@@ -78,7 +78,7 @@
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
         "branch" : "master",
-        "revision" : "eefdeedf0d7edd17ac03e89ab7a4da75f24bc1ff"
+        "revision" : "5025d2e2643a41b83ce05711508ca9f77caa8eb8"
       }
     },
     {
