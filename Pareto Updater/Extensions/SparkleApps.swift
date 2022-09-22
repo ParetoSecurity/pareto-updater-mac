@@ -50,7 +50,16 @@ class SparkleApp: AppUpdater {
     }
 
     override var hasUpdate: Bool {
-        return latestVersion.versionCompare(textVersion) == .orderedDescending
+        // normal check
+        if latestVersion.versionCompare(textVersion) == .orderedDescending {
+            return true
+        }
+        // for wierd versions
+        // v12.2.2 or 12.2.2(1234)
+        if !latestVersion.contains(textVersion) {
+            return false
+        }
+        return false
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
