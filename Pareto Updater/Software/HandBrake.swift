@@ -18,7 +18,7 @@ class AppHandBrake: SparkleApp {
         bundle: "fr.handbrake.HandBrake",
         url: "https://handbrake.fr/appcast.arm64.xml"
     )
-    
+
     override var latestURLExtension: String {
         "dmg"
     }

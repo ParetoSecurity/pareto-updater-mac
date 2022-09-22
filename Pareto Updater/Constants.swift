@@ -30,7 +30,7 @@ public enum Constants {
     static let machineName: String = Host.current().localizedName!
     #if DEBUG
         static let versionStorage = try! Storage<String, String>(
-            diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(1), directory: cacheFolder),
+            diskConfig: DiskConfig(name: "Version+Bundles+Debug", expiry: .seconds(3600), directory: cacheFolder),
             memoryConfig: MemoryConfig(expiry: .seconds(1)),
             transformer: TransformerFactory.forCodable(ofType: String.self) // Storage<String, String>
         )
