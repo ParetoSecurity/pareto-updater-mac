@@ -1,6 +1,16 @@
 {
   "images" : [
     {
+      "filename" : "updater-01-b.png",
+      "idiom" : "mac"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
       "filename" : "updater-01-b.svg",
       "idiom" : "mac"
     }
