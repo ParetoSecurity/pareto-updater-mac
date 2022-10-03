@@ -58,7 +58,7 @@ class SparkleApp: AppUpdater {
         }
         // for weird versions
         // v12.2.2 or 12.2.2(1234)
-        if !latestVersion.contains(textVersion) {
+        if latestVersion.contains(textVersion) {
             update = false
         }
         return update
