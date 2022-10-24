@@ -51,7 +51,7 @@ jobs:
         id: release
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Cache mint modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-mint-v2
         with:
@@ -62,7 +62,7 @@ jobs:
       - name: Install mint and packages
         run: brew install mint && mint bootstrap
       - name: Cache DerivedData
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: release-derived-data-v1
         with:
@@ -71,7 +71,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
       - name: Cache SPM modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-spm-v2
         with:
@@ -90,7 +90,7 @@ jobs:
         run: ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoUpdater.app.zip
 
       - name: Upload App to Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ParetoUpdater.app
           path: ParetoUpdater.app.zip
@@ -102,7 +102,7 @@ jobs:
         run: xcrun notarytool submit ParetoUpdater.dmg --password ${{ secrets.NOTARIZATION_PASSWORD }} --apple-id ${{ secrets.NOTARIZATION_USERNAME }} --team-id PM784W7B8X --progress --wait
 
       - name: Upload DMG to Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ParetoUpdater.dmg
           path: ParetoUpdater.dmg

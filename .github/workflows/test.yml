@@ -23,9 +23,9 @@ jobs:
         with:
           xcode-version: "latest-stable"
       - name: Repository checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Cache mint modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-mint-v2
         with:
@@ -65,9 +65,9 @@ jobs:
           certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: Repository checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Cache mint modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-mint-v2
         with:
@@ -78,7 +78,7 @@ jobs:
       - name: Install mint and packages
         run: brew install mint && mint bootstrap
       - name: Cache SPM modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-spm-v2
         with:
@@ -96,7 +96,7 @@ jobs:
           # export the screenshots
           mint run ChargePoint/xcparse xcparse screenshots --test ./test.xcresult '${{ runner.temp }}/screenshots'
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: screenshots-${{ github.run_number }}
           path: ${{ runner.temp }}/screenshots
@@ -140,9 +140,9 @@ jobs:
           certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: Repository checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Cache mint modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-mint-v2
         with:
@@ -153,7 +153,7 @@ jobs:
       - name: Install mint and packages
         run: brew install mint && mint bootstrap
       - name: Cache SPM modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-spm-v2
         with:
@@ -162,7 +162,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-${{ env.cache-name }}-
       - name: Cache DerivedData
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: build-derived-data-v2
         with:
@@ -175,7 +175,7 @@ jobs:
       - name: Compress app for storage
         run: ditto -V -c -k --keepParent Export/Pareto\ Updater.app ParetoSecurity.app.zip
       - name: Upload App to Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ParetoSecurity.app
           path: ParetoSecurity.app.zip
