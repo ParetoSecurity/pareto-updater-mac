@@ -19,7 +19,7 @@ class AppDropbox: AppUpdater {
     override var appBundle: String { "com.getdropbox.dropbox" }
     override var description: String { "Save and access your files from any device, and share." }
     override var latestURL: URL {
-        URL(string: "https://www.dropbox.com/downloading?plat=mac&full=1")!
+        URL(string: "https://www.dropbox.com/download?plat=mac&full=1")!
     }
 
     override var latestURLExtension: String {
