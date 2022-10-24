@@ -63,6 +63,7 @@
 		4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DF282BBE05007897A6 /* LibreOffice.swift */; };
 		4F9209E2282BBED2007897A6 /* GoogleChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E1282BBED2007897A6 /* GoogleChrome.swift */; };
 		4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209E3282BDEFE007897A6 /* AppsView.swift */; };
+		4FA716C929067EC20072DE96 /* Dropbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA716C829067EC20072DE96 /* Dropbox.swift */; };
 		4FA75600287709960064D0ED /* AppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA755FF287709960064D0ED /* AppUpdater */; };
 		4FA756022877286A0064D0ED /* iTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA756012877286A0064D0ED /* iTerm.swift */; };
 		4FB86BA1288A906200B3B7F6 /* SparkleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */; };
@@ -176,6 +177,7 @@
 		4F9209DF282BBE05007897A6 /* LibreOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibreOffice.swift; sourceTree = "<group>"; };
 		4F9209E1282BBED2007897A6 /* GoogleChrome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleChrome.swift; sourceTree = "<group>"; };
 		4F9209E3282BDEFE007897A6 /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		4FA716C829067EC20072DE96 /* Dropbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dropbox.swift; sourceTree = "<group>"; };
 		4FA756012877286A0064D0ED /* iTerm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTerm.swift; sourceTree = "<group>"; };
 		4FB86BA0288A906200B3B7F6 /* SparkleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleTests.swift; sourceTree = "<group>"; };
 		4FB86BA2288A950600B3B7F6 /* Macy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macy.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				4F2C83502817FEA400B40361 /* Signal.swift */,
 				4F0A05D228C89BBE00BE961C /* Local.swift */,
 				4F094A4628CA24EE0078D328 /* Discord.swift */,
+				4FA716C829067EC20072DE96 /* Dropbox.swift */,
 				4F094A4C28CA2D9E0078D328 /* Notion.swift */,
 				4F094A4A28CA2B130078D328 /* Inkscape.swift */,
 				4F094A4828CA28490078D328 /* Gimp.swift */,
@@ -637,6 +640,7 @@
 				4FBCDF5028736C990093FB5B /* Spotify.swift in Sources */,
 				4F2C83552818158600B40361 /* GeneralView.swift in Sources */,
 				4F3BE0A3286EF68600DDC1AC /* AppCast.swift in Sources */,
+				4FA716C929067EC20072DE96 /* Dropbox.swift in Sources */,
 				4F6FA8B12889F12B00028E3F /* MicrosoftTeams.swift in Sources */,
 				4FB86BA9288A97ED00B3B7F6 /* GitHubApps.swift in Sources */,
 				4F2C835A2818188300B40361 /* AboutView.swift in Sources */,

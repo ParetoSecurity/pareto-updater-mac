@@ -27,6 +27,7 @@ class AppBundles: ObservableObject {
         App1Password8AppUpdater.sharedInstance,
         AppBraveBrowserUpdater.sharedInstance,
         AppBitwardenUpdater.sharedInstance,
+        AppDropbox.sharedInstance,
         AppVSCodeApp.sharedInstance,
         AppSpotify.sharedInstance,
         AppSignal.sharedInstance,
