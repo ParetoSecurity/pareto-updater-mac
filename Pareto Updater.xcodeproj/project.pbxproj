@@ -100,6 +100,7 @@
 		4FEBF0492875AE80002AE0F8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF0482875AE80002AE0F8 /* String.swift */; };
 		4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04A2875CDE4002AE0F8 /* VLC.swift */; };
 		4FEBF04D2876199F002AE0F8 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBF04C2876199F002AE0F8 /* GitHub.swift */; };
+		4FFECB94290700F200517FBA /* DucDuckGo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFECB93290700F200517FBA /* DucDuckGo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +209,7 @@
 		4FEBF0482875AE80002AE0F8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4FEBF04A2875CDE4002AE0F8 /* VLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLC.swift; sourceTree = "<group>"; };
 		4FEBF04C2876199F002AE0F8 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		4FFECB93290700F200517FBA /* DucDuckGo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DucDuckGo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 				4FBCDF4428731A370093FB5B /* 1Password.swift */,
 				4FBCDF4228731A370093FB5B /* Bitwarden.swift */,
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
+				4FFECB93290700F200517FBA /* DucDuckGo.swift */,
 				4FE6B2B228BE45C6001AF636 /* AdGuard.swift */,
 				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
@@ -635,6 +638,7 @@
 				4F303AF72874A25400C983BF /* TopNotch.swift in Sources */,
 				4F094A4F28CA2E840078D328 /* Seashore.swift in Sources */,
 				4FB86BA7288A970800B3B7F6 /* SwiftBar.swift in Sources */,
+				4FFECB94290700F200517FBA /* DucDuckGo.swift in Sources */,
 				4F0DEA75286D8F3E00344B92 /* License.swift in Sources */,
 				4F2C83532818155300B40361 /* PreferencesView.swift in Sources */,
 				4FBCDF5028736C990093FB5B /* Spotify.swift in Sources */,

@@ -65,7 +65,8 @@ class AppBundles: ObservableObject {
         AppNotion.sharedInstance,
         AppViber.sharedInstance,
         AppAudacity.sharedInstance,
-        AppPrusaSlicer.sharedInstance
+        AppPrusaSlicer.sharedInstance,
+        AppDuckDuckGo.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
