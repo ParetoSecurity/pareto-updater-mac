@@ -31,22 +31,25 @@ class AppZoom: PkgApp {
 
     override var latestURL: URL {
         #if arch(arm64)
-            return URL(string: "https://zoom.us/client/latest/zoomusInstallerFull.pkg?archType=arm64")!
+            return URL(string: "https://zoom.us/client/latest/Zoom.pkg?archType=arm64")!
         #else
-            return URL(string: "https://zoom.us/client/latest/zoomusInstallerFull.pkg")!
+            return URL(string: "https://zoom.us/client/latest/Zoom.pkg")!
         #endif
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = "https://zoom.us/client/latest/ZoomInstallerIT.pkg"
+        #if arch(arm64)
+            let url = "https://zoom.us/client/latest/Zoom.pkg?archType=arm64"
+        #else
+            return URL(string: "https://zoom.us/client/latest/Zoom.pkg")!
+        #endif
+        // https://cdn.zoom.us/prod/5.12.3.11845/Zoom.pkg
         let versionRegex = Regex("prod\\/(\\d+\\.\\d+\\.\\d+).\\d+\\/")
         os_log("Requesting %{public}s", url)
 
-        AF.request(url, method: .head).redirect(using: Redirector(behavior: .doNotFollow)).response(queue: Constants.httpQueue, completionHandler: { response in
-
-            if response.error == nil {
-                let location = response.response?.allHeaderFields["Location"] as? String ?? "https://cdn.zoom.us/prod/1.8.6.2879/ZoomInstallerIT.pkg"
-                let version = versionRegex.firstMatch(in: location)?.groups.first?.value ?? "1.8.6.2879"
+        AF.request(url, method: .head).responseString(queue: Constants.httpQueue, completionHandler: { response in
+            if let url = response.response?.url, response.error == nil {
+                let version = versionRegex.firstMatch(in: url.description)?.groups.first?.value ?? "6.4.2"
                 os_log("%{public}s version=%{public}s", self.appBundle, version)
                 completion(version)
             } else {
