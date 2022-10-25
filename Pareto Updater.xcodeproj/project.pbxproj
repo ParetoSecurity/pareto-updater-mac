@@ -29,6 +29,7 @@
 		4F0E4421280EA49A0093B51A /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E441B280EA49A0093B51A /* AppUpdater.swift */; };
 		4F0FF1622889833B008DCE13 /* SparkleRandomVersionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */; };
 		4F151F1F28893B98004FD339 /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F151F1E28893B98004FD339 /* Zoom.swift */; };
+		4F296FC3290880A0001F60D3 /* Messanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F296FC2290880A0001F60D3 /* Messanger.swift */; };
 		4F2C834C2817E33500B40361 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C834B2817E33500B40361 /* Bundle.swift */; };
 		4F2C83512817FEA400B40361 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83502817FEA400B40361 /* Signal.swift */; };
 		4F2C83532818155300B40361 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C83522818155300B40361 /* PreferencesView.swift */; };
@@ -141,6 +142,7 @@
 		4F0E441B280EA49A0093B51A /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		4F0FF1612889833B008DCE13 /* SparkleRandomVersionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkleRandomVersionsTests.swift; sourceTree = "<group>"; };
 		4F151F1E28893B98004FD339 /* Zoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
+		4F296FC2290880A0001F60D3 /* Messanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messanger.swift; sourceTree = "<group>"; };
 		4F2C834A2817E25800B40361 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		4F2C834B2817E33500B40361 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4F2C83502817FEA400B40361 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				4FBCDF4228731A370093FB5B /* Bitwarden.swift */,
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
 				4FFECB93290700F200517FBA /* DucDuckGo.swift */,
+				4F296FC2290880A0001F60D3 /* Messanger.swift */,
 				4FE6B2B228BE45C6001AF636 /* AdGuard.swift */,
 				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
@@ -632,6 +635,7 @@
 				4FE6B2B328BE45C6001AF636 /* AdGuard.swift in Sources */,
 				4F2C835C2819331A00B40361 /* Firefox.swift in Sources */,
 				4FB86BB3288ABB2D00B3B7F6 /* PrusaSlicer.swift in Sources */,
+				4F296FC3290880A0001F60D3 /* Messanger.swift in Sources */,
 				4FBCDF4C28731A370093FB5B /* Brave Browser.swift in Sources */,
 				4FEBF04B2875CDE4002AE0F8 /* VLC.swift in Sources */,
 				4F2C83512817FEA400B40361 /* Signal.swift in Sources */,
