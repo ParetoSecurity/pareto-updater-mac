@@ -41,7 +41,7 @@ class AppZoom: PkgApp {
         #if arch(arm64)
             let url = "https://zoom.us/client/latest/Zoom.pkg?archType=arm64"
         #else
-            return URL(string: "https://zoom.us/client/latest/Zoom.pkg")!
+            let url = "https://zoom.us/client/latest/Zoom.pkg"
         #endif
         // https://cdn.zoom.us/prod/5.12.3.11845/Zoom.pkg
         let versionRegex = Regex("prod\\/(\\d+\\.\\d+\\.\\d+).\\d+\\/")
