@@ -23,7 +23,7 @@ class AppAppCleaner: AppUpdater {
     }
 
     override var latestURLExtension: String {
-        "dmg"
+        "zip"
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

@@ -7,6 +7,7 @@
 
 import Foundation
 import LaunchAtLogin
+import os.log
 import SwiftUI
 
 struct AppsView: View {
@@ -33,8 +34,21 @@ struct AppsView: View {
     }
 
     func clearCache() {
-        try? Constants.versionStorage.removeAll()
-        viewModel.fetchData()
+        DispatchQueue.global(qos: .userInteractive).async {
+            do {
+                let fileManager = FileManager.default
+                let filePaths = try fileManager.contentsOfDirectory(atPath: Constants.cacheFolder.path)
+                for filePath in filePaths {
+                    if filePath.hasSuffix(".dmg") || filePath.hasSuffix(".zip") || filePath.hasSuffix(".pkg") {
+                        try fileManager.removeItem(atPath: Constants.cacheFolder.appendingPathComponent(filePath).path)
+                    }
+                }
+            } catch {
+                os_log("Could not clear temp folder: %{public}s", error.localizedDescription)
+            }
+            try? Constants.versionStorage.removeAll()
+            viewModel.fetchData()
+        }
     }
 
     var body: some View {

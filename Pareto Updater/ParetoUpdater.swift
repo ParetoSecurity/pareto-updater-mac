@@ -68,6 +68,38 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         try? Constants.versionStorage.removeExpiredObjects()
     }
 
+    func clearCache() {
+        do {
+            let fileManager = FileManager.default
+            let filePaths = try fileManager.contentsOfDirectory(atPath: Constants.cacheFolder.path)
+            for filePath in filePaths {
+                if filePath.hasSuffix(".dmg") || filePath.hasSuffix(".zip") || filePath.hasSuffix(".pkg") {
+                    try fileManager.removeItem(atPath: Constants.cacheFolder.appendingPathComponent(filePath).path)
+                }
+            }
+        } catch {
+            os_log("Could not clear temp folder: %{public}s", error.localizedDescription)
+        }
+        try? Constants.versionStorage.removeAll()
+        let alert = NSAlert()
+        alert.messageText = "Cache has been cleared."
+        alert.alertStyle = NSAlert.Style.informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+
+    func copyLogs() {
+        NSPasteboard.general.clearContents()
+        if let data = try? Constants.logEntries().joined(separator: "\n") {
+            NSPasteboard.general.setString(data, forType: .string)
+        }
+        let alert = NSAlert()
+        alert.messageText = "Logs have been copied to the clipboard."
+        alert.alertStyle = NSAlert.Style.informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+
     public func processAction(_ url: URL) {
         #if !DEBUG
             let crumb = Breadcrumb()
@@ -77,6 +109,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             SentrySDK.addBreadcrumb(crumb: crumb)
         #endif
         switch url.host {
+        case "clearCache":
+            clearCache()
+        case "logs":
+            copyLogs()
         case "install":
 
             if let bundles = url.queryParams()["bundles"]?.lowercased().split(separator: ",").map(String.init) {
