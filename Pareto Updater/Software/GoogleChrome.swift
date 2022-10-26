@@ -24,28 +24,32 @@ private struct ChromeVersion: Codable {
     let name, version: String
 }
 
-class AppGoogleChrome: AppUpdater {
-    static let sharedInstance = AppGoogleChrome()
+class AppGoogleChrome: PkgApp {
+    static let sharedInstance = AppGoogleChrome(pkgName: "GoogleChrome.pkg", appPkgName: "Google Chrome.appGoogleChrome.pkg")
 
     override var appName: String { "Google Chrome" }
     override var appMarketingName: String { "Google Chrome" }
     override var appBundle: String { "com.google.Chrome" }
     override var description: String { "Google Chrome is a web browser developed by Google." }
     override var latestURL: URL {
-        return URL(string: "https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg")!
+        return URL(string: "https://dl.google.com/chrome/mac/stable/accept_tos%3Dhttps%253A%252F%252Fwww.google.com%252Fintl%252Fen_ph%252Fchrome%252Fterms%252F%26_and_accept_tos%3Dhttps%253A%252F%252Fpolicies.google.com%252Fterms/googlechrome.pkg")!
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
-        let url = viaEdgeCache("https://versionhistory.googleapis.com/v1/chrome/platforms/mac/channels/stable/versions")
+        let url = "https://omahaproxy.appspot.com/history"
         os_log("Requesting %{public}s", url)
-        AF.request(url).responseDecodable(of: GoogleResponse.self, queue: Constants.httpQueue, completionHandler: { response in
+        AF.request(url).responseString(queue: Constants.httpQueue, completionHandler: { response in
             if response.error == nil {
-                let v = response.value?.versions.first?.version.split(separator: ".") ?? ["0", "0", "0"]
-                completion("\(v[0]).\(v[1]).\(v[2])")
+                let csv = response.value ?? "0,0,0.0.0"
+                let version = String(csv.split(whereSeparator: \.isNewline).filter { line in
+                    line.starts(with: "mac,stable,")
+                }.first ?? "0,0,0.0.0").components(separatedBy: ",")[2].split(separator: ".")
+                completion(String(version[0 ... version.count - 2].joined(separator: ".")))
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
                 completion("0.0.0")
             }
+
         })
     }
 

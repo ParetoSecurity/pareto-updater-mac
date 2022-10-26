@@ -94,7 +94,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURLExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
-            os_log("Update from cache at %{public}", cachedPath.debugDescription)
+            os_log("Update from cache at %{public}s", cachedPath.debugDescription)
             completion(latestURL, cachedPath)
             return
         }
@@ -107,7 +107,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     try FileManager.default.removeItem(at: cachedPath)
                 }
                 try FileManager.default.moveItem(atPath: response.fileURL!.path, toPath: cachedPath.path)
-                os_log("Update downloadLatest: %{public} from %{public}", cachedPath.debugDescription, self.latestURL.debugDescription)
+                os_log("Update downloadLatest: %{public} from %{public}s", cachedPath.debugDescription, self.latestURL.debugDescription)
                 completion(latestURL, cachedPath)
                 return
             } catch {
@@ -142,7 +142,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         switch appFile.pathExtension {
         case "dmg":
             let mountPoint = URL(string: "/Volumes/" + appBundle)!
-            os_log("Mount %{public}s is %{public}s%", appFile.debugDescription, mountPoint.debugDescription)
+            os_log("Mount %{public}s is %{public}s", appFile.debugDescription, mountPoint.debugDescription)
             if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
                 do {
                     let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
