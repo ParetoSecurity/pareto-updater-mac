@@ -46,32 +46,41 @@ class PkgApp: AppUpdater {
             ])
 
             let app = tempPath.appendingPathComponent(pkgAppName)
+            if let downloadedAppBundle = Bundle(url: app) {
+                if let installedAppBundle = Bundle(url: applicationPath) {
+                    if !validate(downloadedAppBundle, installedAppBundle) {
+                        os_log("Failed to validate app bundle %{public}s", appBundle)
+                        return AppUpdaterStatus.Failed
+                    }
 
-            let downloadedAppBundle = Bundle(url: app)!
-            if let installedAppBundle = Bundle(url: applicationPath) {
-                if !validate(downloadedAppBundle, installedAppBundle) {
-                    os_log("Failed to validate app bundle %{public}s", appBundle)
-                    return AppUpdaterStatus.Failed
+                    do {
+                        os_log("Delete installedAppBundle: \(installedAppBundle.path.string)")
+                        try installedAppBundle.path.delete()
+                    } catch {
+                        os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string)")
+                        if !Process.runCMDasAdmin(cmd: "/bin/rm \(installedAppBundle.path.string)") {
+                            os_log("Delete installedAppBundle failed using admin: \(installedAppBundle.path.string)")
+                            return AppUpdaterStatus.Failed
+                        }
+                    }
+
+                    os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                    if needsStart {
+                        installedAppBundle.launch()
+                    }
+                } else {
+                    os_log("Install AppBundle \(downloadedAppBundle.description)")
+                    try downloadedAppBundle.path.copy(to: Path(applicationPath.path)!, overwrite: true)
                 }
 
-                os_log("Delete installedAppBundle: \(installedAppBundle.description)")
-                try installedAppBundle.path.delete()
-
-                os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                if needsStart {
-                    installedAppBundle.launch()
+                if let bundle = Bundle(url: applicationPath), needsStart {
+                    bundle.launch()
                 }
-            } else {
-                os_log("Install AppBundle \(downloadedAppBundle.description)")
-                try downloadedAppBundle.path.copy(to: Path(applicationPath.path)!, overwrite: true)
+                try? Path(tempPath.path)?.delete()
+                return AppUpdaterStatus.Installed
             }
-
-            if let bundle = Bundle(url: applicationPath), needsStart {
-                bundle.launch()
-            }
-            try? Path(tempPath.path)?.delete()
-            return AppUpdaterStatus.Installed
+            return AppUpdaterStatus.Failed
         } catch {
             try? Path(tempPath.path)?.delete()
             os_log("Failed to check for app bundle %{public}s", error.localizedDescription)

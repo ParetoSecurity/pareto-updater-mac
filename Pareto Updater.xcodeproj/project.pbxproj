@@ -42,6 +42,7 @@
 		4F2CB8D2287D7FE900C0DA60 /* AppInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CB8D1287D7FE900C0DA60 /* AppInstall.swift */; };
 		4F303AF52874547200C983BF /* UpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F303AF42874547200C983BF /* UpdaterTests.swift */; };
 		4F303AF72874A25400C983BF /* TopNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F303AF62874A25400C983BF /* TopNotch.swift */; };
+		4F309165290A6A4600579461 /* Maestral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309164290A6A4600579461 /* Maestral.swift */; };
 		4F33FE35280808C000585E5A /* ParetoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE34280808C000585E5A /* ParetoUpdater.swift */; };
 		4F33FE37280808C000585E5A /* AppList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33FE36280808C000585E5A /* AppList.swift */; };
 		4F33FE39280808C200585E5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F33FE38280808C200585E5A /* Assets.xcassets */; };
@@ -156,6 +157,7 @@
 		4F2CB8D1287D7FE900C0DA60 /* AppInstall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInstall.swift; sourceTree = "<group>"; };
 		4F303AF42874547200C983BF /* UpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterTests.swift; sourceTree = "<group>"; };
 		4F303AF62874A25400C983BF /* TopNotch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopNotch.swift; sourceTree = "<group>"; };
+		4F309164290A6A4600579461 /* Maestral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maestral.swift; sourceTree = "<group>"; };
 		4F33FE31280808C000585E5A /* Pareto Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pareto Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F33FE34280808C000585E5A /* ParetoUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParetoUpdater.swift; sourceTree = "<group>"; };
 		4F33FE36280808C000585E5A /* AppList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppList.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
 				4FFECB93290700F200517FBA /* DucDuckGo.swift */,
 				4F296FC2290880A0001F60D3 /* Messanger.swift */,
+				4F309164290A6A4600579461 /* Maestral.swift */,
 				4FE6B2B228BE45C6001AF636 /* AdGuard.swift */,
 				4FA756012877286A0064D0ED /* iTerm.swift */,
 				4FBCDF3D28731A360093FB5B /* VSCode.swift */,
@@ -670,6 +673,7 @@
 				4FB86BB1288AB96400B3B7F6 /* HandBrake.swift in Sources */,
 				4FB86BAB288AA1FA00B3B7F6 /* HiddenBar.swift in Sources */,
 				4F551A60287DCCF100CAC7AE /* ClipButton.swift in Sources */,
+				4F309165290A6A4600579461 /* Maestral.swift in Sources */,
 				4FB99A4D2889BD3A00CDA381 /* Image.swift in Sources */,
 				4F01EE5628C9F20C00A7B138 /* TeamViewer.swift in Sources */,
 				4F094A4B28CA2B130078D328 /* Inkscape.swift in Sources */,

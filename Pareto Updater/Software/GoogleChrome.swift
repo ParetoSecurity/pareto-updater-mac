@@ -25,7 +25,7 @@ private struct ChromeVersion: Codable {
 }
 
 class AppGoogleChrome: PkgApp {
-    static let sharedInstance = AppGoogleChrome(pkgName: "GoogleChrome.pkg", appPkgName: "Google Chrome.appGoogleChrome.pkg")
+    static let sharedInstance = AppGoogleChrome(pkgName: "GoogleChrome.pkg", appPkgName: "Google Chrome.app")
 
     override var appName: String { "Google Chrome" }
     override var appMarketingName: String { "Google Chrome" }

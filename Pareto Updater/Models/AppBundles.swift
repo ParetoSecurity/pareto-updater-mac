@@ -67,7 +67,8 @@ class AppBundles: ObservableObject {
         AppAudacity.sharedInstance,
         AppPrusaSlicer.sharedInstance,
         AppDuckDuckGo.sharedInstance,
-        AppMessenger.sharedInstance
+        AppMessenger.sharedInstance,
+        AppMaestral.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
