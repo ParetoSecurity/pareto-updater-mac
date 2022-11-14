@@ -13,7 +13,7 @@ concurrency:
 jobs:
   lint:
     name: Lint
-    runs-on: macos-12
+    runs-on: apple-silicon
     timeout-minutes: 30
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-lint
@@ -39,7 +39,7 @@ jobs:
         run: make lint
   test:
     name: Unit and UI Tests
-    runs-on: macos-12
+    runs-on: apple-silicon
     needs: lint
     timeout-minutes: 30
     concurrency:
@@ -90,6 +90,10 @@ jobs:
         run: set -o pipefail && make test 2>&1 | mint run xcbeautify
       - name: Update coverage
         run: bash <(curl -s https://codecov.io/bash)
+      - name: Upload BlueRacer reports
+        run: bash <(curl -s https://app.blueracer.io/upload) || true
+        env:
+          BLUERACER_TOKEN: ${{ secrets.BLUERACER_TOKEN }}
       - name: Gather screenshots
         run: |
           mkdir -p "${{ runner.temp }}/screenshots/"
@@ -109,7 +113,7 @@ jobs:
   build:
     name: Build and Archive Native
     needs: lint
-    runs-on: macos-12
+    runs-on: apple-silicon
     timeout-minutes: 30
     permissions:
       issues: write
