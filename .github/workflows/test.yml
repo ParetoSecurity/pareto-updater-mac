@@ -39,7 +39,7 @@ jobs:
         run: make lint
   test:
     name: Unit and UI Tests
-    runs-on: apple-silicon
+    runs-on: macos-latest
     needs: lint
     timeout-minutes: 30
     concurrency:
@@ -113,7 +113,7 @@ jobs:
   build:
     name: Build and Archive Native
     needs: lint
-    runs-on: apple-silicon
+    runs-on: macos-latest
     timeout-minutes: 30
     permissions:
       issues: write
