@@ -26,7 +26,7 @@ class SparkleApp: AppUpdater {
     override var appBundle: String { sparkBundle }
 
     override var latestURL: URL {
-        let url = viaEdgeCache(updateURL)
+        let url = updateURL
         os_log("Requesting %{public}s", url)
         var update = URL(string: url)!
         let lock = DispatchSemaphore(value: 0)
@@ -38,6 +38,7 @@ class SparkleApp: AppUpdater {
                 }
                 let app = AppCast(data: xml)
                 update = URL(string: app.url) ?? update
+                os_log("%{public}s latest bundle: %{public}s", self.appBundle, response.error.debugDescription)
                 lock.signal()
             } else {
                 os_log("%{public}s failed: %{public}s", self.appBundle, response.error.debugDescription)
