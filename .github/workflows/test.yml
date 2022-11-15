@@ -53,13 +53,13 @@ jobs:
         with:
           xcode-version: "latest-stable"
       - name: "Import Certificate: Development"
-        uses: ParetoSecurity/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@main
         with:
           certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: "Import Certificate: Developer ID Application"
-        uses: ParetoSecurity/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@main
         with:
           certificate-data: ${{ secrets.APPLICATION_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
@@ -132,13 +132,13 @@ jobs:
         with:
           xcode-version: "latest-stable"
       - name: "Import Certificate: Development"
-        uses: ParetoSecurity/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@main
         with:
           certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: "Import Certificate: Developer ID Application"
-        uses: ParetoSecurity/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@main
         with:
           certificate-data: ${{ secrets.APPLICATION_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
