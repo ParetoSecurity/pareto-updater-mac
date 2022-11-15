@@ -24,19 +24,19 @@ jobs:
           xcode-version: "latest-stable"
 
       - name: "Import Certificate: Development"
-        uses: devbotsxyz/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@master
         with:
           certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: "Import Certificate: Release"
-        uses: devbotsxyz/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@master
         with:
           certificate-data: ${{ secrets.RELEASE_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.RELEASE_CERTIFICATE_PASSPHRASE }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: "Import Certificate: Developer ID Application"
-        uses: devbotsxyz/xcode-import-certificate@master
+        uses: ParetoSecurity/xcode-import-certificate@master
         with:
           certificate-data: ${{ secrets.APPLICATION_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.APPLICATION_CERTIFICATE_PASSPHRASE }}
