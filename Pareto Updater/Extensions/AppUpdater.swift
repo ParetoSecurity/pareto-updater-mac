@@ -136,7 +136,7 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         }
 
         let extractStatus = extract(sourceFile: sourceFile, appFile: appFile, needsStart: needsStart)
-        if extractStatus == .Failed {
+        if extractStatus == .Failed || extractStatus == .Installed {
             try? Path(url: appFile)?.delete()
         }
         return extractStatus
