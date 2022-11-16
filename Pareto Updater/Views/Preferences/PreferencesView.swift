@@ -38,7 +38,7 @@ struct PreferencesView: View {
                     Label("License", systemImage: "rectangle.badge.person.crop")
                 }
                 .tag(Tabs.license)
-            AboutView()
+            AboutView().environmentObject(appStore)
                 .tabItem {
                     Label("About", systemImage: "info")
                 }

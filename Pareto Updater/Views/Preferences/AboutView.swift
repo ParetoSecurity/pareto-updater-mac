@@ -14,6 +14,7 @@ struct AboutView: View {
     @State private var status = UpdateStates.Checking
     @State private var konami = 0
     @Default(.showBeta) var showBeta
+    @EnvironmentObject var viewModel: AppBundles
 
     enum UpdateStates: String {
         case Checking = "Checking for updates"
@@ -86,6 +87,10 @@ struct AboutView: View {
     }
 
     private func fetch() {
+        if viewModel.workInstall || viewModel.updating || viewModel.installingApps {
+            return
+        }
+
         #if !DEBUG
             DispatchQueue.global(qos: .userInitiated).async {
                 isLoading = true

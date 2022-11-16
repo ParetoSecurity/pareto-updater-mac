@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         updateURL: "https://paretosecurity.app/api/updates?app=updater&uuid=\(Defaults[.machineUUID])&version=\(Constants.appVersion)&os_version=\(Constants.macOSVersionString)&distribution=\(Constants.utmSource)",
         allowPrereleases: Defaults[.betaChannel],
         autoGuard: true,
-        interval: 60 * 60
+        interval: 0
     )
 
     //    func updateHiddenState() {
@@ -66,6 +66,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             completion(.finished)
         }
         try? Constants.versionStorage.removeExpiredObjects()
+    }
+
+    func scheduleHourlyUpdateCheck() {
+        let activity = NSBackgroundActivityScheduler(identifier: "\(String(describing: Bundle.main.bundleIdentifier)).SelfUpdater")
+        activity.repeats = true
+        activity.interval = 60 * 60
+        activity.schedule { completion in
+            DispatchQueue.global(qos: .userInteractive).async { [self] in
+                if !(appsStore.workInstall || appsStore.updating || appsStore.installingApps) {
+                    _ = AppDelegate.updater.checkAndUpdate()
+                }
+            }
+            completion(.finished)
+        }
     }
 
     func clearCache() {
@@ -374,9 +388,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         //        }
 
         if !Constants.isRunningTests {
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.global(qos: .utility).async { [self] in
                 _ = AppDelegate.updater.checkAndUpdate()
                 scheduleHourlyCheck()
+                scheduleHourlyUpdateCheck()
             }
         }
 
