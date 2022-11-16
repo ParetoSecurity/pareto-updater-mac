@@ -135,7 +135,11 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
             needsStart = true
         }
 
-        return extract(sourceFile: sourceFile, appFile: appFile, needsStart: needsStart)
+        let extractStatus = extract(sourceFile: sourceFile, appFile: appFile, needsStart: needsStart)
+        if extractStatus == .Failed {
+            try? Path(url: appFile)?.delete()
+        }
+        return extractStatus
     }
 
     func extract(sourceFile _: URL, appFile: URL, needsStart: Bool) -> AppUpdaterStatus {

@@ -49,7 +49,7 @@ class AppStoreApp: AppUpdater {
         ]
         if let request = url?.url {
             os_log("Requesting %{public}s", request.debugDescription)
-            AF.request(viaEdgeCache(request.description)).responseDecodable(of: AppStoreResponse.self, queue: Constants.httpQueue, completionHandler: { response in
+            AF.request(request.description).responseDecodable(of: AppStoreResponse.self, queue: Constants.httpQueue, completionHandler: { response in
                 if let version = response.value?.results.first, response.error == nil {
                     completion(version.version)
                 } else {
