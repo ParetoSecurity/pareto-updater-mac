@@ -56,16 +56,18 @@ class PkgApp: AppUpdater {
                     do {
                         os_log("Delete installedAppBundle: \(installedAppBundle.path.string)")
                         try installedAppBundle.path.delete()
+                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     } catch {
                         os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string)")
-                        if !Process.runCMDasAdmin(cmd: "/bin/rm \(installedAppBundle.path.string)") {
+                        if !Process.runCMDasAdmin(cmd: "/bin/rm -rf \(installedAppBundle.path.string)") {
                             os_log("Delete installedAppBundle failed using admin: \(installedAppBundle.path.string)")
                             return AppUpdaterStatus.Failed
                         }
+                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     }
 
-                    os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                    try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     if needsStart {
                         installedAppBundle.launch()
                     }
