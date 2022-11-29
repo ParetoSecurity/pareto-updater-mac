@@ -272,14 +272,14 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     var applicationPath: URL {
-        let globalPath = URL(fileURLWithPath: "/Applications/\(appName).app")
-        if (try? globalPath.checkResourceIsReachable()) ?? false {
-            return globalPath
-        }
-
         let homeDirURL = FileManager.default.homeDirectoryForCurrentUser
         let localPath = URL(fileURLWithPath: "\(homeDirURL.path)/Applications/\(appName).app")
-        return localPath
+        if (try? localPath.checkResourceIsReachable()) ?? false {
+            return localPath
+        }
+
+        let globalPath = URL(fileURLWithPath: "/Applications/\(appName).app")
+        return globalPath
     }
 
     public var isInstalled: Bool {
