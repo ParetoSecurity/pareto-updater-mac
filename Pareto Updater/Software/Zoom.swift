@@ -14,11 +14,10 @@ import Path
 import Regex
 
 class AppZoom: PkgApp {
-    static let sharedInstance = AppZoom(pkgName: "zoomus.pkg", appPkgName: "zoom.us.app")
+    static let sharedInstance = AppZoom(appBundle: "us.zoom.xos", pkgName: "zoomus.pkg", appPkgName: "zoom.us.app")
 
     override var appName: String { "Zoom.us" }
     override var appMarketingName: String { "Zoom" }
-    override var appBundle: String { "us.zoom.xos" }
     override var description: String { "Zoom's secure, reliable video platform powers all of your communication needs, including meetings, chat, phone, webinars, and online events." }
     private static var HTTPClient = Session(configuration: HTTPConfig)
 

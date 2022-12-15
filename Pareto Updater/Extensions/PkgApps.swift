@@ -13,9 +13,10 @@ class PkgApp: AppUpdater {
     private var pkg: String
     private var pkgAppName: String
 
-    init(pkgName: String, appPkgName: String) {
+    init(appBundle: String, pkgName: String, appPkgName: String) {
         pkg = pkgName
         pkgAppName = appPkgName
+        super.init(appBundle: appBundle)
     }
 
     override var latestURLExtension: String {
@@ -59,7 +60,7 @@ class PkgApp: AppUpdater {
                         os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
                         try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     } catch {
-                        os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string)")
+                        os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string) \(error.localizedDescription)")
                         if !Process.runCMDasAdmin(cmd: "/bin/rm -rf \(installedAppBundle.path.string)") {
                             os_log("Delete installedAppBundle failed using admin: \(installedAppBundle.path.string)")
                             return AppUpdaterStatus.Failed

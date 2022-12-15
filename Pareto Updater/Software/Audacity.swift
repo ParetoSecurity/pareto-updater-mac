@@ -14,10 +14,9 @@ import Regex
 class AppAudacity: GitHubApp {
     override var appName: String { "Audacity" }
     override var appMarketingName: String { "Audacity" }
-    override var appBundle: String { "org.audacityteam.audacity" }
     override var description: String { "Audacity is an easy-to-use, multi-track audio editor and recorder." }
     static let sharedInstance = AppAudacity(
-        org: "audacity", repo: "audacity"
+        appBundle: "org.audacityteam.audacity", org: "audacity", repo: "audacity"
     )
 
     override public func latestVersionHook(_ version: String) -> String {

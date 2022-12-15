@@ -60,9 +60,10 @@ class GitHubApp: AppUpdater {
     private var gitHubOrg: String
     private var gitHubRepo: String
 
-    init(org: String, repo: String) {
+    init(appBundle: String, org: String, repo: String) {
         gitHubOrg = org
         gitHubRepo = repo
+        super.init(appBundle: appBundle)
     }
 
     private var updateURL: String {

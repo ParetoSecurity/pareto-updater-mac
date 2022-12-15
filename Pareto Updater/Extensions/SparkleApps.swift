@@ -12,18 +12,16 @@ import Regex
 
 class SparkleApp: AppUpdater {
     private var sparkName: String
-    private var sparkBundle: String
     private var updateURL: String
 
     init(name: String, bundle: String, url: String) {
         sparkName = name
-        sparkBundle = bundle
         updateURL = url
+        super.init(appBundle: bundle)
     }
 
     override var appName: String { sparkName }
     override var appMarketingName: String { sparkName }
-    override var appBundle: String { sparkBundle }
 
     override var latestURL: URL {
         let url = updateURL

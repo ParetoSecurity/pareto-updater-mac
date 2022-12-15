@@ -14,11 +14,10 @@ import OSLog
 import Regex
 
 class AppLibreOffice: AppUpdater {
-    static let sharedInstance = AppLibreOffice()
+    static let sharedInstance = AppLibreOffice(appBundle: "org.libreoffice.script")
 
     override var appName: String { "LibreOffice" }
     override var appMarketingName: String { "LibreOffice" }
-    override var appBundle: String { "org.libreoffice.script" }
     override var description: String { "LibreOffice is a free and open-source office productivity software suite." }
     override var latestURL: URL {
         #if arch(arm64)

@@ -12,11 +12,10 @@ import OSLog
 import Regex
 
 class AppDropbox: AppUpdater {
-    static let sharedInstance = AppDropbox()
+    static let sharedInstance = AppDropbox(appBundle: "com.getdropbox.dropbox")
 
     override var appName: String { "Dropbox" }
     override var appMarketingName: String { "Dropbox" }
-    override var appBundle: String { "com.getdropbox.dropbox" }
     override var description: String { "Save and access your files from any device, and share." }
     override var latestURL: URL {
         URL(string: "https://www.dropbox.com/download?plat=mac&full=1")!

@@ -12,11 +12,10 @@ import OSLog
 import Regex
 
 class AppInkscape: AppUpdater {
-    static let sharedInstance = AppInkscape()
+    static let sharedInstance = AppInkscape(appBundle: "org.inkscape.Inkscape")
 
     override var appName: String { "Inkscape" }
     override var appMarketingName: String { "Inkscape" }
-    override var appBundle: String { "org.inkscape.Inkscape" }
     override var description: String { "Inkscape is professional quality vector graphics software." }
     override var latestURL: URL {
         #if arch(arm64)

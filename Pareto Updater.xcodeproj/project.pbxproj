@@ -60,6 +60,7 @@
 		4F7D6FFE28327BC4007D6E8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFD28327BC4007D6E8A /* Constants.swift */; };
 		4F7D700028327FE4007D6E8A /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D6FFF28327FE4007D6E8A /* FileManager.swift */; };
 		4F868ED5286B224800383328 /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F868ED4286B224800383328 /* Menubar.swift */; };
+		4F91931C294BA7D000FB1DF7 /* Gramarly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F91931B294BA7D000FB1DF7 /* Gramarly.swift */; };
 		4F9209DC282BBD7D007897A6 /* Docker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DB282BBD7D007897A6 /* Docker.swift */; };
 		4F9209DE282BBDEF007897A6 /* SublimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DD282BBDEF007897A6 /* SublimeText.swift */; };
 		4F9209E0282BBE05007897A6 /* LibreOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9209DF282BBE05007897A6 /* LibreOffice.swift */; };
@@ -177,6 +178,7 @@
 		4F7D6FFD28327BC4007D6E8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F7D6FFF28327FE4007D6E8A /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		4F868ED4286B224800383328 /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
+		4F91931B294BA7D000FB1DF7 /* Gramarly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gramarly.swift; sourceTree = "<group>"; };
 		4F9209DB282BBD7D007897A6 /* Docker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Docker.swift; sourceTree = "<group>"; };
 		4F9209DD282BBDEF007897A6 /* SublimeText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SublimeText.swift; sourceTree = "<group>"; };
 		4F9209DF282BBE05007897A6 /* LibreOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibreOffice.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				4FBCDF4228731A370093FB5B /* Bitwarden.swift */,
 				4FBCDF4328731A370093FB5B /* Brave Browser.swift */,
 				4FFECB93290700F200517FBA /* DucDuckGo.swift */,
+				4F91931B294BA7D000FB1DF7 /* Gramarly.swift */,
 				4F296FC2290880A0001F60D3 /* Messanger.swift */,
 				4F309164290A6A4600579461 /* Maestral.swift */,
 				4FE6B2B228BE45C6001AF636 /* AdGuard.swift */,
@@ -688,6 +691,7 @@
 				4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */,
 				4FE06A4E2876FD2D00471FA4 /* Cyberduck.swift in Sources */,
 				4F094A4928CA28490078D328 /* Gimp.swift in Sources */,
+				4F91931C294BA7D000FB1DF7 /* Gramarly.swift in Sources */,
 				4F9209E4282BDEFE007897A6 /* AppsView.swift in Sources */,
 				4F094A4728CA24EE0078D328 /* Discord.swift in Sources */,
 				4F2C836828193E9D00B40361 /* Defaults.swift in Sources */,

@@ -25,11 +25,10 @@ private struct ChromeVersion: Codable {
 }
 
 class AppGoogleChrome: PkgApp {
-    static let sharedInstance = AppGoogleChrome(pkgName: "GoogleChrome.pkg", appPkgName: "Google Chrome.app")
+    static let sharedInstance = AppGoogleChrome(appBundle: "com.google.Chrome", pkgName: "GoogleChrome.pkg", appPkgName: "Google Chrome.app")
 
     override var appName: String { "Google Chrome" }
     override var appMarketingName: String { "Google Chrome" }
-    override var appBundle: String { "com.google.Chrome" }
     override var description: String { "Google Chrome is a web browser developed by Google." }
     override var latestURL: URL {
         return URL(string: "https://dl.google.com/chrome/mac/stable/accept_tos%3Dhttps%253A%252F%252Fwww.google.com%252Fintl%252Fen_ph%252Fchrome%252Fterms%252F%26_and_accept_tos%3Dhttps%253A%252F%252Fpolicies.google.com%252Fterms/googlechrome.pkg")!

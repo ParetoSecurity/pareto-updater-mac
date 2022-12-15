@@ -12,11 +12,10 @@ import OSLog
 import Regex
 
 class AppNotion: AppUpdater {
-    static let sharedInstance = AppNotion()
+    static let sharedInstance = AppNotion(appBundle: "notion.id")
 
     override var appName: String { "Notion" }
     override var appMarketingName: String { "Notion" }
-    override var appBundle: String { "notion.id" }
     override var description: String { "Write, plan & get organized in one place." }
     override var latestURL: URL {
         #if arch(arm64)

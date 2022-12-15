@@ -63,11 +63,21 @@ struct AppsView: View {
                     Spacer()
                 }
             } else {
-                List {
-                    ForEach(viewModel.installedApps) { app in
-                        AppRow(app: app, viewModel: viewModel, onUpdate: nil, showActions: false)
-                    }
-                }.frame(minHeight: 280)
+                List(viewModel.installedApps) {
+                    AppRowConfig(app: $0, viewModel: viewModel, onUpdate: nil, showActions: false)
+
+                }.frame(minHeight: 280).navigationTitle("Detected Apps")
+
+                HStack {
+                    Spacer()
+                    Menu {
+                        Button("Copy app list", action: copy)
+                        Button("Share installed apps", action: share)
+                        Button("Clear cache", action: clearCache)
+                    } label: {
+                        Label("...", systemImage: "link")
+                    }.menuStyle(.borderlessButton).frame(width: 25).fixedSize()
+                }
             }
         }
         .frame(width: 350)
@@ -76,10 +86,6 @@ struct AppsView: View {
             DispatchQueue.global(qos: .userInteractive).async {
                 viewModel.fetchData()
             }
-        }.contextMenu(ContextMenu(menuItems: {
-            Button("Copy app list", action: copy)
-            Button("Share installed apps", action: share)
-            Button("Clear cache", action: clearCache)
-        }))
+        }
     }
 }

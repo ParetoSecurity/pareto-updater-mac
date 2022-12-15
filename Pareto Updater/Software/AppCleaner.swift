@@ -12,11 +12,10 @@ import OSLog
 import Regex
 
 class AppAppCleaner: AppUpdater {
-    static let sharedInstance = AppAppCleaner()
+    static let sharedInstance = AppAppCleaner(appBundle: "net.freemacsoft.AppCleaner")
 
     override var appName: String { "AppCleaner" }
     override var appMarketingName: String { "AppCleaner" }
-    override var appBundle: String { "net.freemacsoft.AppCleaner" }
     override var description: String { "AppCleaner is a small application which allows you to thoroughly uninstall unwanted apps." }
     override var latestURL: URL {
         URL(string: "https://freemacsoft.net/downloads/AppCleaner_\(latestVersion).zip")!

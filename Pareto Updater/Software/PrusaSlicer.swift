@@ -14,10 +14,9 @@ import Regex
 class AppPrusaSlicer: GitHubApp {
     override var appName: String { "PrusaSlicer" }
     override var appMarketingName: String { "PrusaSlicer" }
-    override var appBundle: String { "com.prusa3d.slic3r" }
     override var description: String { "G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)" }
     static let sharedInstance = AppPrusaSlicer(
-        org: "prusa3d", repo: "PrusaSlicer"
+        appBundle: "com.prusa3d.slic3r", org: "prusa3d", repo: "PrusaSlicer"
     )
 
     override var hasUpdate: Bool {

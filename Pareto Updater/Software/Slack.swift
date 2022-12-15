@@ -11,11 +11,10 @@ import os.log
 import Regex
 
 class AppSlack: AppUpdater {
-    static let sharedInstance = AppSlack()
+    static let sharedInstance = AppSlack(appBundle: "com.tinyspeck.slackmacgap")
 
     override var appName: String { "Slack" }
     override var appMarketingName: String { "Slack" }
-    override var appBundle: String { "com.tinyspeck.slackmacgap" }
     override var description: String { "Slack is a new way to communicate with your team. It's faster, better organized, and more secure than email." }
     override var latestURL: URL {
         URL(string: "https://downloads.slack-edge.com/releases/macos/\(latestVersion)/prod/universal/Slack-\(latestVersion)-macOS.dmg")!

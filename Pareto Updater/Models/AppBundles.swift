@@ -68,7 +68,8 @@ class AppBundles: ObservableObject {
         AppPrusaSlicer.sharedInstance,
         AppDuckDuckGo.sharedInstance,
         AppMessenger.sharedInstance,
-        AppMaestral.sharedInstance
+        AppMaestral.sharedInstance,
+        AppGrammarly.sharedInstance
     ]
 
     @Published var apps: [AppUpdater]
@@ -90,7 +91,7 @@ class AppBundles: ObservableObject {
     public var updatableApps: [AppUpdater] {
         if fetchedOnce {
             return apps.filter { app in
-                app.isInstalled && app.usedRecently && app.hasUpdate
+                app.isInstalled && app.usedRecently && app.hasUpdate && !app.isEnabled
             }
         }
         return []

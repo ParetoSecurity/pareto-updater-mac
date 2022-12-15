@@ -12,20 +12,28 @@ import OSLog
 import Regex
 
 class AppGimp: AppUpdater {
-    static let sharedInstance = AppGimp()
+    static let sharedInstance = AppGimp(appBundle: "org.gimp.gimp-2.10")
 
-    override var appName: String { "GIMP-2.10" }
+    override var appName: String { "GIMP" }
     override var appMarketingName: String { "GIMP" }
-    override var appBundle: String { "org.gimp.gimp-2.10:" }
     override var description: String { "GIMP is a cross-platform image editor." }
+
+    var arch: String {
+        #if arch(arm64)
+            return "x86_64"
+        #else
+            return "arm64"
+        #endif
+    }
+
     override var latestURL: URL {
-        let nibles = latestVersion.split(separator: ".")
-        return URL(string: "https://download.gimp.org/gimp/v\(nibles[0]).\(nibles[1])/osx/gimp-\(latestVersion)-x86_64.dmg")!
+        return URL(string: "https://download.gimp.org/gimp/v2.10/macos/gimp-\(latestVersion)-1-\(arch).dmg")!
     }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {
         let url = "https://www.gimp.org/downloads/"
-        let versionRegex = Regex("osx/gimp-?([\\.\\d]+)-x86_64.dmg")
+        // https://download.gimp.org/gimp/v2.10/macos/gimp-2.10.32-1-arm64.dmg
+        let versionRegex = Regex("GIMP&nbsp;([-\\.\\d]+)<br/>")
         os_log("Requesting %{public}s", url)
 
         AF.request(url).responseString(queue: Constants.httpQueue, completionHandler: { response in

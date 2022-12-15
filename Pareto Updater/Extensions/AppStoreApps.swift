@@ -13,18 +13,16 @@ import SwiftUI
 
 class AppStoreApp: AppUpdater {
     private var lName: String
-    private var lBundle: String
     private var lLocation: URL
 
     init(name: String, bundle: String, location: URL) {
         lName = name
-        lBundle = bundle
         lLocation = location
+        super.init(appBundle: bundle)
     }
 
     override var appName: String { lName }
     override var appMarketingName: String { lName }
-    override var appBundle: String { lBundle }
 
     override var hasUpdate: Bool {
         latestVersion.versionCompare(textVersion) == .orderedDescending

@@ -12,11 +12,10 @@ import OSLog
 import Regex
 
 class AppSkype: AppUpdater {
-    static let sharedInstance = AppSkype()
+    static let sharedInstance = AppSkype(appBundle: "com.skype.skype")
 
     override var appName: String { "Skype" }
     override var appMarketingName: String { "Skype" }
-    override var appBundle: String { "com.skype.skype" }
     override var description: String { "Skype keeps the world talking. Say “hello” with an instant message, voice or video call." }
     override var latestURL: URL {
         URL(string: "https://get.skype.com/go/getskype-skypeformac")!

@@ -14,9 +14,8 @@ import Regex
 class AppMacy: GitHubApp {
     override var appName: String { "Maccy" }
     override var appMarketingName: String { "Maccy" }
-    override var appBundle: String { "org.p0deje.Maccy" }
     override var description: String { "Clipboard manager for macOS which does one job - keep your copy history at hand." }
     static let sharedInstance = AppMacy(
-        org: "p0deje", repo: "Maccy"
+        appBundle: "org.p0deje.Maccy", org: "p0deje", repo: "Maccy"
     )
 }

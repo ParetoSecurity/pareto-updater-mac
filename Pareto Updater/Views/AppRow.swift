@@ -41,7 +41,7 @@ struct AppRow: View {
                 }
                 switch app.status {
                 case .DownloadingUpdate:
-                    ProgressView(value: app.fractionCompleted).frame(height: 1.0)
+                    ProgressView(value: app.fractionCompleted).frame(height: 1.0).padding(.leading, 2.0)
                 case .InstallingUpdate:
                     Text("Installing ...").font(.footnote)
                 default:
@@ -107,6 +107,79 @@ struct AppRow: View {
                             .frame(height: 15)
                     }
                 }
+            }
+        }
+    }
+}
+
+struct AppRowConfig: View {
+    @ObservedObject var app: AppUpdater
+    @ObservedObject var viewModel: AppBundles
+    var onUpdate: (() -> Void)?
+    @State var showActions: Bool = true
+    @Default(.showBeta) var showBeta
+
+    var body: some View {
+        HStack {
+            Toggle("", isOn: Binding<Bool>(
+                get: { !app.isEnabled },
+                set: { app.isEnabled = !$0 }
+            )).help("Show updates for \(app.appMarketingName)")
+            if let appIcon = app.icon {
+                Image(nsImage: appIcon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 30)
+            } else {
+                Image(systemName: "app.dashed")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 30)
+            }
+            VStack(alignment: .leading) {
+                Text(app.appMarketingName)
+                    .font(.body)
+                if showBeta {
+                    Text(app.appBundle)
+                        .font(.footnote)
+                }
+                switch app.status {
+                case .DownloadingUpdate:
+                    ProgressView(value: app.fractionCompleted).frame(height: 1.0).padding(.leading, 2.0)
+                case .InstallingUpdate:
+                    Text("Installing ...").font(.footnote)
+                default:
+                    Text(app.help)
+                        .font(.footnote)
+                }
+            }
+
+            Spacer()
+            switch app.status {
+            case .GatheringInfo:
+                ProgressView().frame(width: 15.0, height: 15.0)
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
+            case .DownloadingUpdate:
+                EmptyView()
+            case .InstallingUpdate:
+                ProgressView().frame(width: 15.0, height: 15.0)
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center).padding(5)
+            case .Failed:
+                Image(systemName: "exclamationmark.square")
+                    .resizable()
+                    .foregroundColor(.red)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 15)
+            case .Installed:
+                Image(systemName: "checkmark.square")
+                    .resizable()
+                    .foregroundColor(.green)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 15)
+            case .Idle:
+                EmptyView()
+            case .Unsupported:
+                EmptyView()
             }
         }
     }

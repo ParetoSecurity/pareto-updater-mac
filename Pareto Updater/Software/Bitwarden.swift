@@ -9,11 +9,10 @@ import Foundation
 import os.log
 
 class AppBitwardenUpdater: AppUpdater {
-    static let sharedInstance = AppBitwardenUpdater()
+    static let sharedInstance = AppBitwardenUpdater(appBundle: "com.bitwarden.desktop")
 
     override var appName: String { "Bitwarden" }
     override var appMarketingName: String { "Bitwarden" }
-    override var appBundle: String { "com.bitwarden.desktop" }
     override var description: String { "Bitwarden is an integrated open source password management solution for individuals, teams, and business organizations." }
     override var latestURL: URL {
         return URL(string: "https://vault.bitwarden.com/download/?app=desktop&platform=macos&variant=dmg")!

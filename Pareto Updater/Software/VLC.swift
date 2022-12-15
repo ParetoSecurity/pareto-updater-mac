@@ -14,11 +14,10 @@ import OSLog
 import Regex
 
 class AppVLC: AppUpdater {
-    static let sharedInstance = AppVLC()
+    static let sharedInstance = AppVLC(appBundle: "org.videolan.vlc")
 
     override var appName: String { "VLC" }
     override var appMarketingName: String { "VLC media player" }
-    override var appBundle: String { "org.videolan.vlc" }
     override var description: String { "VLC is a free and open source cross-platform multimedia player." }
     override var latestURL: URL {
         #if arch(arm64)

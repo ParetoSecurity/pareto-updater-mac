@@ -10,11 +10,10 @@ import os.log
 import Regex
 
 class App1Password8AppUpdater: AppUpdater {
-    static let sharedInstance = App1Password8AppUpdater()
+    static let sharedInstance = App1Password8AppUpdater(appBundle: "com.1password.1password")
 
     override var appName: String { "1Password" }
     override var appMarketingName: String { "1Password" }
-    override var appBundle: String { "com.1password.1password" }
     override var description: String { "A password manager, digital vault, form filler and secure digital wallet." }
 
     override func getLatestVersion(completion: @escaping (String) -> Void) {

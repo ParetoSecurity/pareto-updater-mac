@@ -24,11 +24,10 @@ private struct Release: Codable {
 private typealias Releases = [Release]
 
 class AppGitHub: AppUpdater {
-    static let sharedInstance = AppGitHub()
+    static let sharedInstance = AppGitHub(appBundle: "com.github.GitHubClient")
 
     override var appName: String { "GitHub Desktop" }
     override var appMarketingName: String { "GitHub Desktop" }
-    override var appBundle: String { "com.github.GitHubClient" }
     override var description: String { "Whether you're new to Git or a seasoned user, GitHub Desktop simplifies your development workflow." }
     override var latestURL: URL {
         #if arch(arm64)

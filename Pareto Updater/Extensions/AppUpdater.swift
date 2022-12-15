@@ -33,16 +33,21 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         hasher.combine(id)
     }
 
-    public var id = UUID()
-
     var appName: String { "" } // Updater for Pareto
     var appMarketingName: String { "" } // Pareto Updater
-    var appBundle: String { "" } // like co.niteo.paretoupdater
+    var appBundle: String // like co.niteo.paretoupdater
     var description: String { "" } // like "this is a great app"
 
+    @AppStorage var isEnabled: Bool
     @Published var status: AppUpdaterStatus = .Idle
     @Published var updatable: Bool = false
     @Published var fractionCompleted: Double = 0.0
+
+    init(appBundle: String) {
+        // Initialize with default value and dynamic key from argument
+        self.appBundle = appBundle
+        _isEnabled = AppStorage(wrappedValue: false, appBundle + "isEnabled")
+    }
 
     var workItem: DispatchWorkItem?
 
@@ -158,11 +163,21 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             return AppUpdaterStatus.Failed
                         }
 
-                        os_log("Delete installedAppBundle: \(installedAppBundle.description)")
-                        try installedAppBundle.path.delete()
+                        do {
+                            os_log("Delete installedAppBundle: \(installedAppBundle.path.string)")
+                            try installedAppBundle.path.delete()
+                            os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        } catch {
+                            os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string)")
+                            if !Process.runCMDasAdmin(cmd: "/bin/rm -rf \(installedAppBundle.path.string)") {
+                                os_log("Delete installedAppBundle failed using admin: \(installedAppBundle.path.string)")
+                                return AppUpdaterStatus.Failed
+                            }
+                            os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+                        }
 
-                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                         if needsStart {
                             installedAppBundle.launch()
                         }
