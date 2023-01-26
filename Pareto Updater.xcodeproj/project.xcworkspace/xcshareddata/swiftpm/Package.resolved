@@ -78,7 +78,7 @@
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
         "branch" : "master",
-        "revision" : "b2eba678bb66d664bafd84c8d4b2a3985dee89bd"
+        "revision" : "4f95793b3acf6ec2a89ee2b635bca268bbf01315"
       }
     },
     {
