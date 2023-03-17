@@ -163,24 +163,20 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                             return AppUpdaterStatus.Failed
                         }
 
-                        do {
-                            os_log("Delete installedAppBundle: \(installedAppBundle.path.string)")
-                            try installedAppBundle.path.delete()
-                            os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                        } catch {
-                            os_log("Delete installedAppBundle failed: \(installedAppBundle.path.string)")
-                            if !Process.runCMDasAdmin(cmd: "/bin/rm -rf \(installedAppBundle.path.string)") {
-                                os_log("Delete installedAppBundle failed using admin: \(installedAppBundle.path.string)")
-                                return AppUpdaterStatus.Failed
-                            }
-                            os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-                        }
+                        let localName = installedAppBundle.path.basename(dropExtension: true) + ".backup"
+                        os_log("Archive installedAppBundle: \(installedAppBundle.description)")
+                        try installedAppBundle.path.rename(to: localName)
+
+                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
 
                         if needsStart {
                             installedAppBundle.launch()
                         }
+
+                        let oldBackup = installedAppBundle.path.parent.join(localName)
+                        try? oldBackup.delete()
+
                     } else {
                         os_log("Install AppBundle \(downloadedAppBundle.description)")
                         try downloadedAppBundle.path.copy(to: Path(url: applicationPath)!, overwrite: true)
@@ -208,20 +204,23 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                         return AppUpdaterStatus.Failed
                     }
 
-                    os_log("Delete installedAppBundle: \(installedAppBundle.description)")
-                    try installedAppBundle.path.delete()
+                    let localName = installedAppBundle.path.basename(dropExtension: true) + ".backup"
+                    os_log("Archive installedAppBundle: \(installedAppBundle.description)")
+                    try installedAppBundle.path.rename(to: localName)
 
                     os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
                     try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     if needsStart {
                         installedAppBundle.launch()
                     }
+                    let oldBackup = installedAppBundle.path.parent.join(localName)
+                    try? oldBackup.delete()
                 } else {
                     os_log("Install AppBundle \(downloadedAppBundle.description)")
                     try downloadedAppBundle.path.copy(to: Path(applicationPath.path)!, overwrite: true)
                 }
 
-                try downloadedAppBundle.path.delete()
+                try? downloadedAppBundle.path.delete()
                 if let bundle = Bundle(url: applicationPath), needsStart {
                     bundle.launch()
                 }
