@@ -23,13 +23,14 @@ extension Bundle {
         }
         return nil
     }
-
-    static func appVersion(path: URL, key: String = "CFBundleShortVersionString") -> String? {
+    
+    static func plistDict (path: URL) -> NSDictionary? {
         let plist = path.appendingPathComponent("/Contents/Info.plist")
-        guard let dictionary = NSDictionary(contentsOf: plist) else {
-            return nil
-        }
-        return dictionary.value(forKey: key) as? String
+        return NSDictionary(contentsOf: plist)
+    }
+    
+    static func appVersion(path: URL, key: String = "CFBundleShortVersionString") -> String? {
+        plistDict(path: path)?.value(forKey: key) as? String
     }
 
     var icon: NSImage? {

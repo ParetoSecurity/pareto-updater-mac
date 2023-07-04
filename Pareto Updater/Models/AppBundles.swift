@@ -24,6 +24,7 @@ class AppBundles: ObservableObject {
     ]
 
     static let bundledApps = [
+        AppMessenger.sharedInstance,
         App1Password8AppUpdater.sharedInstance,
         AppBraveBrowserUpdater.sharedInstance,
         AppBitwardenUpdater.sharedInstance,
@@ -67,7 +68,6 @@ class AppBundles: ObservableObject {
         AppAudacity.sharedInstance,
         AppPrusaSlicer.sharedInstance,
         AppDuckDuckGo.sharedInstance,
-        AppMessenger.sharedInstance,
         AppMaestral.sharedInstance,
         AppGrammarly.sharedInstance
     ]
@@ -270,7 +270,7 @@ class AppBundles: ObservableObject {
 
     init() {
         apps = (AppBundles.bundledApps.filter { app in
-            app.isInstalled && !app.fromAppStore
+            app.isInstalled && !app.fromAppStore && !app.isSafariWebApp
         } + SparkleApp.all + AppStoreApp.all).filter { app in
             !AppBundles.unsupportedBundles.contains(app.appBundle)
         }.sorted(by: { lha, rha in

@@ -96,6 +96,14 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         return false
     }
 
+    public var isSafariWebApp: Bool {
+        if isInstalled {
+            let attributes = Bundle.plistDict(path: applicationPath)
+            return (((attributes?.value(forKey: "CFBundleIdentifier") as? String)?.contains("com.apple.Safari.WebApp")) != nil)
+        }
+        return false
+    }
+    
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
         let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURLExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {

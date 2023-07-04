@@ -13,7 +13,7 @@ concurrency:
 jobs:
   lint:
     name: Lint
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 30
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-lint
@@ -39,7 +39,7 @@ jobs:
         run: make lint
   test:
     name: Unit and UI Tests
-    runs-on: macos-12
+    runs-on: macos-13
     needs: lint
     timeout-minutes: 30
     concurrency:
@@ -143,7 +143,7 @@ jobs:
   build:
     name: Build and Archive Native
     needs: lint
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 30
     permissions:
       issues: write

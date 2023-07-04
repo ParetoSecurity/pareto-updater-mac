@@ -31,8 +31,9 @@ class ParetoUpdaterTests: XCTestCase {
     }
 
     func testPrusaSlicer() throws {
-        let app = AppPrusaSlicer.sharedInstance
+        let app = AppMTeams.sharedInstance
         print(app.latestVersion)
+        print(app.currentVersion)
         print(app.currentVersion)
     }
 }
