@@ -34,7 +34,7 @@ jobs:
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$DEVELOPMENT_CERTIFICATE_DATA" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$DEVELOPMENT_CERTIFICATE_DATA" | base64 --decode > $CERTIFICATE_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH || true
@@ -55,7 +55,7 @@ jobs:
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$RELEASE_CERTIFICATE_DATA" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$RELEASE_CERTIFICATE_DATA" | base64 --decode > $CERTIFICATE_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH || true
@@ -76,7 +76,7 @@ jobs:
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$APPLICATION_CERTIFICATE_DATA" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$APPLICATION_CERTIFICATE_DATA" | base64 --decode > $CERTIFICATE_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH || true
