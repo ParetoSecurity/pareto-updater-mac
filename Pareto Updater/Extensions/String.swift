@@ -19,6 +19,8 @@ extension String {
         version = version.replacingOccurrences(of: ".-", with: "-")
         version = version.replacingOccurrences(of: "release", with: "")
         version = version.replacingOccurrences(of: "version", with: "")
+        version = version.replacingOccurrences(of: "(", with: "")
+        version = version.replacingOccurrences(of: ")", with: "")
         version = version.replacingOccurrences(of: "v", with: "")
         return version
     }
@@ -29,11 +31,14 @@ extension String {
         var versionComponents = components(separatedBy: versionDelimiter) // <1>
         var otherVersionComponents = otherVersion.components(separatedBy: versionDelimiter)
 
-        let zeroDiff = versionComponents.count - otherVersionComponents.count // <2>
+        let numbersOnly = replacingOccurrences(of: versionDelimiter, with: "")
+        let otherNumbersOnly = otherVersion.replacingOccurrences(of: versionDelimiter, with: "")
+
+        let zeroDiff = numbersOnly.count - otherNumbersOnly.count // <2>
 
         if zeroDiff == 0 { // <3>
             // Same format, compare normally
-            return compare(otherVersion, options: .numeric)
+            return numbersOnly.compare(otherNumbersOnly, options: .numeric)
         } else {
             let zeros = Array(repeating: "0", count: abs(zeroDiff)) // <4>
             if zeroDiff > 0 {
