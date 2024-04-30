@@ -5,10 +5,12 @@
 //  Created by Janez Troha on 14/04/2022.
 //
 
+import SettingsAccess
 import SwiftUI
 
 struct AppList: View {
     @EnvironmentObject var viewModel: AppBundles
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -45,11 +47,7 @@ struct AppList: View {
                 .help("Refresh the status of the apps")
 
                 Button {
-                    if #available(macOS 13.0, *) {
-                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                    } else {
-                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                    }
+                    try? openSettings()
                     NSApp.activate(ignoringOtherApps: true)
                 } label: {
                     Image(systemName: "gearshape")

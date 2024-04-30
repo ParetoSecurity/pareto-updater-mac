@@ -13,6 +13,7 @@ import Defaults
 import Foundation
 import os.log
 import Regex
+import SettingsAccess
 import SwiftUI
 
 #if !DEBUG
@@ -343,7 +344,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: AppList().environmentObject(appsStore))
+        popOver.contentViewController?.view = NSHostingView(rootView: AppList().environmentObject(appsStore).openSettingsAccess())
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
@@ -365,10 +366,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
         }
 
         statusMenu = NSMenu(title: "ParetoUpdater")
-
-        let preferencesItem = NSMenuItem(title: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: ",")
-        preferencesItem.target = NSApp.delegate
-        statusMenu?.addItem(preferencesItem)
 
         let contactItem = NSMenuItem(title: "Contact Support", action: #selector(AppDelegate.contact), keyEquivalent: "c")
         contactItem.target = NSApp.delegate
@@ -440,16 +437,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
     func contact() {
         // showInstallAppsWindow()
         NSWorkspace.shared.open(Constants.bugReportURL)
-    }
-
-    @objc
-    func preferences() {
-        if #available(macOS 13.0, *) {
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-        }
-        NSApp.activate(ignoringOtherApps: true)
     }
 
     func showInstallAppsWindow() {

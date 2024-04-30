@@ -78,7 +78,7 @@ struct AppRow: View {
                         Button {
                             onUpdate?()
                         }
-                    label: {
+                        label: {
                             Image(systemName: "arrow.down.app.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

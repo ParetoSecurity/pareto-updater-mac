@@ -81,7 +81,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         if isInstalled {
             let weekAgo = Date().addingTimeInterval(-7 * 24 * 60 * 60)
             let attributes = NSMetadataItem(url: applicationPath)
-            guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else { return false }
+            guard let lastUse = attributes?.value(forAttribute: "kMDItemLastUsedDate") as? Date else {
+                return false
+            }
             return lastUse >= weekAgo
         }
         return true
@@ -90,7 +92,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public var fromAppStore: Bool {
         if isInstalled {
             let attributes = NSMetadataItem(url: applicationPath)
-            guard let hasReceipt = attributes?.value(forAttribute: "kMDItemAppStoreHasReceipt") as? Bool else { return false }
+            guard let hasReceipt = attributes?.value(forAttribute: "kMDItemAppStoreHasReceipt") as? Bool
+            else { return false }
             return hasReceipt
         }
         return false
@@ -99,13 +102,16 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     public var isSafariWebApp: Bool {
         if isInstalled {
             let attributes = Bundle.plistDict(path: applicationPath)
-            return (((attributes?.value(forKey: "CFBundleIdentifier") as? String)?.contains("com.apple.Safari.WebApp")) != nil)
+            return
+                ((attributes?.value(forKey: "CFBundleIdentifier") as? String)?.contains(
+                    "com.apple.Safari.WebApp")) != nil
         }
         return false
     }
-    
+
     func downloadLatest(completion: @escaping (URL, URL) -> Void) {
-        let cachedPath = Constants.cacheFolder.appendingPathComponent("\(appBundle)-\(latestVersion).\(latestURLExtension)")
+        let cachedPath = Constants.cacheFolder.appendingPathComponent(
+            "\(appBundle)-\(latestVersion).\(latestURLExtension)")
         if FileManager.default.fileExists(atPath: cachedPath.path), Constants.useCacheFolder {
             os_log("Update from cache at %{public}s", cachedPath.debugDescription)
             completion(latestURL, cachedPath)
@@ -120,7 +126,10 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     try FileManager.default.removeItem(at: cachedPath)
                 }
                 try FileManager.default.moveItem(atPath: response.fileURL!.path, toPath: cachedPath.path)
-                os_log("Update downloadLatest: %{public} from %{public}s", cachedPath.debugDescription, self.latestURL.debugDescription)
+                os_log(
+                    "Update downloadLatest: %{public} from %{public}s", cachedPath.debugDescription,
+                    self.latestURL.debugDescription
+                )
                 completion(latestURL, cachedPath)
                 return
             } catch {
@@ -159,43 +168,72 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
         switch appFile.pathExtension {
         case "dmg":
             let mountPoint = URL(string: "/Volumes/" + appBundle)!
-            os_log("Mount %{public}s is %{public}s", appFile.debugDescription, mountPoint.debugDescription)
+            os_log(
+                "Mount %{public}s is %{public}s", appFile.debugDescription, mountPoint.debugDescription
+            )
             if DMGMounter.attach(diskImage: appFile, at: mountPoint) {
                 do {
-                    let app = try FileManager.default.contentsOfDirectory(at: mountPoint, includingPropertiesForKeys: nil).filter { $0.lastPathComponent.contains(".app") }.first
+                    let app = try FileManager.default.contentsOfDirectory(
+                        at: mountPoint, includingPropertiesForKeys: nil
+                    ).filter { $0.lastPathComponent.contains(".app") }.first
+                    let pkg = try FileManager.default.contentsOfDirectory(
+                        at: mountPoint, includingPropertiesForKeys: nil
+                    ).filter { $0.lastPathComponent.contains(".pkg") }.first
 
-                    let downloadedAppBundle = Bundle(url: app!)!
-                    if let installedAppBundle = Bundle(url: applicationPath) {
-                        if !validate(downloadedAppBundle, installedAppBundle) {
-                            os_log("Failed to validate app bundle %{public}s", appBundle)
-                            return AppUpdaterStatus.Failed
-                        }
-
-                        let localName = installedAppBundle.path.basename(dropExtension: true) + ".backup"
-                        os_log("Archive installedAppBundle: \(installedAppBundle.description)")
-                        try installedAppBundle.path.rename(to: localName)
-
-                        os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
-                        try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
-
-                        if needsStart {
-                            installedAppBundle.launch()
-                        }
-
-                        let oldBackup = installedAppBundle.path.parent.join(localName)
-                        try? oldBackup.delete()
-
-                    } else {
-                        os_log("Install AppBundle \(downloadedAppBundle.description)")
-                        try downloadedAppBundle.path.copy(to: Path(url: applicationPath)!, overwrite: true)
-                    }
-                    _ = DMGMounter.detach(mountPoint: mountPoint)
-
-                    if let bundle = Bundle(url: applicationPath), needsStart {
-                        bundle.launch()
+                    if app == nil && pkg == nil {
+                        os_log("Failed to find app bundle in DMG %{public}s", appFile.debugDescription)
+                        return AppUpdaterStatus.Failed
                     }
 
-                    return AppUpdaterStatus.Installed
+                    if app != nil {
+                        os_log("Found app bundle in DMG %{public}s", app.debugDescription)
+
+                        let downloadedAppBundle = Bundle(url: app!)!
+                        if let installedAppBundle = Bundle(url: applicationPath) {
+                            if !validate(downloadedAppBundle, installedAppBundle) {
+                                os_log("Failed to validate app bundle %{public}s", appBundle)
+                                return AppUpdaterStatus.Failed
+                            }
+
+                            let localName = installedAppBundle.path.basename(dropExtension: true) + ".backup"
+                            os_log("Archive installedAppBundle: \(installedAppBundle.description)")
+                            try installedAppBundle.path.rename(to: localName)
+
+                            os_log(
+                                "Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)"
+                            )
+                            try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
+
+                            if needsStart {
+                                installedAppBundle.launch()
+                            }
+
+                            let oldBackup = installedAppBundle.path.parent.join(localName)
+                            try? oldBackup.delete()
+
+                        } else {
+                            os_log("Install AppBundle \(downloadedAppBundle.description)")
+                            try downloadedAppBundle.path.copy(to: Path(url: applicationPath)!, overwrite: true)
+                        }
+                        _ = DMGMounter.detach(mountPoint: mountPoint)
+
+                        if let bundle = Bundle(url: applicationPath), needsStart {
+                            bundle.launch()
+                        }
+
+                        return AppUpdaterStatus.Installed
+                    }
+
+                    if pkg != nil {
+                        os_log("Found pkg bundle in DMG %{public}s", pkg.debugDescription)
+                        let task = Process()
+                        task.launchPath = "/usr/bin/open"
+                        task.arguments = [pkg!.path]
+                        task.launch()
+                        _ = DMGMounter.detach(mountPoint: mountPoint)
+                        return AppUpdaterStatus.Installed
+                    }
+
                 } catch {
                     _ = DMGMounter.detach(mountPoint: mountPoint)
                     os_log("Failed to check for app bundle %{public}s", error.localizedDescription)
@@ -216,7 +254,9 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
                     os_log("Archive installedAppBundle: \(installedAppBundle.description)")
                     try installedAppBundle.path.rename(to: localName)
 
-                    os_log("Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)")
+                    os_log(
+                        "Update installedAppBundle: \(installedAppBundle.description) with \(downloadedAppBundle.description)"
+                    )
                     try downloadedAppBundle.path.copy(to: installedAppBundle.path, overwrite: true)
                     if needsStart {
                         installedAppBundle.launch()
@@ -316,8 +356,8 @@ public class AppUpdater: Hashable, Identifiable, ObservableObject {
     }
 
     public var latestVersion: String {
-        if let found = try? Constants.versionStorage.existsObject(forKey: appBundle), found {
-            return latestVersionHook(try! Constants.versionStorage.object(forKey: appBundle))
+        if let found = try? Constants.versionStorage.object(forKey: appBundle), !found.isEmpty {
+            return latestVersionHook(found)
         } else {
             let lock = DispatchSemaphore(value: 0)
             DispatchQueue.global(qos: .userInteractive).async { [self] in

@@ -23,12 +23,12 @@ extension Bundle {
         }
         return nil
     }
-    
-    static func plistDict (path: URL) -> NSDictionary? {
+
+    static func plistDict(path: URL) -> NSDictionary? {
         let plist = path.appendingPathComponent("/Contents/Info.plist")
         return NSDictionary(contentsOf: plist)
     }
-    
+
     static func appVersion(path: URL, key: String = "CFBundleShortVersionString") -> String? {
         plistDict(path: path)?.value(forKey: key) as? String
     }

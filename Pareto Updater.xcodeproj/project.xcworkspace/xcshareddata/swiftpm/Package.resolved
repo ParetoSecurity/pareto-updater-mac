@@ -1,4 +1,5 @@
 {
+  "originHash" : "4d2deb1ffbf29bdd6f26ea089e45f0ba037553dc39b785a7d7a240869d32cd57",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -24,7 +25,7 @@
       "location" : "https://github.com/hyperoslo/Cache",
       "state" : {
         "branch" : "master",
-        "revision" : "eeaf771d8d2e8247fbd6da2e27c986d99803fb1f"
+        "revision" : "f44a8f6b5ec27730198725ccc542fef0d1cc6b3d"
       }
     },
     {
@@ -82,12 +83,21 @@
       }
     },
     {
+      "identity" : "settingsaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/SettingsAccess",
+      "state" : {
+        "revision" : "0fd73c8b5892e88acb13adb7f36a4ba9293a0061",
+        "version" : "1.4.0"
+      }
+    },
+    {
       "identity" : "version",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ParetoSecurity/Version",
       "state" : {
         "branch" : "master",
-        "revision" : "9efa0d232cd886e78a6c59fd6eff337ebcbdafce"
+        "revision" : "88064e19f3c4efd3f7930017ce3ff77378fb22c5"
       }
     },
     {
@@ -100,5 +110,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
