@@ -8,9 +8,7 @@
 import Cocoa
 import Foundation
 import os.log
-#if !DEBUG
-    import Sentry
-#endif
+
 struct PublicApp: Codable {
     let bundle: String
     let name: String

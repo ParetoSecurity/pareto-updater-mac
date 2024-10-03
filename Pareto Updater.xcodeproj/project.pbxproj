@@ -20,7 +20,6 @@
 		4F0A05D528C89F5D00BE961C /* Raycast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D428C89F5D00BE961C /* Raycast.swift */; };
 		4F0A05D728C8A0CD00BE961C /* AppCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05D628C8A0CD00BE961C /* AppCleaner.swift */; };
 		4F0A05DB28C8BE4200BE961C /* Skype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0A05DA28C8BE4200BE961C /* Skype.swift */; };
-		4F0DEA73286D7F8200344B92 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 4F0DEA72286D7F8200344B92 /* Sentry */; };
 		4F0DEA75286D8F3E00344B92 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA74286D8F3E00344B92 /* License.swift */; };
 		4F0DEA77286D8F7700344B92 /* LicenseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DEA76286D8F7700344B92 /* LicenseTests.swift */; };
 		4F0DEA7A286D923A00344B92 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 4F0DEA79286D923A00344B92 /* JWTDecode */; };
@@ -228,7 +227,6 @@
 				4FE610EA282A88660060C002 /* Regex in Frameworks */,
 				4FA75600287709960064D0ED /* AppUpdater in Frameworks */,
 				4FE610F0282A888C0060C002 /* Cache in Frameworks */,
-				4F0DEA73286D7F8200344B92 /* Sentry in Frameworks */,
 				4FE610ED282A887A0060C002 /* LaunchAtLogin in Frameworks */,
 				4FE610E4282A88400060C002 /* Alamofire in Frameworks */,
 				4F3BE0A1286EF61B00DDC1AC /* XMLCoder in Frameworks */,
@@ -467,7 +465,6 @@
 				4FE610E9282A88660060C002 /* Regex */,
 				4FE610EC282A887A0060C002 /* LaunchAtLogin */,
 				4FE610EF282A888C0060C002 /* Cache */,
-				4F0DEA72286D7F8200344B92 /* Sentry */,
 				4F0DEA79286D923A00344B92 /* JWTDecode */,
 				4F3BE0A0286EF61B00DDC1AC /* XMLCoder */,
 				4FA755FF287709960064D0ED /* AppUpdater */,
@@ -552,7 +549,6 @@
 				4FE610E5282A88540060C002 /* XCRemoteSwiftPackageReference "Regex" */,
 				4FE610EB282A887A0060C002 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				4FE610EE282A888C0060C002 /* XCRemoteSwiftPackageReference "Cache" */,
-				4F0DEA71286D7F8200344B92 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				4F0DEA78286D923A00344B92 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				4F3BE09F286EF61B00DDC1AC /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				4FA755FE287709960064D0ED /* XCRemoteSwiftPackageReference "AppUpdater" */,
@@ -1059,14 +1055,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F0DEA71286D7F8200344B92 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		4F0DEA78286D923A00344B92 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
@@ -1150,11 +1138,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4F0DEA72286D7F8200344B92 /* Sentry */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F0DEA71286D7F8200344B92 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
-			productName = Sentry;
-		};
 		4F0DEA79286D923A00344B92 /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4F0DEA78286D923A00344B92 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;

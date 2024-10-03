@@ -16,10 +16,6 @@ import Regex
 import SettingsAccess
 import SwiftUI
 
-#if !DEBUG
-    import Sentry
-#endif
-
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var statusMenu: NSMenu?
@@ -116,13 +112,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
     }
 
     public func processAction(_ url: URL) {
-        #if !DEBUG
-            let crumb = Breadcrumb()
-            crumb.level = SentryLevel.info
-            crumb.category = "processAction"
-            crumb.message = url.debugDescription
-            SentrySDK.addBreadcrumb(crumb: crumb)
-        #endif
         switch url.host {
         case "clearCache":
             clearCache()
@@ -323,22 +312,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDele
             }
         #else
             Constants.Licensed = true
-        #endif
-
-        #if !DEBUG
-            if !Constants.isRunningTests {
-                SentrySDK.start { options in
-                    options.dsn = "https://9f78692775d244589bf08c21749f20fb@o32789.ingest.sentry.io/6539843"
-                    options.enableAutoSessionTracking = true
-                    options.enableAutoPerformanceTracking = true
-                    options.tracesSampleRate = 1.0
-
-                    let user = User()
-                    user.userId = Defaults[.machineUUID]
-                    SentrySDK.setUser(user)
-                }
-            }
-
         #endif
 
         popOver.behavior = .transient
